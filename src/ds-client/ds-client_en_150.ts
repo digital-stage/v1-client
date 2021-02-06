@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ds-client_en_150">
-<context>
-    <name>Dialog</name>
-    <message>
-        <location filename="login_dialog.ui" line="14"/>
-        <source>Http authentication required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="login_dialog.ui" line="20"/>
-        <source>Please enter your Username and Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="login_dialog.ui" line="30"/>
-        <source>Username:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="login_dialog.ui" line="40"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="login_dialog.ui" line="64"/>
-        <source>Stage:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="login_dialog.ui" line="77"/>
-        <source>live.digital-stage.org</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
+<TS version="2.1" language="en_150">
 <context>
     <name>Login</name>
     <message>
@@ -81,11 +48,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="56"/>
-        <source>Logout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="mainwindow.ui" line="41"/>
         <source>Log in</source>
         <translation type="unfinished"></translation>
@@ -93,6 +55,11 @@
     <message>
         <location filename="mainwindow.ui" line="46"/>
         <source>Log out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="56"/>
+        <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
