@@ -1,0 +1,6 @@
+[submodule "lib/qtkeychain"]
+	path = lib/qtkeychain
+	url = https://github.com/frankosterfeld/qtkeychain.git
+[submodule "lib/ov-client"]
+	path = lib/ov-client
+	url = https://github.com/gisogrimm/ov-client.git
