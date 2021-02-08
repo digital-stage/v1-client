@@ -59,7 +59,9 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-set(RESOURCE ${CMAKE_SOURCE_DIR}/assets.qrc)
-qt6_add_resources(RESOURCE_ADDED ${RESOURCE})
-
 target_link_libraries(ds-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+set_target_properties(ds-client PROPERTIES
+  MACOSX_BUNDLE TRUE
+  MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
+  RESOURCE "${RESOURCE_FILES}")

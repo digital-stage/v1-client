@@ -22,7 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Show tray icon
     trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/images/logo.png"));
+
+    QIcon icon = QIcon(QPixmap(":/images/icon.svg"));
+    icon.setIsMask(true);
+
+    trayIcon->setIcon(icon);
     trayIcon->setToolTip("Tray Program");
 
     trayIcon->show();

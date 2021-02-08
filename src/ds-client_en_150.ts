@@ -75,12 +75,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="114"/>
+        <location filename="mainwindow.cpp" line="118"/>
         <source>Systray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="115"/>
+        <location filename="mainwindow.cpp" line="119"/>
         <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Quit&lt;/b&gt; in the context menu of the system tray entry.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -390,40 +390,6 @@
     <message>
         <location filename="main.cpp" line="18"/>
         <source>I couldn&apos;t detect any system tray on this system.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Window</name>
-    <message>
-        <location filename="window.cpp" line="32"/>
-        <location filename="window.cpp" line="52"/>
-        <source>Systray</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.cpp" line="53"/>
-        <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Quit&lt;/b&gt; in the context menu of the system tray entry.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.cpp" line="64"/>
-        <source>Mi&amp;nimize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.cpp" line="67"/>
-        <source>Ma&amp;ximize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.cpp" line="70"/>
-        <source>&amp;Restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.cpp" line="73"/>
-        <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
