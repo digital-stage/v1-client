@@ -1,19 +1,23 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16.0)
 
 project(ds-client LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-# Ignore lib folder when running AUTOUIC
-file(GLOB EXCLUDED_SOURCES "lib/*")
-set_property(SOURCE ${EXCLUDED_SOURCES} PROPERTY SKIP_AUTOUIC ON)
-set_property(SOURCE ${EXCLUDED_SOURCES} PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE ${EXCLUDED_SOURCES} PROPERTY SKIP_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(APPLE)
+    if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm64")
+        set(CMAKE_OSX_ARCHITECTURES arm64;x86_64)
+    endif()
+endif()
+
 
 #if(ANDROID)
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
@@ -27,6 +31,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
+
+QT6_ADD_RESOURCES(ds-client assets.qrc)
+
 set(TS_FILES src/ds-client_en_150.ts)
 
 set(PROJECT_SOURCES
@@ -39,29 +46,35 @@ set(PROJECT_SOURCES
         ${TS_FILES}
 )
 
+set(PROJECT_RESOURCES
+    resources.qrc)
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ds-client
-        ${PROJECT_SOURCES}
+        ${PROJECT_SOURCES} ${PROJECT_RESOURCES}
     )
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     if(ANDROID)
         add_library(ds-client SHARED
-            ${PROJECT_SOURCES}
+            ${PROJECT_SOURCES} ${PROJECT_RESOURCES}
         )
     else()
         add_executable(ds-client
-            ${PROJECT_SOURCES}
+            ${PROJECT_SOURCES} ${PROJECT_RESOURCES}
         )
     endif()
 
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
+
 target_link_libraries(ds-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-set_target_properties(ds-client PROPERTIES
-  MACOSX_BUNDLE TRUE
-  MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
-  RESOURCE "${RESOURCE_FILES}")
+if(APPLE)
+    set_target_properties(ds-client PROPERTIES
+      MACOSX_BUNDLE TRUE
+      MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
+      RESOURCE "${PROJECT_RESOURCES}")
+endif()

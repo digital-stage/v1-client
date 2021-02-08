@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Show tray icon
     trayIcon = new QSystemTrayIcon(this);
 
-    QIcon icon = QIcon(QPixmap(":/images/icon.svg"));
+    QIcon icon = QIcon(":/images/logo.png");
     icon.setIsMask(true);
 
     trayIcon->setIcon(icon);
@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
                 this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
     trayIcon->setContextMenu(loginMenu);
+
 }
 
 MainWindow::~MainWindow()

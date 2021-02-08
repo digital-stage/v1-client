@@ -1,8 +1,0 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file>images/logo.png</file>
-    <file>images/logo.svg</file>
-    <file>images/logo.pdf</file>
-    <file>images/mac/icons.icns</file>
-</qresource>
-</RCC>
