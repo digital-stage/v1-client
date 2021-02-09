@@ -7,13 +7,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="22"
-   height="22"
-   viewBox="0 0 5.8208334 5.8208334"
+   width="42"
+   height="42"
+   viewBox="0 0 11.1125 11.1125"
    version="1.1"
    id="svg8"
    sodipodi:docname="logo.svg"
-   inkscape:version="1.0.2 (e86c8708, 2021-01-15)">
+   inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
+   inkscape:export-filename="/Users/tobias/Developer/digitalstage/ds-client/images/icon.png"
+   inkscape:export-xdpi="48"
+   inkscape:export-ydpi="48">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -23,18 +26,19 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="768"
-     inkscape:window-height="480"
+     inkscape:window-width="1148"
+     inkscape:window-height="673"
      id="namedview959"
      showgrid="false"
-     inkscape:zoom="16.226277"
-     inkscape:cx="14.80294"
-     inkscape:cy="10.486917"
+     inkscape:zoom="11.528491"
+     inkscape:cx="30.574724"
+     inkscape:cy="23.974853"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="0"
      inkscape:current-layer="g153"
-     inkscape:pagecheckerboard="true" />
+     inkscape:pagecheckerboard="true"
+     inkscape:document-rotation="0" />
   <defs
      id="defs2">
     <style
@@ -124,7 +128,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -136,7 +140,7 @@
      style="fill:#ffffff">
     <g
        id="g486"
-       transform="matrix(0.89412501,0,0,0.89413731,4874.602,4835.8583)"
+       transform="matrix(1.8007226,0,0,1.8007474,-36866.106,-36578.182)"
        style="fill:#000000">
       <g
          class="f"

@@ -9,9 +9,9 @@
 int main(int argc, char *argv[])
 {
     //Q_INIT_RESOURCE(systray);
+    //Q_INIT_RESOURCE(resources);
 
     QApplication app(argc, argv);
-
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         QMessageBox::critical(nullptr, QObject::tr("Systray"),

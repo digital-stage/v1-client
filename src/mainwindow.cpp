@@ -23,11 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     // Show tray icon
     trayIcon = new QSystemTrayIcon(this);
 
-    QIcon icon = QIcon(":/images/logo.png");
+    QIcon icon = QIcon(":/images/icon.png");
     icon.setIsMask(true);
 
     trayIcon->setIcon(icon);
-    trayIcon->setToolTip("Tray Program");
+    trayIcon->setToolTip("Digital Stage");
 
     trayIcon->show();
 
