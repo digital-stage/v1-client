@@ -383,12 +383,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="40"/>
+        <location filename="main.cpp" line="36"/>
         <source>Systray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="41"/>
+        <location filename="main.cpp" line="37"/>
         <source>I couldn&apos;t detect any system tray on this system.</source>
         <translation type="unfinished"></translation>
     </message>

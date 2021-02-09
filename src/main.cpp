@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <future>
 #include <chrono>
+#include <QDebug>
 
 bool sign_in (QSplashScreen *splash, QWidget *w) {
     qDebug() << "Loading...";
