@@ -4,7 +4,26 @@
 
 #include <QMessageBox>
 #include <QSystemTrayIcon>
+#include <QSplashScreen>
 #include "mainwindow.h"
+#include <unistd.h>
+#include <future>
+#include <chrono>
+
+bool sign_in (QSplashScreen *splash, QWidget *w) {
+    qDebug() << "Loading...";
+    //TODO: Load login data from keyvault and token, if available
+    //TODO: If there is a token: verify it first
+    //TODO: Otherwise get new token with existing login data
+    //TODO: or show login
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000) );
+
+    splash->hide();
+
+    qDebug() << "Closed splash screen";
+  return true;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -21,8 +40,17 @@ int main(int argc, char *argv[])
     }
     QApplication::setQuitOnLastWindowClosed(false);
 
+    QPixmap pixmap(":/images/splash.png");
+    QSplashScreen splash(pixmap);
+    splash.show();
+    splash.showMessage("Now loading...");
+
     MainWindow window;
+
+    std::future<bool> fut = std::async (sign_in, &splash, &window);
+
     window.show();
+
     return app.exec();
 }
 
