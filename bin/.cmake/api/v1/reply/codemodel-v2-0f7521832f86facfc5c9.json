@@ -1,0 +1,183 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						4,
+						5,
+						6
+					]
+				},
+				{
+					"build" : "lib/qtkeychain",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "lib/qtkeychain",
+					"targetIndexes" : 
+					[
+						3,
+						7,
+						8,
+						9,
+						10
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ds-client",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						4,
+						5,
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "qtkeychain",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						7,
+						8,
+						9,
+						10
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ds-client::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ds-client-Debug-b09e5099ff167ed98820.json",
+					"name" : "ds-client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ds-client_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ds-client_autogen-Debug-8ae30c51af2eba6b62ed.json",
+					"name" : "ds-client_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ds-client_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ds-client_autogen_timestamp_deps-Debug-0c1668e820dd2c6cea55.json",
+					"name" : "ds-client_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "messages::@496d799cf5bfd09d70e1",
+					"jsonFile" : "target-messages-Debug-34a7e9a509b1382a28f6.json",
+					"name" : "messages",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ov-client::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ov-client-Debug-086927382e6b228ec194.json",
+					"name" : "ov-client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ov-client_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ov-client_autogen-Debug-da19e4f62d2b7f2ff950.json",
+					"name" : "ov-client_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ov-client_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ov-client_autogen_timestamp_deps-Debug-8bc37570b843137790da.json",
+					"name" : "ov-client_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "qt6keychain::@496d799cf5bfd09d70e1",
+					"jsonFile" : "target-qt6keychain-Debug-25a9e6676523de960242.json",
+					"name" : "qt6keychain",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "qt6keychain_autogen::@496d799cf5bfd09d70e1",
+					"jsonFile" : "target-qt6keychain_autogen-Debug-196ba049c77769184a59.json",
+					"name" : "qt6keychain_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "qt6keychain_autogen_timestamp_deps::@496d799cf5bfd09d70e1",
+					"jsonFile" : "target-qt6keychain_autogen_timestamp_deps-Debug-a5a2e8c1b9de90c60061.json",
+					"name" : "qt6keychain_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "translations::@496d799cf5bfd09d70e1",
+					"jsonFile" : "target-translations-Debug-1a6c97cf420982bb9f16.json",
+					"name" : "translations",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/tobias/Developer/digitalstage/ds-client/bin",
+		"source" : "/Users/tobias/Developer/digitalstage/ds-client"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}

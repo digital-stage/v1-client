@@ -1,0 +1,1237 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "bin/CMakeFiles/3.19.4/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Platform/Darwin-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "bin/CMakeFiles/3.19.4/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Platform/Darwin.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Platform/UnixPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Compiler/AppleClang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Compiler/Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Platform/Apple-Clang-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Platform/Apple-Clang.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets-relwithdebinfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets-relwithdebinfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets-relwithdebinfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/FindWrapAtomic.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreTargets-relwithdebinfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreConfigExtras.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeature.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeatureCommon.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Internal/CheckCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Gui/Qt6GuiConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Gui/Qt6GuiDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/FindWrapOpenGL.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindOpenGL.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Gui/Qt6GuiTargets-relwithdebinfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Gui/Qt6GuiAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Gui/Qt6GuiVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeature.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeatureCommon.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXCompilerFlag.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsTargets-relwithdebinfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Widgets/Qt6WidgetsMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeature.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeatureCommon.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXCompilerFlag.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsTargets-relwithdebinfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/local/lib/cmake/nlohmann_json/nlohmann_jsonConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/local/lib/cmake/nlohmann_json/nlohmann_jsonConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/local/lib/cmake/nlohmann_json/nlohmann_jsonTargets.cmake"
+		},
+		{
+			"path" : "resources.qrc"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/macos/MacOSXBundleInfo.plist.in"
+		},
+		{
+			"path" : "lib/qtkeychain/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPkgConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "lib/qtkeychain/cmake/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/GenerateExportHeader.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/Internal/CheckCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"path" : "lib/qtkeychain/cmake/Modules/ECMSetupVersion.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"path" : "lib/qtkeychain/cmake/Modules/ECMGeneratePriFile.cmake"
+		},
+		{
+			"path" : "lib/qtkeychain/cmake/Modules/ECMQueryQmake.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/FindWrapAtomic.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6Core/Qt6CoreConfigExtras.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeature.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/QtFeatureCommon.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXCompilerFlag.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsDependencies.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsAdditionalTargetInfo.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsVersionlessTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/exportheader.cmake.in"
+		},
+		{
+			"path" : "lib/qtkeychain/QtKeychainConfig.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "/Users/tobias/Developer/digitalstage/ds-client/bin",
+		"source" : "/Users/tobias/Developer/digitalstage/ds-client"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

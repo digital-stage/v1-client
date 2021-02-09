@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.18.0)
 
+## GLOBAL CONFIGURATION
 project(ds-client LANGUAGES CXX)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -46,9 +44,26 @@ endif()
 #    endif()
 #endif()
 
+## DEPENDENCIES
+set(CURL_STATICLIB ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
+find_package(nlohmann_json 3.2.0 REQUIRED)
+
+set(BUILD_WITH_QT6 ON CACHE BOOL "Build qtkeychain with Qt 6")
+set(BUILD_TEST_APPLICATION OFF CACHE BOOL "Build test application")
+set(QTKEYCHAIN_NO_EXPORT false)
+#set(BUILD_TRANSLATIONS OFF CACHE BOOL "Build translations")
+set(QTKEYCHAIN_STATIC OFF CACHE BOOL "Build static library")
+option(BUILD_WITH_QT6 "Build qtkeychain with Qt 6" ON)
+option(BUILD_TEST_APPLICATION "Build test application" OFF)
+#option(BUILD_TRANSLATIONS "Build translations" OFF)
+option(QTKEYCHAIN_STATIC "Build static library" ON)
+add_subdirectory(lib/qtkeychain)
+add_library(ov-client OBJECT lib/ov-client)
+
+## SOURCE AND RESOURCE CONTROL
 set(TS_FILES src/ds-client_en_150.ts)
 
 set(PROJECT_SOURCES
@@ -58,6 +73,11 @@ set(PROJECT_SOURCES
         src/login.cpp
         src/login.h
         src/login.ui
+        src/api/auth.h
+        src/api/auth.cpp
+        src/api/keystore.h
+        src/api/keystore.cpp
+        lib/qtkeychain/keychain.h
         ${TS_FILES}
         resources.qrc
 )
@@ -66,6 +86,10 @@ set(PROJECT_RESOURCES
     resources.qrc
     )
 
+
+
+
+## APPLE SPECIFIC
 if(APPLE)
     # Add app icon
     set(MACOSX_BUNDLE_ICON_FILE appicon.icns)
@@ -74,6 +98,10 @@ if(APPLE)
            MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
+
+
+
+## EXECUTABLE
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     message("Building with QT6")
     qt_add_executable(ds-client
@@ -98,7 +126,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(ds-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ds-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets nlohmann_json::nlohmann_json)
 
 if(APPLE)
     set_target_properties(ds-client PROPERTIES
@@ -107,6 +135,10 @@ if(APPLE)
       RESOURCE "${PROJECT_RESOURCES}")
 endif()
 
+
+
+
+## VERBOSE
 message("CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
 message("CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")

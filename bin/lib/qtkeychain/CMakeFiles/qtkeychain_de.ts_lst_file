@@ -1,0 +1,17 @@
+-I/Users/tobias/Developer/digitalstage/ds-client/bin/lib/qtkeychain
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/testclient.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/plaintextstore_p.h
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/plaintextstore.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/libsecret_p.h
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/libsecret.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain_win.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain_unix.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain_p.h
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain_haiku.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain_android.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain.h
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/gnomekeyring_p.h
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/gnomekeyring.cpp
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/androidkeystore_p.h
+/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/androidkeystore.cpp

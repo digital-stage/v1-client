@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Digital Stage Client");
+
     mySettingsFile="my.ini";
     loadSettings();
 
@@ -53,7 +54,6 @@ MainWindow::MainWindow(QWidget *parent)
                 this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
     trayIcon->setContextMenu(loginMenu);
-
 }
 
 MainWindow::~MainWindow()

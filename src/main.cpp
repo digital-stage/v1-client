@@ -7,30 +7,11 @@
 #include <QSplashScreen>
 #include "mainwindow.h"
 #include <unistd.h>
-#include <future>
-#include <chrono>
-#include <QDebug>
-
-bool sign_in (QSplashScreen *splash, QWidget *w) {
-    qDebug() << "Loading...";
-    //TODO: Load login data from keyvault and token, if available
-    //TODO: If there is a token: verify it first
-    //TODO: Otherwise get new token with existing login data
-    //TODO: or show login
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000) );
-
-    splash->hide();
-
-    qDebug() << "Closed splash screen";
-  return true;
-}
+#include <QTimer>
 
 
 int main(int argc, char *argv[])
 {
-    //Q_INIT_RESOURCE(systray);
-    //Q_INIT_RESOURCE(resources);
-
     QApplication app(argc, argv);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
@@ -44,12 +25,9 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/images/splash.png");
     QSplashScreen splash(pixmap);
     splash.show();
-    splash.showMessage("Now loading...");
+    QTimer::singleShot(1000, &splash, &QWidget::close); // keep displayed for 5 seconds
 
     MainWindow window;
-
-    std::future<bool> fut = std::async (sign_in, &splash, &window);
-
     window.show();
 
     return app.exec();
