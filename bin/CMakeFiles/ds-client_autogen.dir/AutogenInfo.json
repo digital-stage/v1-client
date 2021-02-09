@@ -193,6 +193,11 @@
 		"/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageHandleStandardArgs.cmake",
 		"/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/FindPackageMessage.cmake",
 		"/usr/local/lib/cmake/nlohmann_json/nlohmann_jsonTargets.cmake",
+		"/usr/local/lib/cmake/Qt5Keychain/qt5keychainConfigVersion.cmake",
+		"/usr/local/lib/cmake/Qt5Keychain/qt5keychainConfig.cmake",
+		"/usr/local/lib/cmake/Qt5Keychain/Qt5KeychainLibraryDepends.cmake",
+		"/usr/local/lib/cmake/Qt5Keychain/Qt5KeychainLibraryDepends-release.cmake",
+		"/usr/local/Cellar/cmake/3.19.4/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
 		"/Users/tobias/Developer/digitalstage/ds-client/resources.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "/Users/tobias/Developer/digitalstage/ds-client",
@@ -200,11 +205,6 @@
 	"DEP_FILE_RULE_NAME" : "ds-client_autogen/timestamp",
 	"HEADERS" : 
 	[
-		[
-			"/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain.h",
-			"MU",
-			"NU36ZSBCR7/moc_keychain.cpp"
-		],
 		[
 			"/Users/tobias/Developer/digitalstage/ds-client/src/api/auth.h",
 			"MU",
@@ -274,10 +274,7 @@
 	],
 	"MOC_PREDEFS_FILE" : "/Users/tobias/Developer/digitalstage/ds-client/bin/ds-client_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
-	"MOC_SKIP" : 
-	[
-		"/Users/tobias/Developer/digitalstage/ds-client/bin/ov-client_autogen/mocs_compilation.cpp"
-	],
+	"MOC_SKIP" : [],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 4,
 	"PARSE_CACHE_FILE" : "/Users/tobias/Developer/digitalstage/ds-client/bin/CMakeFiles/ds-client_autogen.dir/ParseCache.txt",
@@ -305,10 +302,7 @@
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
-	"UIC_SKIP" : 
-	[
-		"/Users/tobias/Developer/digitalstage/ds-client/bin/ov-client_autogen/mocs_compilation.cpp"
-	],
+	"UIC_SKIP" : [],
 	"UIC_UI_FILES" : [],
 	"VERBOSITY" : 0
 }

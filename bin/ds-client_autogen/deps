@@ -122,7 +122,6 @@ ds-client_autogen/timestamp: \
 	/Users/tobias/Developer/digitalstage/ds-client/bin/CMakeFiles/3.19.4/CMakeCXXCompiler.cmake \
 	/Users/tobias/Developer/digitalstage/ds-client/bin/CMakeFiles/3.19.4/CMakeSystem.cmake \
 	/Users/tobias/Developer/digitalstage/ds-client/bin/ds-client_autogen/moc_predefs.h \
-	/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain/keychain.h \
 	/Users/tobias/Developer/digitalstage/ds-client/resources.qrc \
 	/Users/tobias/Developer/digitalstage/ds-client/src/api/keystore.h \
 	/Users/tobias/Developer/digitalstage/ds-client/src/login.h \

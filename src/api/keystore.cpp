@@ -1,5 +1,5 @@
 #include "keystore.h"
-#include "lib/qtkeychain/keychain.h"
+#include <qt5keychain/keychain.h>
 #include <iostream>
 #include <QCoreApplication>
 
@@ -30,11 +30,11 @@ bool KeyStore::store(Credentials credentials) {
 }
 
 
-KeyStore::Credentials KeyStore::restore(QString *email) const {
+KeyStore::Credentials KeyStore::restore(QString email) const {
 
 }
 
-bool KeyStore::remove(QString *email) const {
+bool KeyStore::remove(QString email) const {
     QKeychain::DeletePasswordJob job( QLatin1String("ds-client") );
     job.setAutoDelete( false );
     job.setKey( email );

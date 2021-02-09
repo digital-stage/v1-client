@@ -10,8 +10,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # Excude js files inside the libs folder
-#file(GLOB_RECURSE LIB_FOLDER "lib/*.js")
-#set_property(SOURCE LIB_FOLDER PROPERTY SKIP_AUTOMOC ON)
+file(GLOB_RECURSE LIB_FOLDER lib *.js)
+file(GLOB JS_FILE lib/ov-client/webmixer.js)
+set_property(SOURCE ${JS_FILE} PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE ${JS_FILE} PROPERTY SKIP_AUTOUIC ON)
 
 if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
     if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
@@ -44,24 +46,18 @@ endif()
 #    endif()
 #endif()
 
+
 ## DEPENDENCIES
 set(CURL_STATICLIB ON)
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+#find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
 find_package(nlohmann_json 3.2.0 REQUIRED)
+add_library(ov-client STATIC lib/ov-client)
+find_package(qt5keychain)
+find_package(curl)
 
-set(BUILD_WITH_QT6 ON CACHE BOOL "Build qtkeychain with Qt 6")
-set(BUILD_TEST_APPLICATION OFF CACHE BOOL "Build test application")
-set(QTKEYCHAIN_NO_EXPORT false)
-#set(BUILD_TRANSLATIONS OFF CACHE BOOL "Build translations")
-set(QTKEYCHAIN_STATIC OFF CACHE BOOL "Build static library")
-option(BUILD_WITH_QT6 "Build qtkeychain with Qt 6" ON)
-option(BUILD_TEST_APPLICATION "Build test application" OFF)
-#option(BUILD_TRANSLATIONS "Build translations" OFF)
-option(QTKEYCHAIN_STATIC "Build static library" ON)
-add_subdirectory(lib/qtkeychain)
-add_library(ov-client OBJECT lib/ov-client)
 
 ## SOURCE AND RESOURCE CONTROL
 set(TS_FILES src/ds-client_en_150.ts)
@@ -77,7 +73,6 @@ set(PROJECT_SOURCES
         src/api/auth.cpp
         src/api/keystore.h
         src/api/keystore.cpp
-        lib/qtkeychain/keychain.h
         ${TS_FILES}
         resources.qrc
 )
@@ -126,7 +121,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(ds-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets nlohmann_json::nlohmann_json)
+target_link_libraries(ds-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets nlohmann_json::nlohmann_json qt5keychain curl)
 
 if(APPLE)
     set_target_properties(ds-client PROPERTIES

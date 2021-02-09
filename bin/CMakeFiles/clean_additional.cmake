@@ -8,9 +8,6 @@ if("${CONFIG}" STREQUAL "" OR "${CONFIG}" STREQUAL "Debug")
   "CMakeFiles/ov-client_autogen.dir/AutogenUsed.txt"
   "CMakeFiles/ov-client_autogen.dir/ParseCache.txt"
   "ds-client_autogen"
-  "lib/qtkeychain/CMakeFiles/qt6keychain_autogen.dir/AutogenUsed.txt"
-  "lib/qtkeychain/CMakeFiles/qt6keychain_autogen.dir/ParseCache.txt"
-  "lib/qtkeychain/qt6keychain_autogen"
   "ov-client_autogen"
   )
 endif()

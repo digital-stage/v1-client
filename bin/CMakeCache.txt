@@ -288,7 +288,7 @@ QTKEYCHAIN_STATIC:BOOL=OFF
 QTKEYCHAIN_TRANSLATIONS_DIR:PATH=share/qt6keychain/translations
 
 //The directory containing a CMake configuration file for QT.
-QT_DIR:PATH=/Users/tobias/Qt/6.0.1/clang_64/lib/cmake/Qt6
+QT_DIR:PATH=QT_DIR-NOTFOUND
 
 //No help, variable specified on the command line.
 QT_QMAKE_EXECUTABLE:STRING=/Users/tobias/Qt/6.0.1/clang_64/bin/qmake
@@ -332,11 +332,17 @@ ds-client_SOURCE_DIR:STATIC=/Users/tobias/Developer/digitalstage/ds-client
 //The directory containing a CMake configuration file for nlohmann_json.
 nlohmann_json_DIR:PATH=/usr/local/lib/cmake/nlohmann_json
 
+//The directory containing a CMake configuration file for qt5keychain.
+qt5keychain_DIR:PATH=/usr/local/lib/cmake/Qt5Keychain
+
 //Dependencies for the target
 qt6keychain_LIB_DEPENDS:STATIC=general;Qt6::Core;general;-framework Foundation;general;-framework Security;
 
 //Value Computed by CMake
 qtkeychain_BINARY_DIR:STATIC=/Users/tobias/Developer/digitalstage/ds-client/bin/lib/qtkeychain
+
+//The directory containing a CMake configuration file for qtkeychain.
+qtkeychain_DIR:PATH=qtkeychain_DIR-NOTFOUND
 
 //Value Computed by CMake
 qtkeychain_SOURCE_DIR:STATIC=/Users/tobias/Developer/digitalstage/ds-client/lib/qtkeychain
@@ -456,7 +462,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

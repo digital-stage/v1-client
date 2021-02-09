@@ -22,16 +22,6 @@ rule CUSTOM_COMMAND
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__ov-client_Debug
-  depfile = $DEP_FILE
-  deps = gcc
-  command = /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building CXX object $out
-
-
-#############################################
-# Rule for compiling CXX files.
-
 rule CXX_COMPILER__ds-client_Debug
   depfile = $DEP_FILE
   deps = gcc
@@ -59,7 +49,7 @@ rule CXX_EXECUTABLE_LINKER__ds-client_Debug
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__qt6keychain_Debug
+rule CXX_COMPILER__ov-client_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -67,20 +57,12 @@ rule CXX_COMPILER__qt6keychain_Debug
 
 
 #############################################
-# Rule for linking CXX shared library.
+# Rule for linking CXX static library.
 
-rule CXX_SHARED_LIBRARY_LINKER__qt6keychain_Debug
-  command = $PRE_LINK && /usr/bin/clang++ $LANGUAGE_COMPILE_FLAGS $ARCH_FLAGS -dynamiclib -Wl,-headerpad_max_install_names $LINK_FLAGS -o $TARGET_FILE $SONAME_FLAG $INSTALLNAME_DIR$SONAME $in $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
-  description = Linking CXX shared library $TARGET_FILE
+rule CXX_STATIC_LIBRARY_LINKER__ov-client_Debug
+  command = $PRE_LINK && /usr/local/Cellar/cmake/3.19.4/bin/cmake -E rm -f $TARGET_FILE && /usr/bin/ar qc $TARGET_FILE $LINK_FLAGS $in && /usr/bin/ranlib $TARGET_FILE && /usr/local/Cellar/cmake/3.19.4/bin/cmake -E touch $TARGET_FILE && $POST_BUILD
+  description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
-
-
-#############################################
-# Rule for creating library symlink.
-
-rule CMAKE_SYMLINK_LIBRARY
-  command = /usr/local/Cellar/cmake/3.19.4/bin/cmake -E cmake_symlink_library $in $SONAME $out && $POST_BUILD
-  description = Creating library symlink $out
 
 
 #############################################
