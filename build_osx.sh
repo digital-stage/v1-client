@@ -10,5 +10,5 @@ esac
 git submodule update --init --recursive
 mkdir -p bin
 cd bin
-QT_DIR=$(brew --prefix qt) cmake ./../
+cmake ./../ -DOPENSSL_ROOT_DIR=$(brew --prefix openssl@1.1) -DQT_DIR=$(brew --prefix qt)
 make

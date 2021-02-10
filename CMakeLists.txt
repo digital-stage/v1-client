@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18.0)
 
 ## GLOBAL CONFIGURATION
-project(ds-client LANGUAGES CXX)
+project(DigitalStage LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -30,6 +30,7 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
             # set(CMAKE_CROSSCOMPILING false)
             #set(QMAKE_APPLE_DEVICE_ARCHS arm64)
             #set(CMAKE_OSX_ARCHITECTURES arm64)
+            set(CMAKE_OSX_ARCHITECTURES x86_64)
         else()
             set(CMAKE_OSX_ARCHITECTURES x86_64)
         endif()
@@ -55,15 +56,17 @@ find_package(nlohmann_json 3.2.0 REQUIRED)
 add_library(ov-client STATIC lib/ov-client)
 find_package(qt5keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
-#find_package(OpenSSL REQUIRED)
-
+set(OPENSSL_USE_STATIC_LIBS TRUE)
+find_package(OpenSSL REQUIRED)
 if(APPLE)
     # Fix seems necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
 endif()
 
+
+
 ## SOURCE AND RESOURCE CONTROL
-set(TS_FILES src/ds-client_en_150.ts)
+set(TS_FILES src/DigitalStage_en_150.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -80,11 +83,16 @@ set(PROJECT_SOURCES
         resources.qrc
 )
 
-set(PROJECT_RESOURCES
-    resources.qrc
+file(GLOB
+    PROJECT_ASSETS
+    ${CMAKE_CURRENT_SOURCE_DIR}/images/*.png
+    ${CMAKE_CURRENT_SOURCE_DIR}/images/*.svg
     )
 
-
+set(PROJECT_RESOURCES
+    resources.qrc
+    ${PROJECT_ASSETS}
+    )
 
 
 ## APPLE SPECIFIC
@@ -98,24 +106,23 @@ endif()
 
 
 
-
 ## EXECUTABLE
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     message("Building with QT6")
-    qt_add_executable(ds-client
+    qt_add_executable(DigitalStage
         ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
     )
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     message("Building with QT5")
     if(ANDROID)
-        add_library(ds-client SHARED
+        add_library(DigitalStage SHARED
             ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
         )
     else()
-        add_executable(ds-client ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
+        add_executable(DigitalStage ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
         if(APPLE)
-            set_target_properties(ds-client PROPERTIES
+            set_target_properties(DigitalStage PROPERTIES
               MACOSX_BUNDLE TRUE
               MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
               RESOURCE "${PROJECT_RESOURCES}")
@@ -126,21 +133,42 @@ endif()
 
 link_directories(${Boost_LIBRARY_DIR})
 
-target_link_libraries(ds-client PRIVATE
+target_link_libraries(DigitalStage PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     nlohmann_json::nlohmann_json
     qt5keychain
     cpprestsdk::cpprest
+    OpenSSL::Crypto
 )
 
+if(WIN32)
+    find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+    add_custom_command(TARGET DigitalStage POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E
+            env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
+                "$<TARGET_FILE:DigitalStage>"
+        COMMENT "Running windeployqt..."
+    )
+endif()
+
 if(APPLE)
-    set_target_properties(ds-client PROPERTIES
+    find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+    set_target_properties(DigitalStage PROPERTIES
       MACOSX_BUNDLE TRUE
       MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
       RESOURCE "${PROJECT_RESOURCES}")
+  add_custom_command(TARGET DigitalStage POST_BUILD
+    COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+        "$<TARGET_FILE_DIR:DigitalStage>/../.."
+        -always-overwrite
+    COMMENT "Running macdeployqt..."
+  )
+    set(CPACK_GENERATOR "DRAGNDROP")
+    set(CPACK_DMG_VOLUME_NAME "InstallDigitalStage")
+    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Packaging_DMGSetup.scpt)
+    set(CPACK_DMG_BACKGROUND_IMAGE ${CMAKE_CURRENT_SOURCE_DIR}/images/DMGBackground.tif)
+    include(CPack)
 endif()
-
-
 
 
 ## VERBOSE
