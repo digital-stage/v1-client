@@ -7,6 +7,14 @@
 #include <QMessageBox>
 #include <QDebug>
 
+#ifndef AUTH_SERVER
+#define AUTH_SERVER "https://auth.digital-stage.org"
+#endif
+
+#ifndef API_SERVER
+#define API_SERVER "https://api.digital-stage.org"
+#endif
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -54,22 +62,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                 this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
-    connect(qApp, SIGNAL(aboutToClose()), this, SLOT(exit()));
+    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(exit()));
 
-    this->auth = new Auth("https://auth.digital-stage.org");
+    this->auth = new Auth(AUTH_SERVER);
     this->keyStore = new KeyStore();
 }
 
 void MainWindow::init() {
     const QString email = loadEmail();
     if( !email.isEmpty() ) {
+        qDebug() << "[INIT]" << "Restored email from last session: " << email;
         KeyStore::Credentials* credentials = keyStore->restore(email);
         if( credentials != NULL ) {
+            qDebug() << "[INIT]" << "Restored password from keystore: " << credentials->password;
             const string& token = auth->signIn(credentials->email.toStdString(), credentials->password.toStdString());
             if( !token.empty()) {
+                qDebug() << "[INIT]" << "Retrieved token: " << token.c_str();
                 showStatus();
                 return;
             }
+            qDebug() << "[INIT]" << "Could not sign in, showing login now" << token.c_str();
             showLogin(credentials->email, credentials->password);
             return;
         }
@@ -96,33 +108,23 @@ void MainWindow::showLogin(QString initialEmail, QString initialPassword)
     loginPane->setPassword(initialPassword);
 
     setCentralWidget(loginPane);
-
-    loginPane->resetError();
-    // Try login
-    QString email = loginPane->getEmail();
-    QString password = loginPane->getPassword();
-    const std::string token = auth->signIn(email.toStdString(), password.toStdString());
-    if( !token.empty() ) {
-        keyStore->store({email, password});
-        saveEmail(email);
-        showStatus();
-        return;
-    }
-    loginPane->setError("Unknown email or wrong password");
 }
 
 void MainWindow::onLogIn(const QString email, const QString password) {
     loginPane->resetError();
-    qDebug() << "Try to login with " << email << password;
+    qDebug() << "[onLogIn]" << "Try to login with token: " << email << password;
     const string& token = auth->signIn(email.toStdString(), password.toStdString());
     if( !token.empty() ) {
+        qDebug() << "[onLogIn]" << "Retrieved token: " << token.c_str();
         showStatus();
         return;
     }
+    qDebug() << "[onLogIn]" << "Could not sign in" << token.c_str();
     loginPane->setError("Unknown email or wrong password");
 }
 
 void MainWindow::onLogOut() {
+    qDebug() << "[onLogOut]" << "Signing out";
     auth->signOut();
     trayIcon->setContextMenu(loginMenu);
     loginPane->resetError();

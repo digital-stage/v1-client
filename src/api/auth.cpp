@@ -24,10 +24,16 @@ Auth::~Auth() {
 std::string Auth::signIn(const std::string& email, const std::string& password) {
     qDebug() << "Try siging in";
 
-    http_client client1(utility::conversions::to_string_t("https://auth.dstage.org"));
-    http_request request;
-    request.set_method(methods::POST);
-    request.headers().add(U("Host"), U("auth.dstage.org"));
+    auto postJson = pplx::create_task([this]() {
+        json::value jsonObject;
+        jsonObject[U("email")] = json::value::string(U("atakan"));
+        jsonObject[U("password")] = json::value::string(U("sarioglu"));
+
+        return http_client(U(url))
+            .request(methods::POST,
+                uri_builder(U("api")).append_path(U("users")).to_string(),
+                jsonObject.serialize(), U("application/json"));
+    });
 
 
     if( email == "bla" && password == "bla" ) {

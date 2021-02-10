@@ -13,6 +13,8 @@ set(CMAKE_PROJECT_VERSION_MAJOR "0")
 set(CMAKE_PROJECT_VERSION_MINOR "1")
 set(CMAKE_PROJECT_VERSION_PATCH "0")
 
+add_compile_definitions(AUTH_SERVER="https://auth.dstage.org")
+add_compile_definitions(API_SERVER="https://api.dstage.org")
 
 # Excude js files inside the libs folder
 set_property(SOURCE "lib/ov-client/webmixer.js" PROPERTY SKIP_AUTOMOC ON)
@@ -145,62 +147,68 @@ target_link_libraries(DigitalStage PRIVATE
     OpenSSL::Crypto
 )
 
-include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_NAME "DigitalStage")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Native client for Digital Stage")
-set(CPACK_PACKAGE_VENDOR "Digital Stage gGmbH")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ReadMe.txt")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt")
-set(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${CMAKE_PROJECT_VERSION_PATCH})
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
-set(CPACK_NSIS_CONTACT "info@digital-stage.com")
-set(CPACK_PACKAGE_EXECUTABLES "DigitalStage" "Digital Stage")
+if (CMAKE_BUILD_TYPE EQUAL "Release")
+    message("Deploying application...")
+
+    include(InstallRequiredSystemLibraries)
+    set(CPACK_PACKAGE_NAME "DigitalStage")
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Native client for Digital Stage")
+    set(CPACK_PACKAGE_VENDOR "Digital Stage gGmbH")
+    set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ReadMe.txt")
+    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt")
+    set(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
+    set(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
+    set(CPACK_PACKAGE_VERSION_PATCH ${CMAKE_PROJECT_VERSION_PATCH})
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
+    set(CPACK_NSIS_CONTACT "info@digital-stage.com")
+    set(CPACK_PACKAGE_EXECUTABLES "DigitalStage" "Digital Stage")
 
 
-if(WIN32 AND NOT UNIX)
-    find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
-    add_custom_command(TARGET DigitalStage POST_BUILD
-        COMMAND "${CMAKE_COMMAND}" -E
-            env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
-                "$<TARGET_FILE:DigitalStage>"
-        COMMENT "Running windeployqt..."
-    )
-    set(CPACK_GENERATOR "NSIS")
-    set(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/images\\\\appicon.bmp")
-    set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\DigitalStage.exe")
-    set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} Digital Stage")
-    set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.digital-stage.org")
-    set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.digital-stage.com")
-    set(CPACK_NSIS_MODIFY_PATH ON)
+    if(WIN32 AND NOT UNIX)
+        find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+        add_custom_command(TARGET DigitalStage POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E
+                env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
+                    "$<TARGET_FILE:DigitalStage>"
+            COMMENT "Running windeployqt..."
+        )
+        set(CPACK_GENERATOR "NSIS")
+        set(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/images\\\\appicon.bmp")
+        set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\DigitalStage.exe")
+        set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} Digital Stage")
+        set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.digital-stage.org")
+        set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.digital-stage.com")
+        set(CPACK_NSIS_MODIFY_PATH ON)
+    endif()
+
+    if(APPLE)
+        find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+        set_target_properties(DigitalStage PROPERTIES
+          MACOSX_BUNDLE TRUE
+          MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
+          RESOURCE "${PROJECT_RESOURCES}")
+        add_custom_command(TARGET DigitalStage POST_BUILD
+            COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+                "$<TARGET_FILE_DIR:DigitalStage>/../.."
+                -always-overwrite
+            COMMENT "Running macdeployqt..."
+        )
+        install(DIRECTORY "${PROJECT_BINARY_DIR}/DigitalStage.app"
+            DESTINATION "."
+            USE_SOURCE_PERMISSIONS)
+        set(CPACK_GENERATOR "DRAGNDROP")
+        set(CPACK_DMG_VOLUME_NAME "InstallDigitalStage")
+        #set(CPACK_STRIP_FILES "${CMAKE_BINARY_DIR}/DigitalStage.app")
+        set(CPACK_SOURCE_STRIP_FILES "")
+        set(CPACK_DMG_DS_STORE_SETUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Packaging_DMGSetup.scpt)
+        set(CPACK_DMG_BACKGROUND_IMAGE ${CMAKE_CURRENT_SOURCE_DIR}/images/DMGBackground.tif)
+        #set(CPACK_COMPONENTS_ALL "${CMAKE_BINARY_DIR}/DigitalStage.app")
+    endif()
+
+    include(CPack)
+else()
+    message("Not deploying application, set CMAKE_BUILD_TYPE to Release to deploy.")
 endif()
-
-if(APPLE)
-    find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
-    set_target_properties(DigitalStage PROPERTIES
-      MACOSX_BUNDLE TRUE
-      MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
-      RESOURCE "${PROJECT_RESOURCES}")
-    add_custom_command(TARGET DigitalStage POST_BUILD
-        COMMAND "${MACDEPLOYQT_EXECUTABLE}"
-            "$<TARGET_FILE_DIR:DigitalStage>/../.."
-            -always-overwrite
-        COMMENT "Running macdeployqt..."
-    )
-    install(DIRECTORY "${PROJECT_BINARY_DIR}/DigitalStage.app"
-        DESTINATION "."
-        USE_SOURCE_PERMISSIONS)
-    set(CPACK_GENERATOR "DRAGNDROP")
-    set(CPACK_DMG_VOLUME_NAME "InstallDigitalStage")
-    #set(CPACK_STRIP_FILES "${CMAKE_BINARY_DIR}/DigitalStage.app")
-    set(CPACK_SOURCE_STRIP_FILES "")
-    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Packaging_DMGSetup.scpt)
-    set(CPACK_DMG_BACKGROUND_IMAGE ${CMAKE_CURRENT_SOURCE_DIR}/images/DMGBackground.tif)
-    #set(CPACK_COMPONENTS_ALL "${CMAKE_BINARY_DIR}/DigitalStage.app")
-endif()
-
-include(CPack)
 
 ## VERBOSE
 message("CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
