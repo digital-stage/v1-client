@@ -20,7 +20,7 @@ public:
     ~KeyStore();
 
     bool store(Credentials credentials);
-    Credentials restore(QString email) const;
+    Credentials* restore(QString email) const;
     bool remove(QString email) const;
 
 protected:

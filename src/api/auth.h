@@ -2,26 +2,22 @@
 #define AUTH_H
 
 #import <string>
-#include "curl/curl.h"
-
-using namespace std;
 
 class Auth
 {
 public:
-    Auth(string *url);
+    Auth(const std::string& url);
     ~Auth();
 
-    bool verifyToken(string *token);
-    string signIn(string *email, string *password);
+    bool verifyToken(const std::string& token);
+    std::string signIn(const std::string& email, const std::string& password);
     bool signOut();
 
 
-
 protected:
+
 private:
-    CURL *curl;
-    string *url;
+    std::string url;
 };
 
 #endif // AUTH_H

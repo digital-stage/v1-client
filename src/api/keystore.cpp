@@ -30,8 +30,21 @@ bool KeyStore::store(Credentials credentials) {
 }
 
 
-KeyStore::Credentials KeyStore::restore(QString email) const {
-
+KeyStore::Credentials* KeyStore::restore(QString email) const {
+    QKeychain::ReadPasswordJob job( QLatin1String("qtkeychain-testclient") );
+    job.setAutoDelete( false );
+    job.setKey( email );
+    QEventLoop loop;
+    job.connect( &job, SIGNAL(finished(QKeychain::Job*)), &loop, SLOT(quit()) );
+    job.start();
+    loop.exec();
+    const QString password = job.textData();
+    if ( job.error() ) {
+        std::cerr << "Restoring password failed: " << qPrintable(job.errorString()) << std::endl;
+        return NULL;
+    }
+    std::cout << qPrintable(password) << std::endl;
+    return new KeyStore::Credentials({email, password});
 }
 
 bool KeyStore::remove(QString email) const {

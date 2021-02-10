@@ -9,11 +9,10 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+
 # Excude js files inside the libs folder
-file(GLOB_RECURSE LIB_FOLDER lib *.js)
-file(GLOB JS_FILE lib/ov-client/webmixer.js)
-set_property(SOURCE ${JS_FILE} PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE ${JS_FILE} PROPERTY SKIP_AUTOUIC ON)
+set_property(SOURCE "lib/ov-client/webmixer.js" PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE "lib/ov-client/webmixer.js" PROPERTY SKIP_AUTOUIC ON)
 
 if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
     if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
@@ -25,12 +24,12 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
             )
         if(_sysctl_result EQUAL 0 AND _sysctl_stdout MATCHES "hw.optional.arm64: 1")
             message("Compiling multi build for x84_64 and arm64")
-            set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
+            #set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
             # Not possible right now with qt6
             #set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
-            #set(QMAKE_APPLE_DEVICE_ARCHS arm64)
             # set(CMAKE_CROSSCOMPILING false)
-            set(CMAKE_OSX_ARCHITECTURES x86_64)
+            #set(QMAKE_APPLE_DEVICE_ARCHS arm64)
+            #set(CMAKE_OSX_ARCHITECTURES arm64)
         else()
             set(CMAKE_OSX_ARCHITECTURES x86_64)
         endif()
@@ -48,16 +47,20 @@ endif()
 
 
 ## DEPENDENCIES
-set(CURL_STATICLIB ON)
 #find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
 find_package(nlohmann_json 3.2.0 REQUIRED)
 add_library(ov-client STATIC lib/ov-client)
-find_package(qt5keychain)
-find_package(curl)
+find_package(qt5keychain REQUIRED)
+find_package(cpprestsdk REQUIRED)
+#find_package(OpenSSL REQUIRED)
 
+if(APPLE)
+    # Fix seems necessary
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
+endif()
 
 ## SOURCE AND RESOURCE CONTROL
 set(TS_FILES src/ds-client_en_150.ts)
@@ -66,9 +69,9 @@ set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
         src/mainwindow.h
-        src/login.cpp
-        src/login.h
-        src/login.ui
+        src/loginpane.cpp
+        src/loginpane.h
+        src/loginpane.ui
         src/api/auth.h
         src/api/auth.cpp
         src/api/keystore.h
@@ -121,7 +124,14 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(ds-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets nlohmann_json::nlohmann_json qt5keychain curl)
+link_directories(${Boost_LIBRARY_DIR})
+
+target_link_libraries(ds-client PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    nlohmann_json::nlohmann_json
+    qt5keychain
+    cpprestsdk::cpprest
+)
 
 if(APPLE)
     set_target_properties(ds-client PROPERTIES
