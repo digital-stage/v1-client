@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     settingsFile="config.ini";
 
     // Create Login
-    loginPane = new LoginPane(this);
+    loginPane = new LoginPane();
     connect(loginPane, &LoginPane::logIn, this, &MainWindow::onLogIn);
 
     // Show tray icon
@@ -75,13 +75,14 @@ void MainWindow::init() {
         KeyStore::Credentials* credentials = keyStore->restore(email);
         if( credentials != NULL ) {
             qDebug() << "[INIT]" << "Restored password from keystore: " << credentials->password;
-            const string& token = auth->signIn(credentials->email.toStdString(), credentials->password.toStdString());
-            if( !token.empty()) {
-                qDebug() << "[INIT]" << "Retrieved token: " << token.c_str();
-                showStatus();
+            const string& retrievedToken = auth->signIn(credentials->email.toStdString(), credentials->password.toStdString());
+            if( !retrievedToken.empty()) {
+                this->token = QString::fromStdString(retrievedToken);
+                qDebug() << "[INIT]" << "Retrieved token: " << token;
+                startClient(token);
                 return;
             }
-            qDebug() << "[INIT]" << "Could not sign in, showing login now" << token.c_str();
+            qDebug() << "[INIT]" << "Could not sign in, showing login now";
             showLogin(credentials->email, credentials->password);
             return;
         }
@@ -102,6 +103,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::showLogin(QString initialEmail, QString initialPassword)
 {
+    qDebug() << "Show login";
     trayIcon->setContextMenu(loginMenu);
 
     loginPane->setEmail(initialEmail);
@@ -113,28 +115,34 @@ void MainWindow::showLogin(QString initialEmail, QString initialPassword)
 void MainWindow::onLogIn(const QString email, const QString password) {
     loginPane->resetError();
     qDebug() << "[onLogIn]" << "Try to login with token: " << email << password;
-    const string& token = auth->signIn(email.toStdString(), password.toStdString());
-    if( !token.empty() ) {
-        qDebug() << "[onLogIn]" << "Retrieved token: " << token.c_str();
-        showStatus();
+    const string& retrievedToken = auth->signIn(email.toStdString(), password.toStdString());
+    if( !retrievedToken.empty() ) {
+        qDebug() << "[onLogIn]" << "Retrieved token: " << retrievedToken.c_str();
+        token = QString::fromStdString(retrievedToken);
+        keyStore->store({email, password});
+        saveEmail(email);
+        startClient(token);
         return;
     }
-    qDebug() << "[onLogIn]" << "Could not sign in" << token.c_str();
+    qDebug() << "[onLogIn]" << "Could not sign in";
     loginPane->setError("Unknown email or wrong password");
 }
 
 void MainWindow::onLogOut() {
     qDebug() << "[onLogOut]" << "Signing out";
-    auth->signOut();
+    //TODO: Check if token is initialized (or is this not neccessary in c++?)
+    auth->signOut(token.toStdString());
     trayIcon->setContextMenu(loginMenu);
     loginPane->resetError();
     loginPane->setPassword("");
     show();
 }
 
-void MainWindow::showStatus()
+void MainWindow::startClient(QString token)
 {
-    hide();
+    qDebug() << "Starting client using token" << token;
+    if( this->isVisible() )
+        hide();
     trayIcon->setContextMenu(statusMenu);
 }
 

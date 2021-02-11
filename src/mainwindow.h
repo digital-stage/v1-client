@@ -28,7 +28,7 @@ protected:
     const QString loadEmail();
     void saveEmail(const QString email);
     void showLogin(QString initialEmail, QString initialPassword);
-    void showStatus();
+    void startClient(QString token);
 
 public slots:
     void onLogIn(const QString email, const QString password);
@@ -52,5 +52,7 @@ private:
     KeyStore *keyStore;
 
     bool trayWarning = true;
+
+    QString token;
 };
 #endif // MAINWINDOW_H

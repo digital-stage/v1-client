@@ -28,8 +28,6 @@ int main(int argc, char *argv[])
     QTimer::singleShot(1000, &splash, &QWidget::close); // keep displayed for 5 seconds
 
     MainWindow window;
-    window.show();
-
     window.init();
 
     return app.exec();

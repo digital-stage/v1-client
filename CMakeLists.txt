@@ -30,13 +30,13 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
             )
         if(_sysctl_result EQUAL 0 AND _sysctl_stdout MATCHES "hw.optional.arm64: 1")
             message("Compiling multi build for x84_64 and arm64")
-            #set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
+            set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
             # Not possible right now with qt6
             #set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
             # set(CMAKE_CROSSCOMPILING false)
             #set(QMAKE_APPLE_DEVICE_ARCHS arm64)
-            #set(CMAKE_OSX_ARCHITECTURES arm64)
-            set(CMAKE_OSX_ARCHITECTURES x86_64)
+            set(CMAKE_OSX_ARCHITECTURES arm64)
+            #set(CMAKE_OSX_ARCHITECTURES x86_64)
         else()
             set(CMAKE_OSX_ARCHITECTURES x86_64)
         endif()
@@ -183,6 +183,7 @@ if (CMAKE_BUILD_TYPE EQUAL "Release")
 
     if(APPLE)
         find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+        set(CPACK_BUNDLE_APPLE_CERT_APP "")
         set_target_properties(DigitalStage PROPERTIES
           MACOSX_BUNDLE TRUE
           MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget

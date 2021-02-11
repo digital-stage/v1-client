@@ -1,7 +1,9 @@
 #ifndef AUTH_H
 #define AUTH_H
 
+#include <stdexcept>
 #import <string>
+
 
 class Auth
 {
@@ -11,7 +13,7 @@ public:
 
     bool verifyToken(const std::string& token);
     std::string signIn(const std::string& email, const std::string& password);
-    bool signOut();
+    bool signOut(const std::string& token);
 
 
 protected:

@@ -4,6 +4,10 @@
 #include <QCoreApplication>
 #include <QString>
 
+#ifndef KEYSTORE_NAME
+#define KEYSTORE_NAME "org.digital-stage.client"
+#endif
+
 using namespace std;
 
 class KeyStore : QObject

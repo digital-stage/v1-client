@@ -10,7 +10,7 @@ esac
 git submodule update --init --recursive
 mkdir -p bin
 cd bin
-cmake ./../ -DOPENSSL_ROOT_DIR=$(brew --prefix openssl@1.1) -DQT_DIR=$(brew --prefix qt)
+cmake ./../ -DOPENSSL_ROOT_DIR=$(brew --prefix openssl@1.1) -DQT_DIR=$(brew --prefix qt) -DCMAKE_BUILD_TYPE=Release
 make
 cpack -G DragNDrop
 echo "You'll find the installer in bin/InstallDigitalStage.dmg"

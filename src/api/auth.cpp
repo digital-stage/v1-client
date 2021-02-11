@@ -22,39 +22,85 @@ Auth::~Auth() {
 }
 
 std::string Auth::signIn(const std::string& email, const std::string& password) {
-    qDebug() << "Try siging in";
-
-    auto postJson = pplx::create_task([this]() {
+    const std::string url = this->url;
+    auto postJson = pplx::create_task([url, email, password]() {
+        qDebug() << url.c_str() << email.c_str() << password.c_str();
         json::value jsonObject;
-        jsonObject[U("email")] = json::value::string(U("atakan"));
-        jsonObject[U("password")] = json::value::string(U("sarioglu"));
+        jsonObject[U("email")] = json::value::string(U(email));
+        jsonObject[U("password")] = json::value::string(U(password));
 
         return http_client(U(url))
             .request(methods::POST,
-                uri_builder(U("api")).append_path(U("users")).to_string(),
+                uri_builder(U("login")).to_string(),
                 jsonObject.serialize(), U("application/json"));
-    });
+    })
+        .then([](http_response response) {
+            // Check the status code.
+            if (response.status_code() != 200) {
+                throw std::invalid_argument("Returned " + std::to_string(response.status_code()));
+            }
+            // Convert the response body to JSON object.
+            return response.extract_json();
+        })
+        // Parse the user details.
+        .then([](json::value jsonObject) {
+            qDebug() << jsonObject.as_string().c_str();
+            return jsonObject.as_string();
+        });
 
-
-    if( email == "bla" && password == "bla" ) {
+    try {
+        postJson.wait();
+        const std::string token = postJson.get();
         qDebug() << "Sucessfully signed in";
-        return "mytoken";
+        return token;
+    } catch (const std::exception &e) {
+        qDebug() << "Failed to sign in" << e.what();
     }
-    qDebug() << "Failed to sign in";
     return "";
 }
 
 bool Auth::verifyToken(const std::string& token) {
-    if( token == "mytoken" ) {
-        qDebug() << "Token is valid";
-        return true;
-    }
-    qDebug() << "Invalid token";
-    return false;
+    const std::string url = this->url;
+    auto postJson = pplx::create_task([url, token]() {
+        http_client client(U(url + "/profile"));
+        http_request request(methods::POST);
+        request.headers().add(U("Content-Type"), U("application/json"));
+        request.headers().add(U("Authorization"), U("Bearer " + token));
+        return client.request(request);
+    })
+        .then([](http_response response) {
+            // Check the status code.
+            if (response.status_code() != 200) {
+                return false;
+            }
+            // Convert the response body to JSON object.
+            return true;
+        });
+
+    postJson.wait();
+    return postJson.get();
 }
 
-bool Auth::signOut() {
+bool Auth::signOut(const std::string& token) {
     qDebug() << "Signing out";
-    return true;
+    const std::string url = this->url;
+    auto postJson = pplx::create_task([url, token]() {
+        http_client client(U(url + "/logout"));
+        http_request request(methods::POST);
+        request.headers().add(U("Content-Type"), U("application/json"));
+        request.headers().add(U("Authorization"), U("Bearer " + token));
+        return client.request(request);
+    })
+        .then([](http_response response) {
+            // Check the status code.
+            if (response.status_code() != 200) {
+                return false;
+            }
+            // Convert the response body to JSON object.
+            return true;
+        });
+
+    postJson.wait();
+    return postJson.get();
 }
 

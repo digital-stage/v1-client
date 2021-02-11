@@ -3,6 +3,7 @@
 #include <iostream>
 #include <QCoreApplication>
 
+
 KeyStore::KeyStore() {
 
 }
@@ -12,7 +13,7 @@ KeyStore::~KeyStore() {
 }
 
 bool KeyStore::store(Credentials credentials) {
-    QKeychain::WritePasswordJob job( QLatin1String("ds-client") );
+    QKeychain::WritePasswordJob job( QLatin1String(KEYSTORE_NAME) );
     job.setAutoDelete( false );
     job.setKey( credentials.email );
     job.setBinaryData( credentials.password.toUtf8() );
@@ -31,7 +32,7 @@ bool KeyStore::store(Credentials credentials) {
 
 
 KeyStore::Credentials* KeyStore::restore(QString email) const {
-    QKeychain::ReadPasswordJob job( QLatin1String("qtkeychain-testclient") );
+    QKeychain::ReadPasswordJob job( QLatin1String(KEYSTORE_NAME) );
     job.setAutoDelete( false );
     job.setKey( email );
     QEventLoop loop;
