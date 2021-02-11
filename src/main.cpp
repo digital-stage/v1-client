@@ -8,6 +8,8 @@
 #include "mainwindow.h"
 #include <unistd.h>
 #include <QTimer>
+#include <QTranslator>
+#include <QDebug>
 
 
 int main(int argc, char *argv[])
@@ -21,6 +23,11 @@ int main(int argc, char *argv[])
         return 1;
     }
     QApplication::setQuitOnLastWindowClosed(false);
+
+    QTranslator translator;
+    if (translator.load(QLocale(), QLatin1String("DigitalStage"), QLatin1String("_"), QLatin1String(":/i18n"))) {
+        QCoreApplication::installTranslator(&translator);
+    }
 
     QPixmap pixmap(":/images/splash.png");
     QSplashScreen splash(pixmap);

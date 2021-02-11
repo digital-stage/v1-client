@@ -6,14 +6,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QDebug>
-
-#ifndef AUTH_SERVER
-#define AUTH_SERVER "https://auth.digital-stage.org"
-#endif
-
-#ifndef API_SERVER
-#define API_SERVER "https://api.digital-stage.org"
-#endif
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -35,17 +28,19 @@ MainWindow::MainWindow(QWidget *parent)
     icon.setIsMask(true);
 
     trayIcon->setIcon(icon);
-    trayIcon->setToolTip("Digital Stage");
+    trayIcon->setToolTip(tr("Digital Stage"));
 
     trayIcon->show();
 
-    QAction * viewLoginAction = new QAction("Login", this);
-    QAction * quitAction = new QAction("Close", this);
-    QAction * logoutAction = new QAction("Logout", this);
+    QAction * viewLoginAction = new QAction(tr("Login"), this);
+    QAction * quitAction = new QAction(tr("Close"), this);
+    QAction * logoutAction = new QAction(tr("Logout"), this);
+    QAction * openStageAction = new QAction(tr("Open stage"), this);
 
     connect(viewLoginAction, SIGNAL(triggered()), this, SLOT(show()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(exit()));
     connect(logoutAction, SIGNAL(triggered()), this, SLOT(onLogOut()));
+    connect(openStageAction, SIGNAL(triggered()), this, SLOT(openStage()));
 
     // Login menu
     loginMenu = new QMenu(this);
@@ -54,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Status menu
     statusMenu = new QMenu(this);
-    statusMenu->addSection("Running");
+    statusMenu->addAction(openStageAction);
     statusMenu->addAction(logoutAction);
     statusMenu->addSeparator();
     statusMenu->addAction(quitAction);
@@ -112,6 +107,10 @@ void MainWindow::showLogin(QString initialEmail, QString initialPassword)
     setCentralWidget(loginPane);
 }
 
+void MainWindow::openStage() {
+    QDesktopServices::openUrl(QUrl(STAGE_URL));
+}
+
 void MainWindow::onLogIn(const QString email, const QString password) {
     loginPane->resetError();
     qDebug() << "[onLogIn]" << "Try to login with token: " << email << password;
@@ -125,7 +124,7 @@ void MainWindow::onLogIn(const QString email, const QString password) {
         return;
     }
     qDebug() << "[onLogIn]" << "Could not sign in";
-    loginPane->setError("Unknown email or wrong password");
+    loginPane->setError(tr("Unknown email or wrong password"));
 }
 
 void MainWindow::onLogOut() {

@@ -13,8 +13,11 @@ set(CMAKE_PROJECT_VERSION_MAJOR "0")
 set(CMAKE_PROJECT_VERSION_MINOR "1")
 set(CMAKE_PROJECT_VERSION_PATCH "0")
 
+
+add_compile_definitions(STAGE_URL="https://www.dstage.org")
 add_compile_definitions(AUTH_SERVER="https://auth.dstage.org")
 add_compile_definitions(API_SERVER="https://api.dstage.org")
+
 
 # Excude js files inside the libs folder
 set_property(SOURCE "lib/ov-client/webmixer.js" PROPERTY SKIP_AUTOMOC ON)
@@ -72,7 +75,7 @@ endif()
 
 
 ## SOURCE AND RESOURCE CONTROL
-set(TS_FILES src/DigitalStage_en_150.ts)
+set(TS_FILES i18n/DigitalStage_de.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -85,12 +88,13 @@ set(PROJECT_SOURCES
         src/api/auth.cpp
         src/api/keystore.h
         src/api/keystore.cpp
-        ${TS_FILES}
         resources.qrc
+        ${TS_FILES}
 )
 
 file(GLOB
     PROJECT_ASSETS
+    ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm
     ${CMAKE_CURRENT_SOURCE_DIR}/images/*.png
     ${CMAKE_CURRENT_SOURCE_DIR}/images/*.svg
     )

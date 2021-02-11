@@ -8,6 +8,20 @@
 #include <src/api/keystore.h>
 #include "loginpane.h"
 
+
+#ifndef STAGE_URL
+#define STAGE_URL "https://live.digital-stage.org"
+#endif
+
+#ifndef AUTH_SERVER
+#define AUTH_SERVER "https://auth.digital-stage.org"
+#endif
+
+#ifndef API_SERVER
+#define API_SERVER "https://api.digital-stage.org"
+#endif
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -33,6 +47,7 @@ protected:
 public slots:
     void onLogIn(const QString email, const QString password);
     void onLogOut();
+    void openStage();
 
 private slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
