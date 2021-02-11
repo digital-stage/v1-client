@@ -33,7 +33,7 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
             )
         if(_sysctl_result EQUAL 0 AND _sysctl_stdout MATCHES "hw.optional.arm64: 1")
             message("Compiling multi build for x84_64 and arm64")
-            set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
+            #set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
             # Not possible right now with qt6
             #set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
             # set(CMAKE_CROSSCOMPILING false)
@@ -158,7 +158,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-link_directories(${Boost_LIBRARY_DIR})
+#link_directories(${Boost_LIBRARY_DIR})
 
 target_link_libraries(DigitalStage PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
@@ -170,7 +170,7 @@ target_link_libraries(DigitalStage PRIVATE
 )
 #add_dependencies(DigitalStage ov-client)
 
-if (CMAKE_BUILD_TYPE EQUAL "Release")
+if (CMAKE_BUILD_TYPE MATCHES Release)
     message("Deploying application...")
 
     include(InstallRequiredSystemLibraries)

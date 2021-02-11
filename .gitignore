@@ -1,6 +1,7 @@
 build-qt6
 bin
 .DS_Store
+/.DS_Store
 build
 # C++ objects and libs
 *.slo
