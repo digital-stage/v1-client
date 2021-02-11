@@ -110,7 +110,10 @@ jobs:
           ${{ matrix.config.name }}-ccache-
 
     - name: Downloads dependencies
-      run: brew install pkgconfig libxml2 glibmm libxml++ jack liblo libsndfile gtkmm3 eigen boost gsl fftw libsamplerate cpprestsdk nlohmann-json openssl coreutils
+      run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            brew install pkgconfig libxml2 glibmm libxml++ jack liblo libsndfile gtkmm3 eigen boost gsl fftw libsamplerate cpprestsdk nlohmann-json openssl coreutils
+          fi
 
     - name: Loading submodules
       run: git submodule update --init --recursiv
