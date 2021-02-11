@@ -71,11 +71,11 @@ if(APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
 endif()
 # add_library(ov-client STATIC lib/ov-client)
-add_custom_target(
-   ov-client
-   COMMAND make
-   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
-)
+#add_custom_target(
+#   ov-client
+#   COMMAND sh build_osx.sh
+#   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
+#)
 
 
 
@@ -95,6 +95,18 @@ set(PROJECT_SOURCES
         src/api/keystore.cpp
         resources.qrc
         ${TS_FILES}
+
+        # ov-client
+#        lib/ov-client/src/ov_client_digitalstage.h
+#        lib/ov-client/src/ov_client_digitalstage.cc
+#        lib/ov-client/src/ov_render_tascar.h
+#        lib/ov-client/src/ov_render_tascar.cc
+#        lib/ov-client/src/ov_tools.h
+#        lib/ov-client/src/ov_tools.cc
+#        lib/ov-client/src/soundcardtools.h
+#        lib/ov-client/src/soundcardtools.cc
+#        lib/ov-client/src/spawn_process.h
+#        lib/ov-client/src/spawn_process.cc
 )
 
 file(GLOB
@@ -154,9 +166,9 @@ target_link_libraries(DigitalStage PRIVATE
     qt5keychain
     cpprestsdk::cpprest
     OpenSSL::Crypto
-    ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
+   # ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
 )
-add_dependencies(DigitalStage ov-client)
+#add_dependencies(DigitalStage ov-client)
 
 if (CMAKE_BUILD_TYPE EQUAL "Release")
     message("Deploying application...")
