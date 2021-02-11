@@ -62,7 +62,6 @@ find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
 find_package(nlohmann_json 3.2.0 REQUIRED)
-add_library(ov-client STATIC lib/ov-client)
 find_package(qt5keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
@@ -71,6 +70,12 @@ if(APPLE)
     # Fix seems necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
 endif()
+# add_library(ov-client STATIC lib/ov-client)
+add_custom_target(
+   ov-client
+   COMMAND make
+   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
+)
 
 
 
@@ -149,7 +154,9 @@ target_link_libraries(DigitalStage PRIVATE
     qt5keychain
     cpprestsdk::cpprest
     OpenSSL::Crypto
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
 )
+add_dependencies(DigitalStage ov-client)
 
 if (CMAKE_BUILD_TYPE EQUAL "Release")
     message("Deploying application...")
