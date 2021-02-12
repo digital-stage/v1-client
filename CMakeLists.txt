@@ -64,7 +64,7 @@ find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(qt5keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
-#find_package(nlohmann_json CONFIG REQUIRED)
+find_package(nlohmann_json 3.2.0 REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 add_subdirectory(lib/ov-client)
@@ -142,17 +142,14 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-#link_directories(${Boost_LIBRARY_DIR})
 
 target_link_libraries(DigitalStage PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    #nlohmann_json::nlohmann_json
+    nlohmann_json::nlohmann_json
     qt5keychain
     cpprestsdk::cpprest
     OpenSSL::Crypto
-   # ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
 )
-#add_dependencies(DigitalStage ov-client)
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
     message("Deploying application...")
