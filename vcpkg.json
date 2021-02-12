@@ -1,0 +1,21 @@
+{
+    "name": "ds-client",
+    "version-string": "0.0.1",
+    "homepage": "https://www.digital-stage.org",
+    "description": "Native client to accelerate and render spacial audio",
+    "dependencies": [
+        "qt5",
+        "nlohmann-json",
+        "qtkeychain",
+        "cpprestsdk",
+        "openssl",
+        "libsndfile",
+        "jack2",
+        "liblo",
+        "gtkmm",
+        "eigen3",
+        "gsl",
+        "fftw3",
+        "curl"
+    ]
+  }

@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.18.0)
 
+#set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+
 ## GLOBAL CONFIGURATION
 project(DigitalStage LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
@@ -60,53 +62,34 @@ endif()
 #find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
-
-find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(qt5keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
+#find_package(nlohmann_json CONFIG REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
+add_subdirectory(lib/ov-client)
 if(APPLE)
     # Fix seems necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
 endif()
-# add_library(ov-client STATIC lib/ov-client)
-#add_custom_target(
-#   ov-client
-#   COMMAND sh build_osx.sh
-#   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/ov-client
-#)
-
 
 
 ## SOURCE AND RESOURCE CONTROL
 set(TS_FILES i18n/DigitalStage_de.ts)
 
 set(PROJECT_SOURCES
-        src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow.h
-        src/loginpane.cpp
-        src/loginpane.h
-        src/loginpane.ui
-        src/api/auth.h
-        src/api/auth.cpp
-        src/api/keystore.h
-        src/api/keystore.cpp
-        resources.qrc
-        ${TS_FILES}
-
-        # ov-client
-#        lib/ov-client/src/ov_client_digitalstage.h
-#        lib/ov-client/src/ov_client_digitalstage.cc
-#        lib/ov-client/src/ov_render_tascar.h
-#        lib/ov-client/src/ov_render_tascar.cc
-#        lib/ov-client/src/ov_tools.h
-#        lib/ov-client/src/ov_tools.cc
-#        lib/ov-client/src/soundcardtools.h
-#        lib/ov-client/src/soundcardtools.cc
-#        lib/ov-client/src/spawn_process.h
-#        lib/ov-client/src/spawn_process.cc
+    src/main.cpp
+    src/mainwindow.cpp
+    src/mainwindow.h
+    src/loginpane.cpp
+    src/loginpane.h
+    src/loginpane.ui
+    src/api/auth.h
+    src/api/auth.cpp
+    src/api/keystore.h
+    src/api/keystore.cpp
+    resources.qrc
+    ${TS_FILES}
 )
 
 file(GLOB
@@ -114,12 +97,12 @@ file(GLOB
     ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm
     ${CMAKE_CURRENT_SOURCE_DIR}/images/*.png
     ${CMAKE_CURRENT_SOURCE_DIR}/images/*.svg
-    )
+)
 
 set(PROJECT_RESOURCES
     resources.qrc
     ${PROJECT_ASSETS}
-    )
+)
 
 
 ## APPLE SPECIFIC
@@ -128,7 +111,7 @@ if(APPLE)
     set(MACOSX_BUNDLE_ICON_FILE appicon.icns)
     set(APP_ICON ${CMAKE_CURRENT_SOURCE_DIR}/images/appicon.icns)
     set_source_files_properties(${APP_ICON} PROPERTIES
-           MACOSX_PACKAGE_LOCATION "Resources")
+        MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
 
@@ -150,9 +133,10 @@ else()
         add_executable(DigitalStage ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
         if(APPLE)
             set_target_properties(DigitalStage PROPERTIES
-              MACOSX_BUNDLE TRUE
-              MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
-              RESOURCE "${PROJECT_RESOURCES}")
+                MACOSX_BUNDLE TRUE
+                MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
+                RESOURCE "${PROJECT_RESOURCES}"
+            )
         endif()
     endif()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
@@ -162,7 +146,7 @@ endif()
 
 target_link_libraries(DigitalStage PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    nlohmann_json::nlohmann_json
+    #nlohmann_json::nlohmann_json
     qt5keychain
     cpprestsdk::cpprest
     OpenSSL::Crypto

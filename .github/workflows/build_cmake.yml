@@ -1,6 +1,6 @@
 name: CMake Build Matrix
 
-on: [push, pull_request]
+on: []
 
 env:
   CMAKE_VERSION: 3.18.3
