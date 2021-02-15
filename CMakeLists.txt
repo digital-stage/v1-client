@@ -67,27 +67,26 @@ find_package(cpprestsdk REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
-add_subdirectory(lib/ov-client)
+#add_subdirectory(lib/ov-client)
 if(APPLE)
     # Fix seems necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
 endif()
-
 
 ## SOURCE AND RESOURCE CONTROL
 set(TS_FILES i18n/DigitalStage_de.ts)
 
 set(PROJECT_SOURCES
     src/main.cpp
-    src/mainwindow.cpp
-    src/mainwindow.h
-    src/loginpane.cpp
-    src/loginpane.h
-    src/loginpane.ui
+    src/logindialog.cpp
+    src/logindialog.h
+    src/logindialog.ui
     src/api/auth.h
     src/api/auth.cpp
     src/api/keystore.h
     src/api/keystore.cpp
+    src/app.h
+    src/app.cpp
     resources.qrc
     ${TS_FILES}
 )
@@ -190,7 +189,7 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
         set(CPACK_BUNDLE_APPLE_CERT_APP "")
         set_target_properties(DigitalStage PROPERTIES
           MACOSX_BUNDLE TRUE
-          MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
+          MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
           RESOURCE "${PROJECT_RESOURCES}")
         add_custom_command(TARGET DigitalStage POST_BUILD
             COMMAND "${MACDEPLOYQT_EXECUTABLE}"

@@ -105,6 +105,7 @@ void MainWindow::showLogin(QString initialEmail, QString initialPassword)
     loginPane->setPassword(initialPassword);
 
     setCentralWidget(loginPane);
+    this->show();
 }
 
 void MainWindow::openStage() {
@@ -134,14 +135,14 @@ void MainWindow::onLogOut() {
     trayIcon->setContextMenu(loginMenu);
     loginPane->resetError();
     loginPane->setPassword("");
-    show();
+    this->show();
 }
 
 void MainWindow::startClient(QString token)
 {
     qDebug() << "Starting client using token" << token;
-    if( this->isVisible() )
-        hide();
+//if( this->isVisible() )
+    this->close();
     trayIcon->setContextMenu(statusMenu);
 }
 
@@ -186,7 +187,8 @@ void MainWindow::closeEvent(QCloseEvent * event)
                                             "of the system tray entry."));
                 trayWarning = false;
             }
-            hide();
+            this->close();
+            //hide();
             event->ignore();
             return;
         }

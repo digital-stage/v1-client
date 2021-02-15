@@ -1,4 +1,5 @@
 #include <QApplication>
+#include "app.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
@@ -14,7 +15,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QApplication qApplication(argc, argv);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         QMessageBox::critical(nullptr, QObject::tr("Systray"),
@@ -22,7 +23,6 @@ int main(int argc, char *argv[])
                                           "on this system."));
         return 1;
     }
-    QApplication::setQuitOnLastWindowClosed(false);
 
     QTranslator translator;
     if (translator.load(QLocale(), QLatin1String("DigitalStage"), QLatin1String("_"), QLatin1String(":/i18n"))) {
@@ -34,10 +34,10 @@ int main(int argc, char *argv[])
     splash.show();
     QTimer::singleShot(1000, &splash, &QWidget::close); // keep displayed for 5 seconds
 
-    MainWindow window;
-    window.init();
+    App app;
+    app.show();
 
-    return app.exec();
+    return qApplication.exec();
 }
 
 #else
