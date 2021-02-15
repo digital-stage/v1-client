@@ -57,6 +57,7 @@ private:
     Auth *auth_;
     KeyStore *keyStore_;
 
+    QString email_;
     QString token_;
 };
 

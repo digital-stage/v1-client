@@ -1,6 +1,6 @@
 #import "auth.h"
-#import <QDebug>
 
+#include <QDebug>
 #include <cpprest/http_client.h>
 #include <cpprest/filestream.h>
 #include <cpprest/http_msg.h>
@@ -24,7 +24,6 @@ Auth::~Auth() {
 std::string Auth::signIn(const std::string& email, const std::string& password) {
     const std::string url = this->url;
     auto postJson = pplx::create_task([url, email, password]() {
-        qDebug() << url.c_str() << email.c_str() << password.c_str();
         json::value jsonObject;
         jsonObject[U("email")] = json::value::string(U(email));
         jsonObject[U("password")] = json::value::string(U(password));
@@ -44,14 +43,12 @@ std::string Auth::signIn(const std::string& email, const std::string& password) 
         })
         // Parse the user details.
         .then([](json::value jsonObject) {
-            qDebug() << jsonObject.as_string().c_str();
             return jsonObject.as_string();
         });
 
     try {
         postJson.wait();
         const std::string token = postJson.get();
-        qDebug() << "Sucessfully signed in";
         return token;
     } catch (const std::exception &e) {
         qDebug() << "Failed to sign in" << e.what();

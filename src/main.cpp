@@ -10,7 +10,6 @@
 #include <unistd.h>
 #include <QTimer>
 #include <QTranslator>
-#include <QDebug>
 
 
 int main(int argc, char *argv[])
@@ -43,7 +42,6 @@ int main(int argc, char *argv[])
 #else
 
 #include <QLabel>
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -54,7 +52,6 @@ int main(int argc, char *argv[])
     label->setWordWrap(true);
 
     label->show();
-    qDebug() << text;
 
     app.exec();
 }

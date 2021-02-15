@@ -1,7 +1,6 @@
 #include "app.h"
 #include <QApplication>
 #include <QAction>
-#include <QDebug>
 #include <QSettings>
 #include <QDesktopServices>
 #include <QUrl>
@@ -68,29 +67,23 @@ App::~App() {
 
 
 void App::init() {
-    qDebug() << "INIT";
-    const QString email = restoreEmail();
-    if( !email.isEmpty() ) {
-        qDebug() << "[INIT]" << "Restored email from last session: " << email;
-        KeyStore::Credentials* credentials = this->keyStore_->restore(email);
+    this->email_ = restoreEmail();
+    this->loginDialog_->setEmail(email_);
+    if( !this->email_.isEmpty() ) {
+        KeyStore::Credentials* credentials = this->keyStore_->restore(this->email_);
         if( credentials != NULL ) {
-            qDebug() << "[INIT]" << "Restored password from keystore: " << credentials->password;
             const string& retrievedToken = this->auth_->signIn(credentials->email.toStdString(), credentials->password.toStdString());
             if( !retrievedToken.empty()) {
                 this->token_ = QString::fromStdString(retrievedToken);
-                qDebug() << "[INIT]" << "Retrieved token: " << this->token_;
                 if( this->loginDialog_->isVisible() )
                     this->loginDialog_->hide();
                 this->trayIcon_->setContextMenu(statusMenu_);
                 this->start();
                 return;
             }
-            qDebug() << "[INIT]" << "Could not sign in, showing login now";
-            this->loginDialog_->setEmail(credentials->email);
             this->loginDialog_->setPassword(credentials->password);
         }
     } else {
-        this->loginDialog_->setEmail(email);
         this->loginDialog_->setPassword("");
     }
     this->trayIcon_->setContextMenu(loginMenu_);
@@ -106,10 +99,9 @@ void App::show() {
 
 void App::onSignIn(const QString email, const QString password) {
     this->loginDialog_->resetError();
-    qDebug() << "[onLogIn]" << "Try to login with token: " << email << password;
     const string& retrievedToken = this->auth_->signIn(email.toStdString(), password.toStdString());
     if( !retrievedToken.empty() ) {
-        qDebug() << "[onLogIn]" << "Retrieved token: " << retrievedToken.c_str();
+        this->email_ = email;
         this->token_ = QString::fromStdString(retrievedToken);
         this->keyStore_->store({email, password});
         this->storeEmail(email);
@@ -119,7 +111,6 @@ void App::onSignIn(const QString email, const QString password) {
         this->start();
         return;
     }
-    qDebug() << "[onLogIn]" << "Could not sign in";
     this->loginDialog_->setError(tr("Unknown email or wrong password"));
     this->trayIcon_->setContextMenu(loginMenu_);
     if( !this->loginDialog_->isVisible() )
@@ -127,8 +118,9 @@ void App::onSignIn(const QString email, const QString password) {
 }
 
 void App::onSignOut() {
-    qDebug() << "[onLogOut]" << "Signing out";
+    this->stop();
     this->auth_->signOut(this->token_.toStdString());
+    this->keyStore_->remove(this->email_);
     this->trayIcon_->setContextMenu(loginMenu_);
     this->loginDialog_->resetError();
     this->loginDialog_->setPassword("");
@@ -140,11 +132,9 @@ void App::openStage() {
 }
 
 void App::start() {
-    qDebug() << "START";
 }
 
 void App::stop() {
-    qDebug() << "STOP";
 }
 
 
@@ -152,7 +142,6 @@ const QString App::restoreEmail()
 {
     QSettings settings("org.digital-stage", "Client");
     const QString email = settings.value("email", "").toString();
-    qDebug() << "loaded Settings" << email;
     return email;
 }
 
@@ -161,14 +150,13 @@ void App::storeEmail(const QString email)
 {
     QSettings settings("org.digital-stage", "Client");
     settings.setValue("email", email);
-    qDebug() << "settings saved: " << email;
 }
 
 void App::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
     case QSystemTrayIcon::DoubleClick:
-        if( !this->token_.isEmpty() && !this->loginDialog_->isVisible() )
+        if( this->token_.isEmpty() && !this->loginDialog_->isVisible() )
             this->loginDialog_->show();
         break;
     default:

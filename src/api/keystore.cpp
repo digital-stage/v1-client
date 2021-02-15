@@ -3,7 +3,6 @@
 #include <iostream>
 #include <QCoreApplication>
 
-
 KeyStore::KeyStore() {
 
 }
@@ -49,7 +48,7 @@ KeyStore::Credentials* KeyStore::restore(QString email) const {
 }
 
 bool KeyStore::remove(QString email) const {
-    QKeychain::DeletePasswordJob job( QLatin1String("ds-client") );
+    QKeychain::DeletePasswordJob job( QLatin1String(KEYSTORE_NAME) );
     job.setAutoDelete( false );
     job.setKey( email );
     QEventLoop loop;
