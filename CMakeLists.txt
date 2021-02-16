@@ -53,11 +53,7 @@ endif()
 #find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
-if( APPLE )
-    find_package(qt5keychain REQUIRED)
-else()
-    find_package(qtkeychain REQUIRED)
-endif()
+find_package(qt5keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
@@ -137,25 +133,14 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-if( APPLE )
-    target_link_libraries(DigitalStage PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
-        nlohmann_json::nlohmann_json
-        qt5keychain
-        cpprestsdk::cpprest
-        OpenSSL::Crypto
-        #ovclient
-    )
-else()
-    target_link_libraries(DigitalStage PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
-        nlohmann_json::nlohmann_json
-        qtkeychain
-        cpprestsdk::cpprest
-        OpenSSL::Crypto
-        #ovclient
-    )
-endif()
+target_link_libraries(DigitalStage PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    nlohmann_json::nlohmann_json
+    qt5keychain
+    cpprestsdk::cpprest
+    OpenSSL::Crypto
+    #ovclient
+)x
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
     message("Deploying application...")
