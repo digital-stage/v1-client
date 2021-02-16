@@ -21,7 +21,7 @@ jobs:
     - name: Configure project
       run: mkdir -p build && 
            cd build && 
-           cmake .. -DCMAKE_BUILD_TYPE=Release
+           cmake .. -DCMAKE_BUILD_TYPE=Release -DQT_DIR=/usr/local/opt/qt5/lib/cmake/Qt5 -DQt5_DIR=/usr/local/opt/qt5/lib/cmake/Qt5
     - name: Build
       run: make
     - name: Create installer
