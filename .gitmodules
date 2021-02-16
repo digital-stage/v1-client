@@ -1,5 +1,5 @@
 [submodule "lib/ov-client"]
-	path = lib/ov-client
+	path = ov-client/ov-client
 	url = https://github.com/gisogrimm/ov-client.git
 [submodule "vcpkg"]
 	path = vcpkg
