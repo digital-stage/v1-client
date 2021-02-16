@@ -18,7 +18,7 @@ jobs:
     - name: Configure project
       run: mkdir -p build && 
            cd build && 
-           cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/;/usr/lib/cmake/
+           cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="/usr/lib/x86_64-linux-gnu/cmake/;/usr/lib/cmake/"
     - name: Build
       run: make
     - name: Create package
