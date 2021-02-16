@@ -55,10 +55,10 @@ find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt5Keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
-find_package(nlohmann_json 3.2.0 REQUIRED)
+find_package(nlohmann_json REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
-#add_subdirectory(ov-client)
+add_subdirectory(ov-client)
 if(APPLE)
     # Fix seems necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
@@ -139,7 +139,7 @@ target_link_libraries(DigitalStage PRIVATE
     qt5keychain
     cpprestsdk::cpprest
     OpenSSL::Crypto
-    #ovclient
+    ovclient
 )
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
@@ -186,10 +186,9 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
             DESTINATION "."
             USE_SOURCE_PERMISSIONS)
         add_custom_command(TARGET DigitalStage POST_BUILD
-            COMMAND "ls"
-            COMMAND "ls"
-            COMMAND "ls"
-            COMMAND "ls"
+            COMMAND ${CMAKE_COMMAND} -E copy
+                    ${CMAKE_BINARY_DIR}/plugins/*.dylib
+                    ${CMAKE_BINARY_DIR}/DigitalStage.app/Contents/libs/
             COMMAND "${MACDEPLOYQT_EXECUTABLE}"
                 "$<TARGET_FILE_DIR:DigitalStage>/../.."
                 -always-overwrite
