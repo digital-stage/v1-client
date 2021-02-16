@@ -1,0 +1,32 @@
+name: Ubuntu
+
+on:
+  push:
+    branches: [ master, development ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: fetchtags
+      run: git fetch --unshallow --tags
+    - name: submods
+      run: git submodule init && git submodule update
+    - name: Installing dependencies
+      run: sudo apt update &&
+           sudo apt install --assume-yes git zita-njbridge liblo-dev nodejs libcurl4-openssl-dev build-essential libasound2-dev libeigen3-dev libfftw3-dev libfftw3-double3 libfftw3-single3 libgsl-dev libjack-jackd2-dev libltc-dev libmatio-dev libsndfile1-dev libsamplerate0-dev mhamakedeb libboost-all-dev libxml++2.6-dev libcpprest-dev nlohmann-json-dev qt5-default
+    - name: Configure project
+      run: cd build && 
+           cmake ..
+    - name: Building
+      run: make
+    - name: Package installer
+      run: cpack
+    #- name: Publish installer
+    #  uses: svenstaro/upload-release-action@v2.2.1
+    #  with:
+    #    repo_token: ${{ secrets.GITHUB_TOKEN }}
+    #    file: build/InstallDigitalStage.dmg
+    #    tag: ${{ github.ref }}
+    #    overwrite: true

@@ -1,21 +1,12 @@
-name: build
-on: [push]
+name: Windows Build
+
+on:
+  push:
+    branches: [ master, development ]
 
 jobs: 
   job:
-    name: ${{ matrix.os }}-build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: windows-latest
-            triplet: x64-windows
-          - os: ubuntu-latest
-            triplet: x64-linux
-          - os: macos-latest
-            triplet: x64-osx
+    runs-on: windows-latest
     env:
       buildDir: '${{ github.workspace }}/build/'
     steps:

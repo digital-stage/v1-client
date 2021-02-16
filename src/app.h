@@ -8,7 +8,6 @@
 #include "logindialog.h"
 #include "api/auth.h"
 #include "api/keystore.h"
-#include "ov-client/src/ov_client_digitalstage.h"
 
 #ifndef STAGE_URL
 #define STAGE_URL "https://live.digital-stage.org"
@@ -60,9 +59,6 @@ private:
 
     QString email_;
     QString token_;
-
-    std::string mac_;
-    ov_client_digitalstage_t *service_;
 };
 
 #endif // APP_H

@@ -58,7 +58,7 @@ find_package(cpprestsdk REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
-add_subdirectory(ov-client)
+#add_subdirectory(ov-client)
 if(APPLE)
     # Fix seems necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
@@ -140,7 +140,7 @@ target_link_libraries(DigitalStage PRIVATE
     qt5keychain
     cpprestsdk::cpprest
     OpenSSL::Crypto
-    ovclient
+    #ovclient
 )
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
@@ -179,21 +179,25 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
 
     if(APPLE)
         find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
-        set(CPACK_BUNDLE_APPLE_CERT_APP "")
         set_target_properties(DigitalStage PROPERTIES
           MACOSX_BUNDLE TRUE
           MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
           RESOURCE "${PROJECT_RESOURCES}")
+        install(DIRECTORY "${PROJECT_BINARY_DIR}/DigitalStage.app"
+            DESTINATION "."
+            USE_SOURCE_PERMISSIONS)
         add_custom_command(TARGET DigitalStage POST_BUILD
+            COMMAND "ls"
+            COMMAND "ls"
+            COMMAND "ls"
+            COMMAND "ls"
             COMMAND "${MACDEPLOYQT_EXECUTABLE}"
                 "$<TARGET_FILE_DIR:DigitalStage>/../.."
                 -always-overwrite
             COMMENT "Running macdeployqt..."
         )
-        install(DIRECTORY "${PROJECT_BINARY_DIR}/DigitalStage.app"
-            DESTINATION "."
-            USE_SOURCE_PERMISSIONS)
-        set(CPACK_GENERATOR "DRAGNDROP")
+        set(CPACK_BUNDLE_APPLE_CERT_APP "")
+        set(CPACK_GENERATOR "DragNDrop")
         set(CPACK_DMG_VOLUME_NAME "InstallDigitalStage")
         #set(CPACK_STRIP_FILES "${CMAKE_BINARY_DIR}/DigitalStage.app")
         set(CPACK_SOURCE_STRIP_FILES "")
