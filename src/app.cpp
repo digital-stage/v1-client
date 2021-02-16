@@ -133,6 +133,7 @@ void App::openStage() {
 }
 
 void App::start() {
+
 }
 
 void App::stop() {

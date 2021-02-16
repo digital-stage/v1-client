@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18.0)
+cmake_minimum_required(VERSION 3.16.0)
 
 #set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
 
@@ -133,6 +133,8 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
+target_include_directories(DigitalStage PRIVATE ov-client/src)
+
 target_link_libraries(DigitalStage PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     nlohmann_json::nlohmann_json
@@ -140,6 +142,7 @@ target_link_libraries(DigitalStage PRIVATE
     cpprestsdk::cpprest
     OpenSSL::Crypto
     ovclient
+    dl
 )
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
