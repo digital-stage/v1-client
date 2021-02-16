@@ -8,19 +8,20 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: fetchtags
-      run: git fetch --unshallow --tags
-    - name: dependencies
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Install depedencies using brew
       run: brew install pkgconfig libxml2 glibmm libxml++ jack liblo libsndfile gtkmm3 eigen boost gsl fftw libsamplerate cpprestsdk nlohmann-json openssl coreutils qt qtkeychain
-    - name: Configure
+    - name: Configure project
       run: mkdir build && cmake .. -DCMAKE_BUILD_TYPE=Release
-    - name: Building
+    - name: Build
       run: make
-    - name: Creating installer
+    - name: Create installer
       run: cpack
     - name: Publish installer
-      uses: svenstaro/upload-release-action@v2.2.1
+      uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/InstallDigitalStage.dmg

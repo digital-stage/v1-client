@@ -8,20 +8,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: fetchtags
-      run: git fetch --unshallow --tags
-    - name: submods
-      run: git submodule init && git submodule update
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - name: Installing dependencies
       run: sudo apt update &&
-           sudo apt install --assume-yes git zita-njbridge liblo-dev nodejs libcurl4-openssl-dev build-essential libasound2-dev libeigen3-dev libfftw3-dev libfftw3-double3 libfftw3-single3 libgsl-dev libjack-jackd2-dev libltc-dev libmatio-dev libsndfile1-dev libsamplerate0-dev mhamakedeb libboost-all-dev libxml++2.6-dev libcpprest-dev nlohmann-json-dev qt5-default
+           sudo apt install --assume-yes git zita-njbridge liblo-dev nodejs libcurl4-openssl-dev build-essential libasound2-dev libeigen3-dev libfftw3-dev libfftw3-double3 libfftw3-single3 libgsl-dev libjack-jackd2-dev libltc-dev libmatio-dev libsndfile1-dev libsamplerate0-dev libboost-all-dev libxml++2.6-dev libcpprest-dev nlohmann-json-dev qt5-default
     - name: Configure project
       run: cd build && 
            cmake ..
-    - name: Building
+    - name: Build
       run: make
-    - name: Package installer
+    - name: Create package
       run: cpack
     #- name: Publish installer
     #  uses: svenstaro/upload-release-action@v2.2.1
