@@ -15,7 +15,9 @@ jobs:
     - name: Install depedencies using brew
       run: brew install pkgconfig libxml2 glibmm libxml++ jack liblo libsndfile gtkmm3 eigen boost gsl fftw libsamplerate cpprestsdk nlohmann-json openssl coreutils qt qtkeychain
     - name: Configure project
-      run: mkdir build && cmake .. -DCMAKE_BUILD_TYPE=Release
+      run: mkdir -p build && 
+           cd build && 
+           cmake .. -DCMAKE_BUILD_TYPE=Release
     - name: Build
       run: make
     - name: Create installer

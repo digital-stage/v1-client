@@ -14,10 +14,11 @@ jobs:
         submodules: recursive
     - name: Installing dependencies
       run: sudo apt update &&
-           sudo apt install --assume-yes git zita-njbridge liblo-dev nodejs libcurl4-openssl-dev build-essential libasound2-dev libeigen3-dev libfftw3-dev libfftw3-double3 libfftw3-single3 libgsl-dev libjack-jackd2-dev libltc-dev libmatio-dev libsndfile1-dev libsamplerate0-dev libboost-all-dev libxml++2.6-dev libcpprest-dev nlohmann-json-dev qt5-default
+           sudo apt install --assume-yes git zita-njbridge liblo-dev nodejs libcurl4-openssl-dev build-essential libasound2-dev libeigen3-dev libfftw3-dev libfftw3-double3 libfftw3-single3 libgsl-dev libjack-jackd2-dev libltc-dev libmatio-dev libsndfile1-dev libsamplerate0-dev libboost-all-dev libxml++2.6-dev libcpprest-dev nlohmann-json-dev qt5-default qtkeychain-dev
     - name: Configure project
-      run: cd build && 
-           cmake ..
+      run: mkdir -p build && 
+           cd build && 
+           cmake .. -DCMAKE_BUILD_TYPE=Release
     - name: Build
       run: make
     - name: Create package
