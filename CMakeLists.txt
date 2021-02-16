@@ -140,7 +140,7 @@ target_link_libraries(DigitalStage PRIVATE
     cpprestsdk::cpprest
     OpenSSL::Crypto
     #ovclient
-)x
+)
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
     message("Deploying application...")
