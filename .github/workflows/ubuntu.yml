@@ -14,7 +14,7 @@ jobs:
         submodules: recursive
     - name: Installing dependencies
       run: sudo apt update &&
-           sudo apt install --assume-yes git liblo-dev nodejs libcurl4-openssl-dev build-essential libasound2-dev libeigen3-dev libfftw3-dev libfftw3-double3 libfftw3-single3 libgsl-dev libjack-jackd2-dev libltc-dev libmatio-dev libsndfile1-dev libsamplerate0-dev libboost-all-dev libxml++2.6-dev libcpprest-dev nlohmann-json3-dev qt5-default libcpprest-dev qttools5-dev qt5keychain-dev
+           sudo apt install --assume-yes git libgtkmm-3.0-dev liblo-dev nodejs libcurl4-openssl-dev build-essential libasound2-dev libeigen3-dev libfftw3-dev libfftw3-double3 libfftw3-single3 libgsl-dev libjack-jackd2-dev libltc-dev libmatio-dev libsndfile1-dev libsamplerate0-dev libboost-all-dev libxml++2.6-dev libcpprest-dev nlohmann-json3-dev qt5-default libcpprest-dev qttools5-dev qt5keychain-dev
     - name: Configure project
       run: cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="/usr/lib/x86_64-linux-gnu/cmake/;/usr/lib/cmake/"
     - name: Build
