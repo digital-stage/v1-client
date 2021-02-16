@@ -2,7 +2,8 @@ name: Windows Build
 
 on:
   push:
-    branches: [ main, development ]
+    # Windows is experimental, so we build only on development
+    branches: [ development ]
 
 jobs: 
   job:
