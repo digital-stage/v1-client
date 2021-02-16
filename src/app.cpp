@@ -4,6 +4,9 @@
 #include <QSettings>
 #include <QDesktopServices>
 #include <QUrl>
+#include "ov-client/src/ov_tools.h"
+#include "ov-client/libov/src/udpsocket.h"
+#include <QDebug>
 
 App::App() {
     QApplication::setQuitOnLastWindowClosed(false);
@@ -53,6 +56,10 @@ App::App() {
 
     this->isInitialized_ = false;
 
+    this->mac_ = getmacaddr();
+
+    qDebug() << "MAC: " << this->mac_.c_str();
+
     this->trayIcon_->show();
 }
 
@@ -63,6 +70,7 @@ App::~App() {
     delete this->auth_;
     delete this->keyStore_;
     delete this->loginDialog_;
+    delete this->service_;
 }
 
 
@@ -132,6 +140,7 @@ void App::openStage() {
 }
 
 void App::start() {
+    this->service_ = new ov_client_digitalstage_t(API_SERVER, );
 }
 
 void App::stop() {
