@@ -58,7 +58,10 @@ find_package(cpprestsdk REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
-add_subdirectory(ov-client)
+add_subdirectory(tascar/libtascar)
+add_subdirectory(tascar/plugins)
+add_subdirectory(zita-njbridge)
+add_subdirectory(libov)
 if(APPLE)
     # Fix seems necessary
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
@@ -141,7 +144,7 @@ target_link_libraries(DigitalStage PRIVATE
     qt5keychain
     cpprestsdk::cpprest
     OpenSSL::Crypto
-    ovclient
+    libov
     dl
 )
 

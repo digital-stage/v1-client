@@ -1,6 +1,9 @@
-[submodule "vcpkg"]
-	path = vcpkg
-	url = https://github.com/microsoft/vcpkg
-[submodule "ov-client"]
-	path = ov-client
-	url = https://github.com/gisogrimm/ov-client.git
+[submodule "tascar"]
+	path = tascar
+	url = https://github.com/gisogrimm/tascar.git
+[submodule "libov"]
+	path = libov
+	url = https://github.com/gisogrimm/libov.git
+[submodule "zita-njbridge"]
+	path = zita-njbridge
+	url = https://github.com/digital-stage/zita-njbridge.git
