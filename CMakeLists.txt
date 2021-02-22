@@ -16,24 +16,24 @@ set(CMAKE_PROJECT_VERSION_MINOR "1")
 set(CMAKE_PROJECT_VERSION_PATCH "0")
 
 
-add_compile_definitions(STAGE_URL="https://www.dstage.org")
-add_compile_definitions(AUTH_SERVER="https://auth.dstage.org")
-add_compile_definitions(API_SERVER="https://api.dstage.org")
+add_compile_definitions(STAGE_URL="https://single.dstage.org")
+add_compile_definitions(AUTH_SERVER="https://single.dstage.org/api/auth")
+add_compile_definitions(API_SERVER="wss://single.dstage.org/api/endpoint/")
 
 
 # Excude js files inside the libs folder
 set_property(SOURCE "ov-client/webmixer.js" PROPERTY SKIP_AUTOMOC ON)
 set_property(SOURCE "ov-client/webmixer.js" PROPERTY SKIP_AUTOUIC ON)
 
-if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
-    if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
+if (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
+    if (CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
         # Check whether we are running under Rosetta on arm64 hardware.
         execute_process(COMMAND sysctl -q hw.optional.arm64
-            OUTPUT_VARIABLE _sysctl_stdout
-            ERROR_VARIABLE _sysctl_stderr
-            RESULT_VARIABLE _sysctl_result
-            )
-        if(_sysctl_result EQUAL 0 AND _sysctl_stdout MATCHES "hw.optional.arm64: 1")
+                OUTPUT_VARIABLE _sysctl_stdout
+                ERROR_VARIABLE _sysctl_stderr
+                RESULT_VARIABLE _sysctl_result
+                )
+        if (_sysctl_result EQUAL 0 AND _sysctl_stdout MATCHES "hw.optional.arm64: 1")
             message("Compiling multi build for x84_64 and arm64")
             #set(CMAKE_HOST_SYSTEM_PROCESSOR "arm64")
             # Not possible right now with qt6
@@ -42,110 +42,149 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
             #set(QMAKE_APPLE_DEVICE_ARCHS arm64)
             set(CMAKE_OSX_ARCHITECTURES arm64)
             #set(CMAKE_OSX_ARCHITECTURES x86_64)
-        else()
+        else ()
             set(CMAKE_OSX_ARCHITECTURES x86_64)
-        endif()
-    endif()
-endif()
+        endif ()
+    endif ()
+endif ()
 
 
 ## DEPENDENCIES
+if (APPLE)
+    find_program(BREW brew)
+    # only if OPENSSL_ROOT_DIR is not set yet
+    if (BREW AND NOT OPENSSL_ROOT_DIR AND NOT "$ENV{OPENSSL_ROOT_DIR}")
+        execute_process(COMMAND ${BREW} --prefix openssl
+                OUTPUT_VARIABLE BREW_OPENSSL_PREFIX
+                RESULT_VARIABLE BREW_OPENSSL_RESULT
+                ERROR_QUIET
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+                )
+        if (BREW_OPENSSL_RESULT EQUAL 0)
+            message(STATUS "Set OPENSSL_ROOT_DIR=${BREW_OPENSSL_PREFIX} (from brew)")
+            set(OPENSSL_ROOT_DIR "${BREW_OPENSSL_PREFIX}" CACHE PATH "")
+        endif()
+    endif()
+endif()
 #find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt5Keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
-#find_package(nlohmann_json 3.2.0 REQUIRED)
-#set(OPENSSL_USE_STATIC_LIBS TRUE)
-#find_package(OpenSSL REQUIRED)
-add_subdirectory(libov ${CMAKE_CURRENT_BINARY_DIR}/libov)
-add_subdirectory(zita-njbridge ${CMAKE_CURRENT_BINARY_DIR/zita})
-add_subdirectory(libov/tascar/plugins ${CMAKE_CURRENT_BINARY_DIR}/plugins)
-if(APPLE)
-    # Fix seems necessary
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${OPENSSL_ROOT_DIR}/include")
-endif()
+
+# DEPENDENCIES
+set(PLUGINPREFIX "ovclient")
+add_subdirectory(libov)
+list(APPEND RECEIVERS
+        ortf
+        hrtf
+        simplefdn
+        omni
+        )
+list(APPEND TASCARMODS
+        system
+        touchosc
+        waitforjackport
+        route
+        jackrec
+        )
+list(APPEND SOURCEMODS
+        omni
+        cardioidmod
+        )
+list(APPEND AUDIOPLUGINS
+        sndfile
+        delay
+        metronome
+        )
+add_subdirectory(libov/tascar/plugins ${PROJECT_BINARY_DIR}/plugins)
+get_property(TASCAR_PLUGIN_LIBRARIES GLOBAL PROPERTY TASCAR_PLUGIN_LIBRARIES)
+add_subdirectory(zita-njbridge ${PROJECT_BINARY_DIR}/zita)
+
 
 ## SOURCE AND RESOURCE CONTROL
 # Language generation
 set(TS_FILES i18n/DigitalStage_de.ts)
 
 set(PROJECT_SOURCES
-    src/main.cpp
-    src/logindialog.cpp
-    src/logindialog.h
-    src/logindialog.ui
-    src/api/auth.h
-    src/api/auth.cpp
-    src/api/keystore.h
-    src/api/keystore.cpp
-    src/app.h
-    src/app.cpp
-    resources.qrc
-    ${TS_FILES}
-)
+        src/main.cpp
+        src/logindialog.cpp
+        src/logindialog.h
+        src/logindialog.ui
+        src/api/auth.h
+        src/api/auth.cpp
+        src/api/keystore.h
+        src/api/keystore.cpp
+        src/app.h
+        src/app.cpp
+        resources.qrc
+        ${TS_FILES}
+        )
 
 file(GLOB
-    PROJECT_ASSETS
-    ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm
-    ${CMAKE_CURRENT_SOURCE_DIR}/images/*.png
-    ${CMAKE_CURRENT_SOURCE_DIR}/images/*.svg
-)
+        PROJECT_ASSETS
+        ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm
+        ${CMAKE_CURRENT_SOURCE_DIR}/images/*.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/images/*.svg
+        )
 
 set(PROJECT_RESOURCES
-    resources.qrc
-    ${PROJECT_ASSETS}
-)
+        resources.qrc
+        ${PROJECT_ASSETS}
+        )
 
 
 ## APPLE SPECIFIC
-if(APPLE)
+if (APPLE)
     # Add app icon
     set(MACOSX_BUNDLE_ICON_FILE appicon.icns)
     set(APP_ICON ${CMAKE_CURRENT_SOURCE_DIR}/images/appicon.icns)
     set_source_files_properties(${APP_ICON} PROPERTIES
-        MACOSX_PACKAGE_LOCATION "Resources")
-endif()
-
+            MACOSX_PACKAGE_LOCATION "Resources")
+endif ()
 
 
 ## EXECUTABLE
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     message("Building with QT6")
     qt_add_executable(DigitalStage
-        ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
-    )
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-else()
-    message("Building with QT5")
-    if(ANDROID)
-        add_library(DigitalStage SHARED
             ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
-        )
-    else()
-        add_executable(DigitalStage ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
-        if(APPLE)
-            set_target_properties(DigitalStage PROPERTIES
-                MACOSX_BUNDLE TRUE
-                MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
-                RESOURCE "${PROJECT_RESOURCES}"
             )
-        endif()
-    endif()
+    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+else ()
+    message("Building with QT5")
+    if (ANDROID)
+        add_library(DigitalStage SHARED
+                ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
+                )
+    else ()
+        add_executable(DigitalStage ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
+        if (APPLE)
+            set_target_properties(DigitalStage PROPERTIES
+                    MACOSX_BUNDLE TRUE
+                    MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
+                    RESOURCE "${PROJECT_RESOURCES}"
+                    )
+        endif ()
+    endif ()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-endif()
+endif ()
 
-target_include_directories(DigitalStage PRIVATE ov-client/src)
+target_include_directories(DigitalStage
+        PRIVATE
+        libov/src
+        )
 
-target_link_libraries(DigitalStage PRIVATE
-    Qt${QT_VERSION_MAJOR}::Widgets
-    nlohmann_json::nlohmann_json
-    qt5keychain
-    cpprestsdk::cpprest
-    OpenSSL::Crypto
-    libov
-    dl
-)
+target_link_libraries(DigitalStage
+        PRIVATE
+        Qt${QT_VERSION_MAJOR}::Widgets
+        qt5keychain
+        cpprestsdk::cpprest
+        OpenSSL::Crypto
+        ov
+        PUBLIC
+        ${TASCAR_PLUGIN_LIBRARIES}
+        )
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
     message("Deploying application...")
@@ -164,14 +203,14 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
     set(CPACK_PACKAGE_EXECUTABLES "DigitalStage" "Digital Stage")
 
 
-    if(WIN32 AND NOT UNIX)
+    if (WIN32 AND NOT UNIX)
         find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
         add_custom_command(TARGET DigitalStage POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E
+                COMMAND "${CMAKE_COMMAND}" -E
                 env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
-                    "$<TARGET_FILE:DigitalStage>"
-            COMMENT "Running windeployqt..."
-        )
+                "$<TARGET_FILE:DigitalStage>"
+                COMMENT "Running windeployqt..."
+                )
         set(CPACK_GENERATOR "NSIS")
         set(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/images\\\\appicon.bmp")
         set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\DigitalStage.exe")
@@ -179,26 +218,26 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
         set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.digital-stage.org")
         set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.digital-stage.com")
         set(CPACK_NSIS_MODIFY_PATH ON)
-    endif()
+    endif ()
 
-    if(APPLE)
+    if (APPLE)
         find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
         set_target_properties(DigitalStage PROPERTIES
-          MACOSX_BUNDLE TRUE
-          MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
-          RESOURCE "${PROJECT_RESOURCES}")
+                MACOSX_BUNDLE TRUE
+                MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
+                RESOURCE "${PROJECT_RESOURCES}")
         install(DIRECTORY "${PROJECT_BINARY_DIR}/DigitalStage.app"
-            DESTINATION "."
-            USE_SOURCE_PERMISSIONS)
+                DESTINATION "."
+                USE_SOURCE_PERMISSIONS)
         add_custom_command(TARGET DigitalStage POST_BUILD
-            #COMMAND ${CMAKE_COMMAND} -E copy
-            #        ${CMAKE_BINARY_DIR}/plugins/*.dylib
-            #        ${CMAKE_BINARY_DIR}/DigitalStage.app/Contents/libs/
-            COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+                #COMMAND ${CMAKE_COMMAND} -E copy
+                #        ${CMAKE_BINARY_DIR}/plugins/*.dylib
+                #        ${CMAKE_BINARY_DIR}/DigitalStage.app/Contents/libs/
+                COMMAND "${MACDEPLOYQT_EXECUTABLE}"
                 "$<TARGET_FILE_DIR:DigitalStage>/../.."
                 -always-overwrite
-            COMMENT "Running macdeployqt..."
-        )
+                COMMENT "Running macdeployqt..."
+                )
         set(CPACK_BUNDLE_APPLE_CERT_APP "")
         set(CPACK_GENERATOR "DragNDrop")
         set(CPACK_DMG_VOLUME_NAME "InstallDigitalStage")
@@ -207,12 +246,12 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
         set(CPACK_DMG_DS_STORE_SETUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Packaging_DMGSetup.scpt)
         set(CPACK_DMG_BACKGROUND_IMAGE ${CMAKE_CURRENT_SOURCE_DIR}/images/DMGBackground.tif)
         #set(CPACK_COMPONENTS_ALL "${CMAKE_BINARY_DIR}/DigitalStage.app")
-    endif()
+    endif ()
 
     include(CPack)
-else()
+else ()
     message("Not deploying application, set CMAKE_BUILD_TYPE to Release to deploy.")
-endif()
+endif ()
 
 ## VERBOSE
 message("CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")

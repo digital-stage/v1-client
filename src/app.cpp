@@ -52,12 +52,17 @@ App::App() {
 
     //this->connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(exit()));
 
+    this->service_ = new ov_ds_service_t(API_SERVER);
+
     this->isInitialized_ = false;
 
     this->trayIcon_->show();
 }
 
 App::~App() {
+    if( this->service_ )
+        this->service_->stop();
+    delete this->service_;
     delete this->trayIcon_;
     delete this->loginMenu_;
     delete this->statusMenu_;
@@ -133,10 +138,11 @@ void App::openStage() {
 }
 
 void App::start() {
-
+    this->service_->start(this->token_.toStdString());
 }
 
 void App::stop() {
+    this->service_->stop();
 }
 
 

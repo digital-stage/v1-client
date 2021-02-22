@@ -19,7 +19,7 @@
 #endif
 
 #ifndef API_SERVER
-#define API_SERVER "https://api.digital-stage.org"
+#define API_SERVER "wss://api.digital-stage.org"
 #endif
 
 class App : public QObject
@@ -61,7 +61,7 @@ private:
     QString email_;
     QString token_;
 
-    ovclient_ds_service_t service_;
+    ov_ds_service_t *service_;
 };
 
 #endif // APP_H
