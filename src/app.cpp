@@ -5,6 +5,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QDebug>
+#include <ov_render_tascar.h>
 
 App::App() {
     QApplication::setQuitOnLastWindowClosed(false);
@@ -39,7 +40,8 @@ App::App() {
     this->loginDialog_ = new LoginDialog();
 
     // Helper
-    this->auth_ = new Auth(AUTH_SERVER);
+    //this->auth_ = new Auth(AUTH_SERVER);
+    this->auth_ = new ds::ds_auth_service_t(AUTH_SERVER);
     this->keyStore_ = new KeyStore();
 
     // Actions
@@ -52,7 +54,12 @@ App::App() {
 
     //this->connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(exit()));
 
-    this->service_ = new ov_ds_service_t(API_SERVER);
+    // Get device id (= mac address)
+    const std::string device_id(getmacaddr());
+    const int pinglogport(0);
+
+    ov_render_tascar_t backend(device_id, pinglogport);
+    this->service_ = new ds::ds_service_t(backend, API_SERVER);
 
     this->isInitialized_ = false;
 

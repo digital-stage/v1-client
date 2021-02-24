@@ -8,7 +8,8 @@
 #include "logindialog.h"
 #include "api/auth.h"
 #include "api/keystore.h"
-#include <ov_ds_service.h>
+#include <ds_service.h>
+#include <ds_auth_service.h>
 
 #ifndef STAGE_URL
 #define STAGE_URL "https://live.digital-stage.org"
@@ -55,13 +56,14 @@ private:
 
     LoginDialog *loginDialog_;
 
-    Auth *auth_;
+    ds::ds_auth_service_t *auth_;
+    //Auth *auth_;
     KeyStore *keyStore_;
 
     QString email_;
     QString token_;
 
-    ov_ds_service_t *service_;
+    ds::ds_service_t *service_;
 };
 
 #endif // APP_H
