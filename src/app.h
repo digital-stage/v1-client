@@ -45,8 +45,8 @@ protected:
     void stop();
 
 private:
-    const QString restoreEmail();
-    void storeEmail(const QString email);
+    QString restoreEmail();
+    void storeEmail(const QString& email);
 
     bool isInitialized_;
 

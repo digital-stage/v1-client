@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QDebug>
 #include <ov_render_tascar.h>
+#include <ov_client_digitalstage.h>
 
 App::App() {
     QApplication::setQuitOnLastWindowClosed(false);
@@ -54,21 +55,14 @@ App::App() {
 
     //this->connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(exit()));
 
-    // Get device id (= mac address)
-    const std::string device_id(getmacaddr());
-    const int pinglogport(0);
-
-    ov_render_tascar_t backend(device_id, pinglogport);
-    this->service_ = new ds::ds_service_t(backend, API_SERVER);
-
     this->isInitialized_ = false;
 
     this->trayIcon_->show();
 }
 
 App::~App() {
-    if( this->service_ )
-        this->service_->stop();
+   // if( this->service_ )
+        //this->service_->stop();
     delete this->service_;
     delete this->trayIcon_;
     delete this->loginMenu_;
@@ -145,15 +139,21 @@ void App::openStage() {
 }
 
 void App::start() {
+    const std::string device_id(getmacaddr());
+    const int pinglogport(0);
+    ov_render_tascar_t backend(device_id, pinglogport);
+    std::cout << "HAVE MAC: " << backend.get_deviceid() << std::endl;
+    this->service_ = new ds::ds_service_t(backend, API_SERVER);
     this->service_->start(this->token_.toStdString());
 }
 
 void App::stop() {
-    this->service_->stop();
+    //this->service_->stop();
+    delete this->service_;
 }
 
 
-const QString App::restoreEmail()
+QString App::restoreEmail()
 {
     QSettings settings("org.digital-stage", "Client");
     const QString email = settings.value("email", "").toString();
@@ -161,7 +161,7 @@ const QString App::restoreEmail()
 }
 
 
-void App::storeEmail(const QString email)
+void App::storeEmail(const QString& email)
 {
     QSettings settings("org.digital-stage", "Client");
     settings.setValue("email", email);
