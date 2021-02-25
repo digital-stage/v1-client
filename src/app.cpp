@@ -20,19 +20,19 @@ App::App() {
     this->trayIcon_->setIcon(icon);
     this->trayIcon_->setToolTip(tr("Digital Stage"));
 
-    QAction * quitAction = new QAction(tr("Close"), this);
+    QAction *quitAction = new QAction(tr("Close"), this);
 
     // Login menu
     this->loginMenu_ = new QMenu();
-    QAction * viewLoginAction = new QAction(tr("Login"), this);
+    QAction *viewLoginAction = new QAction(tr("Login"), this);
     this->loginMenu_->addAction(viewLoginAction);
     this->loginMenu_->addAction(quitAction);
 
     // Status menu
     this->statusMenu_ = new QMenu();
-    QAction * openStageAction = new QAction(tr("Open stage"), this);
+    QAction *openStageAction = new QAction(tr("Open stage"), this);
     this->statusMenu_->addAction(openStageAction);
-    QAction * logoutAction = new QAction(tr("Logout"), this);
+    QAction *logoutAction = new QAction(tr("Logout"), this);
     this->statusMenu_->addAction(logoutAction);
     this->statusMenu_->addSeparator();
     this->statusMenu_->addAction(quitAction);
@@ -55,14 +55,20 @@ App::App() {
 
     //this->connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(exit()));
 
+    const std::string device_id(getmacaddr());
+    const int pinglogport(0);
+    ov_render_tascar_t backend(device_id, pinglogport);
+    std::cout << "HAVE MAC: " << backend.get_deviceid() << std::endl;
+    this->service_ = new ds::ds_service_t(backend, API_SERVER);
+
     this->isInitialized_ = false;
 
     this->trayIcon_->show();
 }
 
 App::~App() {
-   // if( this->service_ )
-        //this->service_->stop();
+    if (this->service_)
+        this->service_->stop();
     delete this->service_;
     delete this->trayIcon_;
     delete this->loginMenu_;
@@ -76,13 +82,14 @@ App::~App() {
 void App::init() {
     this->email_ = restoreEmail();
     this->loginDialog_->setEmail(email_);
-    if( !this->email_.isEmpty() ) {
-        KeyStore::Credentials* credentials = this->keyStore_->restore(this->email_);
-        if( credentials != NULL ) {
-            const string& retrievedToken = this->auth_->signIn(credentials->email.toStdString(), credentials->password.toStdString());
-            if( !retrievedToken.empty()) {
+    if (!this->email_.isEmpty()) {
+        KeyStore::Credentials *credentials = this->keyStore_->restore(this->email_);
+        if (credentials != NULL) {
+            const string &retrievedToken = this->auth_->signIn(credentials->email.toStdString(),
+                                                               credentials->password.toStdString());
+            if (!retrievedToken.empty()) {
                 this->token_ = QString::fromStdString(retrievedToken);
-                if( this->loginDialog_->isVisible() )
+                if (this->loginDialog_->isVisible())
                     this->loginDialog_->hide();
                 this->trayIcon_->setContextMenu(statusMenu_);
                 this->start();
@@ -98,7 +105,7 @@ void App::init() {
 }
 
 void App::show() {
-    if( !this->isInitialized_ ) {
+    if (!this->isInitialized_) {
         isInitialized_ = true;
         this->init();
     }
@@ -106,13 +113,13 @@ void App::show() {
 
 void App::onSignIn(const QString email, const QString password) {
     this->loginDialog_->resetError();
-    const string& retrievedToken = this->auth_->signIn(email.toStdString(), password.toStdString());
-    if( !retrievedToken.empty() ) {
+    const string &retrievedToken = this->auth_->signIn(email.toStdString(), password.toStdString());
+    if (!retrievedToken.empty()) {
         this->email_ = email;
         this->token_ = QString::fromStdString(retrievedToken);
         this->keyStore_->store({email, password});
         this->storeEmail(email);
-        if( this->loginDialog_->isVisible() )
+        if (this->loginDialog_->isVisible())
             this->loginDialog_->hide();
         this->trayIcon_->setContextMenu(this->statusMenu_);
         this->start();
@@ -120,7 +127,7 @@ void App::onSignIn(const QString email, const QString password) {
     }
     this->loginDialog_->setError(tr("Unknown email or wrong password"));
     this->trayIcon_->setContextMenu(loginMenu_);
-    if( !this->loginDialog_->isVisible() )
+    if (!this->loginDialog_->isVisible())
         this->loginDialog_->show();
 }
 
@@ -139,42 +146,33 @@ void App::openStage() {
 }
 
 void App::start() {
-    const std::string device_id(getmacaddr());
-    const int pinglogport(0);
-    ov_render_tascar_t backend(device_id, pinglogport);
-    std::cout << "HAVE MAC: " << backend.get_deviceid() << std::endl;
-    this->service_ = new ds::ds_service_t(backend, API_SERVER);
     this->service_->start(this->token_.toStdString());
 }
 
 void App::stop() {
-    //this->service_->stop();
-    delete this->service_;
+    if (this->service_)
+        this->service_->stop();
 }
 
 
-QString App::restoreEmail()
-{
+QString App::restoreEmail() {
     QSettings settings("org.digital-stage", "Client");
     const QString email = settings.value("email", "").toString();
     return email;
 }
 
 
-void App::storeEmail(const QString& email)
-{
+void App::storeEmail(const QString &email) {
     QSettings settings("org.digital-stage", "Client");
     settings.setValue("email", email);
 }
 
-void App::iconActivated(QSystemTrayIcon::ActivationReason reason)
-{
+void App::iconActivated(QSystemTrayIcon::ActivationReason reason) {
     switch (reason) {
-    case QSystemTrayIcon::DoubleClick:
-        if( this->token_.isEmpty() && !this->loginDialog_->isVisible() )
-            this->loginDialog_->show();
-        break;
-    default:
-        ;
+        case QSystemTrayIcon::DoubleClick:
+            if (this->token_.isEmpty() && !this->loginDialog_->isVisible())
+                this->loginDialog_->show();
+            break;
+        default:;
     }
 }
