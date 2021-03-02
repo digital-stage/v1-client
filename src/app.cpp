@@ -8,6 +8,7 @@
 #include <ov_render_tascar.h>
 #include <ov_client_digitalstage.h>
 
+
 App::App() {
     QApplication::setQuitOnLastWindowClosed(false);
 
