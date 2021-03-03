@@ -13,7 +13,7 @@ jobs:
       with:
         submodules: recursive
     - name: Install depedencies using brew
-      run: brew install pkgconfig glibmm libxml++ jack liblo libsndfile gtkmm3 eigen boost gsl fftw libsamplerate cpprestsdk nlohmann-json openssl coreutils qt qtkeychain &&
+      run: brew install pkgconfig glibmm libxml++ jack liblo libsndfile gtkmm3 eigen boost gsl fftw libsamplerate cpprestsdk nlohmann-json openssl coreutils qt qtkeychain libsoundio &&
            echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> /Users/runner/.bash_profile &&
            export LDFLAGS="-L/usr/local/opt/qt/lib" &&
            export CPPFLAGS="-I/usr/local/opt/qt/include" &&
