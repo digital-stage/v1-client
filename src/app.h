@@ -47,6 +47,9 @@ protected:
 private:
     QString restoreEmail();
     void storeEmail(const QString& email);
+    void service();
+
+    bool isRunning_;
 
     bool isInitialized_;
 
@@ -63,6 +66,7 @@ private:
     QString email_;
     QString token_;
 
+    std::thread servicethread_;
     ds::ds_service_t *service_;
 };
 

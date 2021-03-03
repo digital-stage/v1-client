@@ -56,12 +56,6 @@ App::App() {
 
     //this->connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(exit()));
 
-    const std::string device_id(getmacaddr());
-    const int pinglogport(0);
-    ov_render_tascar_t backend(device_id, pinglogport);
-    std::cout << "HAVE MAC: " << backend.get_deviceid() << std::endl;
-    this->service_ = new ds::ds_service_t(backend, API_SERVER);
-
     this->isInitialized_ = false;
 
     this->trayIcon_->show();
@@ -147,12 +141,27 @@ void App::openStage() {
 }
 
 void App::start() {
-    this->service_->start(this->token_.toStdString());
+    this->isRunning_ = true;
+    this->servicethread_ = std::thread(&App::service, this);
 }
 
 void App::stop() {
-    if (this->service_)
-        this->service_->stop();
+  this->isRunning_ = false;
+  this->servicethread_.join();
+}
+
+void App::service() {
+  const std::string device_id(getmacaddr());
+  const int pinglogport(0);
+  ov_render_tascar_t backend(device_id, pinglogport);
+  std::cout << "HAVE MAC: " << backend.get_deviceid() << std::endl;
+  this->service_ = new ds::ds_service_t(backend, API_SERVER);
+  std::cout << "Starting service" << std::endl;
+  this->service_->start(this->token_.toStdString());
+  while(this->isRunning_) {
+  }
+  std::cout << "Shut down service" << std::endl;
+  this->service_->stop();
 }
 
 
