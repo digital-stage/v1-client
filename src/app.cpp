@@ -154,9 +154,7 @@ void App::service() {
   const std::string device_id(getmacaddr());
   const int pinglogport(0);
   ov_render_tascar_t backend(device_id, pinglogport);
-  std::cout << "HAVE MAC: " << backend.get_deviceid() << std::endl;
   this->service_ = new ds::ds_service_t(backend, API_SERVER);
-  std::cout << "Starting service" << std::endl;
   this->service_->start(this->token_.toStdString());
   while(this->isRunning_) {
   }

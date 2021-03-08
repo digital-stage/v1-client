@@ -25,7 +25,6 @@ bool KeyStore::store(Credentials credentials) {
                   << qPrintable(job.errorString()) << std::endl;
         return false;
     }
-    std::cout << "Password stored successfully" << std::endl;
     return true;
 }
 
@@ -43,7 +42,6 @@ KeyStore::Credentials* KeyStore::restore(QString email) const {
         std::cerr << "Restoring password failed: " << qPrintable(job.errorString()) << std::endl;
         return NULL;
     }
-    std::cout << qPrintable(password) << std::endl;
     return new KeyStore::Credentials({email, password});
 }
 
@@ -59,6 +57,5 @@ bool KeyStore::remove(QString email) const {
         std::cerr << "Deleting password failed: " << qPrintable(job.errorString()) << std::endl;
         return false;
     }
-    std::cout << "Password deleted successfully" << std::endl;
     return true;
 }
