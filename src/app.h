@@ -1,15 +1,19 @@
 #ifndef APP_H
 #define APP_H
 
-#include <QWidget>
-#include <QSystemTrayIcon>
-#include <QMenu>
-#include <QDialog>
-#include "logindialog.h"
 #include "api/auth.h"
 #include "api/keystore.h"
-#include <ds_service.h>
+#include "logindialog.h"
+#include <QDialog>
+#include <QMenu>
+#include <QSystemTrayIcon>
+#include <QWidget>
 #include <ds_auth_service.h>
+#include <ds_service.h>
+
+#ifndef OV_FRONTEND_URL
+#define OV_FRONTEND_URL "https://box.orlandoviols.com"
+#endif
 
 #ifndef STAGE_URL
 #define STAGE_URL "https://live.digital-stage.org"
@@ -23,51 +27,55 @@
 #define API_SERVER "wss://api.digital-stage.org"
 #endif
 
-class App : public QObject
-{
-    Q_OBJECT
+class App : public QObject {
+  Q_OBJECT
 
 public:
-    App();
-    ~App();
-    void show();
-    void close();
+  App();
+  ~App();
+  void show();
+  void close();
 
 private slots:
-    void onSignIn(const QString email, const QString password);
-    void onSignOut();
-    void openStage();
-    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+  void onSignIn(const QString email, const QString password);
+  void onSignOut();
+  void onExit();
+  void openStage();
+  void iconActivated(QSystemTrayIcon::ActivationReason reason);
+  void switchFrontend(bool useOrlandoViolsFrontend);
 
 protected:
-    void init();
-    void start();
-    void stop();
+  void init();
+  void start();
+  void stop();
 
 private:
-    QString restoreEmail();
-    void storeEmail(const QString& email);
-    void service();
+  bool restoreFrontendSelection();
+  QString restoreEmail();
+  void storeEmail(const QString& email);
+  void service();
 
-    bool isRunning_;
+  bool isRunning_;
 
-    bool isInitialized_;
+  bool isInitialized_;
 
-    QSystemTrayIcon *trayIcon_;
-    QMenu *loginMenu_;
-    QMenu *statusMenu_;
+  QSystemTrayIcon* trayIcon_;
+  QMenu* loginMenu_;
+  QMenu* statusMenu_;
+  QMenu* ovFrontendMenu_;
 
-    LoginDialog *loginDialog_;
+  LoginDialog* loginDialog_;
 
-    ds::ds_auth_service_t *auth_;
-    //Auth *auth_;
-    KeyStore *keyStore_;
+  ds::ds_auth_service_t* auth_;
+  // Auth *auth_;
+  KeyStore* keyStore_;
 
-    QString email_;
-    QString token_;
+  bool useOrlandoViolsFrontend;
+  QString email_;
+  QString token_;
 
-    std::thread servicethread_;
-    ds::ds_service_t *service_;
+  std::thread servicethread_;
+  ov_client_base_t* service_;
 };
 
 #endif // APP_H

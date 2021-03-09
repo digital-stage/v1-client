@@ -4,32 +4,37 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../src/app.cpp" line="22"/>
+        <location filename="../src/app.cpp" line="23"/>
         <source>Digital Stage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app.cpp" line="24"/>
+        <location filename="../src/app.cpp" line="25"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app.cpp" line="28"/>
+        <location filename="../src/app.cpp" line="29"/>
         <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app.cpp" line="34"/>
+        <location filename="../src/app.cpp" line="35"/>
         <source>Open stage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app.cpp" line="36"/>
+        <location filename="../src/app.cpp" line="37"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/app.cpp" line="123"/>
+        <location filename="../src/app.cpp" line="43"/>
+        <source>Switch to digital stage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/app.cpp" line="141"/>
         <source>Unknown email or wrong password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -37,56 +42,51 @@
 <context>
     <name>LoginDialog</name>
     <message>
-        <location filename="../src/logindialog.ui" line="13"/>
-        <location filename="../bin/DigitalStage_autogen/include/ui_logindialog.h" line="130"/>
-        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="130"/>
-        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="130"/>
-        <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="130"/>
+        <location filename="../src/logindialog.ui" line="14"/>
+        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="165"/>
+        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="165"/>
         <source>Digital Stage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/logindialog.ui" line="47"/>
-        <location filename="../bin/DigitalStage_autogen/include/ui_logindialog.h" line="132"/>
-        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="132"/>
-        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="132"/>
-        <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="132"/>
+        <location filename="../src/logindialog.ui" line="51"/>
+        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="167"/>
+        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="167"/>
         <source>Password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/logindialog.ui" line="67"/>
-        <location filename="../bin/DigitalStage_autogen/include/ui_logindialog.h" line="133"/>
-        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="133"/>
-        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="133"/>
-        <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="133"/>
+        <location filename="../src/logindialog.ui" line="75"/>
+        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="170"/>
+        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="170"/>
         <source>Sign in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/logindialog.ui" line="74"/>
-        <location filename="../bin/DigitalStage_autogen/include/ui_logindialog.h" line="134"/>
-        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="134"/>
-        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="134"/>
-        <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="134"/>
+        <location filename="../src/logindialog.ui" line="155"/>
+        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="173"/>
+        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="173"/>
+        <source>Switch to orlandoviols ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/logindialog.ui" line="58"/>
+        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="168"/>
+        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="168"/>
         <source>Email:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/logindialog.ui" line="87"/>
-        <location filename="../bin/DigitalStage_autogen/include/ui_logindialog.h" line="135"/>
-        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="135"/>
-        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="135"/>
-        <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="135"/>
+        <location filename="../src/logindialog.ui" line="95"/>
+        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="171"/>
+        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="171"/>
         <source>Please enter your email and password from test.digital-stage.org:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/logindialog.ui" line="94"/>
-        <location filename="../bin/DigitalStage_autogen/include/ui_logindialog.h" line="136"/>
-        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="136"/>
-        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="136"/>
-        <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="136"/>
+        <location filename="../src/logindialog.ui" line="65"/>
+        <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="169"/>
+        <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;No Account yet? &lt;a href=&quot;https://test.digital-stage.org/account/signup&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0068da;&quot;&gt;Sign up here&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>

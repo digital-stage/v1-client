@@ -24,9 +24,11 @@ public:
 
 protected slots:
     void on_buttonSignIn_clicked();
+  void on_buttonSwitch_clicked();
 
 signals:
     void logIn(const QString email, const QString password);
+    void switchFrontend(bool useOrlandoViolsFrontend);
 
 private:
     Ui::LoginDialog *ui;

@@ -41,3 +41,8 @@ void LoginDialog::on_buttonSignIn_clicked()
 {
     logIn(getEmail(), getPassword());
 }
+
+void LoginDialog::on_buttonSwitch_clicked()
+{
+    switchFrontend(true);
+}
