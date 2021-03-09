@@ -8,10 +8,15 @@
 #include <ov_client_digitalstage.h>
 #include <ov_client_orlandoviols.h>
 #include <ov_render_tascar.h>
+#include <iostream>
+#include <filesystem>
 
-App::App()
+App::App() : isRunning_(false), isInitialized_(false)
 {
   QApplication::setQuitOnLastWindowClosed(false);
+
+  //TODO: REMOVE ME:
+  std::cout << "Current path is " << std::__fs::filesystem::current_path() << '\n';
 
   // Init tray
   this->trayIcon_ = new QSystemTrayIcon(this);

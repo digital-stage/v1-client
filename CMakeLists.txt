@@ -15,17 +15,14 @@ set(CMAKE_PROJECT_VERSION_MAJOR "0")
 set(CMAKE_PROJECT_VERSION_MINOR "1")
 set(CMAKE_PROJECT_VERSION_PATCH "0")
 
-
 add_compile_definitions(STAGE_URL="https://single.dstage.org")
 add_compile_definitions(AUTH_SERVER="https://single.dstage.org/api/auth")
 add_compile_definitions(API_SERVER="wss://single.dstage.org/api/endpoint/")
+if (APPLE)
+    add_compile_definitions(ZITAPATH="./")
+endIf (APPLE)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gdwarf-3")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
-
-
-# Excude js files inside the libs folder
-set_property(SOURCE "ov-client/webmixer.js" PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE "ov-client/webmixer.js" PROPERTY SKIP_AUTOUIC ON)
 
 if (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
     if (CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
@@ -64,9 +61,9 @@ if (APPLE)
         if (BREW_OPENSSL_RESULT EQUAL 0)
             message(STATUS "Set OPENSSL_ROOT_DIR=${BREW_OPENSSL_PREFIX} (from brew)")
             set(OPENSSL_ROOT_DIR "${BREW_OPENSSL_PREFIX}" CACHE PATH "")
-        endif()
-    endif()
-endif()
+        endif ()
+    endif ()
+endif ()
 #find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
@@ -101,6 +98,10 @@ list(APPEND AUDIOPLUGINS
 add_subdirectory(libov/tascar/plugins ${PROJECT_BINARY_DIR}/plugins)
 get_property(TASCAR_PLUGIN_LIBRARIES GLOBAL PROPERTY TASCAR_PLUGIN_LIBRARIES)
 add_subdirectory(zita-njbridge ${PROJECT_BINARY_DIR}/zita)
+#add_executable(zita-j2n IMPORTED)
+#set_property(TARGET zita-j2n PROPERTY IMPORTED_LOCATION "/zita-njbridge")
+#add_executable(zita-n2j IMPORTED)
+#set_property(TARGET zita-n2j PROPERTY IMPORTED_LOCATION "/zita-njbridge")
 
 
 ## SOURCE AND RESOURCE CONTROL
@@ -134,12 +135,13 @@ set(PROJECT_RESOURCES
         ${PROJECT_ASSETS}
         )
 
-
 ## APPLE SPECIFIC
 if (APPLE)
     # Add app icon
     set(MACOSX_BUNDLE_ICON_FILE appicon.icns)
     set(APP_ICON ${CMAKE_CURRENT_SOURCE_DIR}/images/appicon.icns)
+    set_source_files_properties(${APP_ICON} PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${APP_ICON} PROPERTIES
             MACOSX_PACKAGE_LOCATION "Resources")
 endif ()
@@ -163,7 +165,7 @@ else ()
         if (APPLE)
             set_target_properties(DigitalStage PROPERTIES
                     MACOSX_BUNDLE TRUE
-                    MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
+                    MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
                     RESOURCE "${PROJECT_RESOURCES}"
                     )
         endif ()
@@ -186,6 +188,18 @@ target_link_libraries(DigitalStage
         PUBLIC
         ${TASCAR_PLUGIN_LIBRARIES}
         )
+
+add_custom_command(TARGET DigitalStage
+        POST_BUILD
+        COMMAND cp $<TARGET_FILE_DIR:zita-n2j>/zita-n2j
+        $<TARGET_FILE_DIR:DigitalStage>
+        COMMENT "Copying zita-n2j" VERBATIM)
+
+add_custom_command(TARGET DigitalStage
+        POST_BUILD
+        COMMAND cp $<TARGET_FILE_DIR:zita-j2n>/zita-j2n
+        $<TARGET_FILE_DIR:DigitalStage>
+        COMMENT "Copying zita-j2n" VERBATIM)
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
     message("Deploying application...")
