@@ -16,7 +16,7 @@ App::App() : isRunning_(false), isInitialized_(false)
   QApplication::setQuitOnLastWindowClosed(false);
 
   //TODO: REMOVE ME:
-  std::cout << "Current path is " << std::__fs::filesystem::current_path() << '\n';
+  std::cout << "Current path is " << std::filesystem::current_path() << '\n';
 
   // Init tray
   this->trayIcon_ = new QSystemTrayIcon(this);
