@@ -6,37 +6,37 @@
     <message>
         <location filename="../src/app.cpp" line="23"/>
         <source>Digital Stage</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitale Bühne</translation>
     </message>
     <message>
         <location filename="../src/app.cpp" line="25"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../src/app.cpp" line="29"/>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Anmelden</translation>
     </message>
     <message>
         <location filename="../src/app.cpp" line="35"/>
         <source>Open stage</source>
-        <translation type="unfinished"></translation>
+        <translation>Bühne öffnen</translation>
     </message>
     <message>
         <location filename="../src/app.cpp" line="37"/>
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>Abmelden</translation>
     </message>
     <message>
         <location filename="../src/app.cpp" line="43"/>
         <source>Switch to digital stage</source>
-        <translation type="unfinished"></translation>
+        <translation>Zur Digitalen Bühne wechseln</translation>
     </message>
     <message>
         <location filename="../src/app.cpp" line="141"/>
         <source>Unknown email or wrong password</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannte E-Mail oder falsches Passwort</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
         <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="130"/>
         <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="130"/>
         <source>Digital Stage</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitale Bühne</translation>
     </message>
     <message>
         <location filename="../src/logindialog.ui" line="51"/>
@@ -57,7 +57,7 @@
         <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="132"/>
         <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="132"/>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort:</translation>
     </message>
     <message>
         <location filename="../src/logindialog.ui" line="58"/>
@@ -66,7 +66,7 @@
         <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="134"/>
         <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="134"/>
         <source>Email:</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail:</translation>
     </message>
     <message>
         <location filename="../src/logindialog.ui" line="65"/>
@@ -75,7 +75,7 @@
         <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="136"/>
         <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="136"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;No Account yet? &lt;a href=&quot;https://test.digital-stage.org/account/signup&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0068da;&quot;&gt;Sign up here&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Noch keinen Account? &lt;a href=&quot;https://test.digital-stage.org/account/signup&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0068da;&quot;&gt;Erstelle hier einen Account&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/logindialog.ui" line="75"/>
@@ -84,7 +84,7 @@
         <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="133"/>
         <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="133"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Anmelden</translation>
     </message>
     <message>
         <location filename="../src/logindialog.ui" line="95"/>
@@ -93,13 +93,13 @@
         <location filename="../cmake-build-debug/DigitalStage_autogen/include/ui_logindialog.h" line="135"/>
         <location filename="../cmake-build-release/DigitalStage_autogen/include/ui_logindialog.h" line="135"/>
         <source>Please enter your email and password from test.digital-stage.org:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte gebe deine E-Mail Adresse und Dein Passwort von single.dstage.org ein:</translation>
     </message>
     <message>
         <location filename="../src/logindialog.ui" line="155"/>
         <location filename="../build/DigitalStage_autogen/include/ui_logindialog.h" line="173"/>
         <source>Switch to orlandoviols ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsle zu Orlandoviols ...</translation>
     </message>
 </context>
 <context>
@@ -107,12 +107,12 @@
     <message>
         <location filename="../src/main.cpp" line="19"/>
         <source>Systray</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemleiste</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="20"/>
         <source>I couldn&apos;t detect any system tray on this system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leider ist Dein System für die Digitale Bühne ungeeignet, da es keine Systemleiste bietet.</translation>
     </message>
 </context>
 </TS>
