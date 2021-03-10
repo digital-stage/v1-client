@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.16.0)
 
 ## GLOBAL CONFIGURATION
 project(DigitalStage LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -64,10 +64,10 @@ if (APPLE)
         endif ()
     endif ()
 endif ()
-#find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+#find_package(QT NAMES Qt6 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
-find_package(Qt5Keychain REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR}Keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
 
 # DEPENDENCIES
@@ -98,11 +98,6 @@ list(APPEND AUDIOPLUGINS
 add_subdirectory(libov/tascar/plugins ${PROJECT_BINARY_DIR}/plugins)
 get_property(TASCAR_PLUGIN_LIBRARIES GLOBAL PROPERTY TASCAR_PLUGIN_LIBRARIES)
 add_subdirectory(zita-njbridge ${PROJECT_BINARY_DIR}/zita)
-#add_executable(zita-j2n IMPORTED)
-#set_property(TARGET zita-j2n PROPERTY IMPORTED_LOCATION "/zita-njbridge")
-#add_executable(zita-n2j IMPORTED)
-#set_property(TARGET zita-n2j PROPERTY IMPORTED_LOCATION "/zita-njbridge")
-
 
 ## SOURCE AND RESOURCE CONTROL
 # Language generation
@@ -156,21 +151,19 @@ if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else ()
     message("Building with QT5")
-    if (ANDROID)
-        add_library(DigitalStage SHARED
-                ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
-                )
-    else ()
-        add_executable(DigitalStage ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
-        if (APPLE)
-            set_target_properties(DigitalStage PROPERTIES
-                    MACOSX_BUNDLE TRUE
-                    MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
-                    RESOURCE "${PROJECT_RESOURCES}"
-                    )
-        endif ()
-    endif ()
+    add_executable(DigitalStage ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    if (APPLE)
+        set_target_properties(DigitalStage PROPERTIES
+                MACOSX_BUNDLE TRUE
+                MACOSX_BUNDLE_NAME DigitalStage
+                MACOSX_BUNDLE_BUNDLE_NAME DigitalStage
+                MACOSX_BUNDLE_BUNDLE_VERSION ${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH}
+                MACOSX_BUNDLE_ICON_FILE appicon.icns
+                MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
+                RESOURCE "${PROJECT_RESOURCES}"
+                )
+    endif ()
 endif ()
 
 target_include_directories(DigitalStage
@@ -201,6 +194,35 @@ add_custom_command(TARGET DigitalStage
         $<TARGET_FILE_DIR:DigitalStage>
         COMMENT "Copying zita-j2n" VERBATIM)
 
+if (APPLE)
+    include(InstallRequiredSystemLibraries)
+    include(CPack)
+    set(CPACK_PACKAGE_NAME "DigitalStage")
+    set(CPACK_PACKAGE_FILE_NAME "DigitalStage")
+    find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+    install(DIRECTORY "${PROJECT_BINARY_DIR}/DigitalStage.app"
+            DESTINATION "."
+            USE_SOURCE_PERMISSIONS)
+    add_custom_command(TARGET DigitalStage POST_BUILD
+            #COMMAND ${CMAKE_COMMAND} -E copy
+            #        ${CMAKE_BINARY_DIR}/plugins/*.dylib
+            #        ${CMAKE_BINARY_DIR}/DigitalStage.app/Contents/libs/
+            COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+            "$<TARGET_FILE_DIR:DigitalStage>/../.."
+            -always-overwrite
+            COMMENT "Running macdeployqt..."
+            )
+    set(CPACK_BUNDLE_APPLE_CERT_APP "")
+    set(CPACK_GENERATOR "DragNDrop")
+    set(CPACK_DMG_VOLUME_NAME "InstallDigitalStage")
+    #set(CPACK_STRIP_FILES "${CMAKE_BINARY_DIR}/DigitalStage.app")
+    set(CPACK_SOURCE_STRIP_FILES "")
+    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Packaging_DMGSetup.scpt)
+    set(CPACK_DMG_BACKGROUND_IMAGE ${CMAKE_CURRENT_SOURCE_DIR}/images/DMGBackground.tif)
+    #set(CPACK_COMPONENTS_ALL "${CMAKE_BINARY_DIR}/DigitalStage.app")
+endif (APPLE)
+
+#[[
 if (CMAKE_BUILD_TYPE MATCHES Release)
     message("Deploying application...")
 
@@ -267,10 +289,10 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
 else ()
     message("Not deploying application, set CMAKE_BUILD_TYPE to Release to deploy.")
 endif ()
+]]
 
 ## VERBOSE
 message("CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
 message("CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
 message("CMAKE_CROSSCOMPILING: ${CMAKE_CROSSCOMPILING}")
-
