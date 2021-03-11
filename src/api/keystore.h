@@ -10,25 +10,26 @@
 
 using namespace std;
 
-class KeyStore : QObject
-{
-    Q_OBJECT
+class KeyStore : QObject {
+  Q_OBJECT
 
 public:
-    struct Credentials {
-        QString email;
-        QString password;
-    };
+  struct Credentials {
+    QString email;
+    QString password;
+  };
 
-    KeyStore();
-    ~KeyStore();
+  KeyStore();
+  ~KeyStore();
 
-    bool store(Credentials credentials);
-    Credentials* restore(QString email) const;
-    bool remove(QString email) const;
+  bool store(Credentials credentials);
+  Credentials* restore(const QString& email) const;
+  bool remove(const QString& email) const;
 
-protected:
-private:
+  QString restoreEmail();
+  void storeEmail(const QString& email);
+  QString restoreFrontendSelection();
+  void storeFrontendSelection(const QString& frontend);
 };
 
 #endif // KEY_STORE_H

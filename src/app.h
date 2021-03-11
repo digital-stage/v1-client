@@ -3,13 +3,14 @@
 
 #include "api/auth.h"
 #include "api/keystore.h"
+#include "libov/src/ds_auth_service.h"
 #include "logindialog.h"
+#include "ov/ov_controller.h"
 #include <QDialog>
 #include <QMenu>
+#include <QString>
 #include <QSystemTrayIcon>
 #include <QWidget>
-#include <ds_auth_service.h>
-#include <ds_service.h>
 
 #ifndef OV_FRONTEND_URL
 #define OV_FRONTEND_URL "https://box.orlandoviols.com"
@@ -34,48 +35,42 @@ public:
   App();
   ~App();
   void show();
-  void close();
 
 private slots:
-  void onSignIn(const QString email, const QString password);
-  void onSignOut();
+  void autoSignIn();
+  void signIn(const QString& email, const QString& password);
+  void signOut();
   void onExit();
-  void openStage();
+  void openDigitalStageFrontend();
+  void openOrlandoViolsFrontend();
   void iconActivated(QSystemTrayIcon::ActivationReason reason);
-  void switchFrontend(bool useOrlandoViolsFrontend);
+  void switchFrontend(const QString& frontend);
+  void onStarted(const QString& frontend);
+  void onStopped();
+  void onError(const QString& error);
 
 protected:
-  void init();
   void start();
   void stop();
 
 private:
-  bool restoreFrontendSelection();
-  QString restoreEmail();
-  void storeEmail(const QString& email);
-  void service();
+  bool isInitialized;
 
-  bool isRunning_;
+  QSystemTrayIcon* trayIcon;
+  QMenu* loginMenu;
+  QMenu* dsStatusMenu;
+  QMenu* ovStatusMenu;
 
-  bool isInitialized_;
+  LoginDialog* loginDialog;
 
-  QSystemTrayIcon* trayIcon_;
-  QMenu* loginMenu_;
-  QMenu* statusMenu_;
-  QMenu* ovFrontendMenu_;
-
-  LoginDialog* loginDialog_;
-
-  ds::ds_auth_service_t* auth_;
+  ds::ds_auth_service_t* auth;
   // Auth *auth_;
-  KeyStore* keyStore_;
+  KeyStore* keyStore;
 
-  bool useOrlandoViolsFrontend;
-  QString email_;
-  QString token_;
+  QString email;  // we need this redundancy for signing out
+  QString token;
 
-  std::thread servicethread_;
-  ov_client_base_t* service_;
+  OvController* ovController;
 };
 
 #endif // APP_H
