@@ -1,7 +1,7 @@
 #import "auth.h"
 
 #include <QDebug>
-#include <cpprest/filestream.h>
+//#include <cpprest/filestream.h>
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
 #include <cpprest/json.h>

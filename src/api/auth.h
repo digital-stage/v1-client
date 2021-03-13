@@ -2,7 +2,7 @@
 #define AUTH_H
 
 #include <stdexcept>
-#import <string>
+#include <string>
 
 
 class Auth

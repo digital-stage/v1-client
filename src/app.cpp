@@ -5,7 +5,6 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QUrl>
-#include <filesystem>
 #include <iostream>
 
 App::App() : isInitialized(false)
@@ -16,10 +15,6 @@ App::App() : isInitialized(false)
   loginDialog = new LoginDialog();
   auth = new ds::ds_auth_service_t(AUTH_SERVER);
   keyStore = new KeyStore();
-
-  // TODO: REMOVE ME:
-  std::cout << "Current path is " << std::__fs::filesystem::current_path()
-            << '\n';
 
   // Init tray
   trayIcon = new QSystemTrayIcon(this);

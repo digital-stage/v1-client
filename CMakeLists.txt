@@ -68,7 +68,11 @@ endif ()
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt5Keychain REQUIRED)
-find_package(cpprestsdk REQUIRED)
+#find_package(cpprestsdk REQUIRED)
+find_package(cpprestsdk REQUIRED NAMES cpprestsdk cpprest)
+# cpprest needs boost::system (see: https://github.com/microsoft/cpprestsdk/issues/991)
+find_package(Boost COMPONENTS system REQUIRED)
+
 
 # DEPENDENCIES
 set(PLUGINPREFIX "ovclient")
@@ -185,6 +189,7 @@ target_link_libraries(DigitalStage
         cpprestsdk::cpprest
         OpenSSL::Crypto
         ov
+        ${Boost_SYSTEM_LIBRARY}
         PUBLIC
         ${TASCAR_PLUGIN_LIBRARIES}
         )
