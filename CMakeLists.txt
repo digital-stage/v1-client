@@ -130,7 +130,7 @@ target_include_directories(DigitalStage
 target_link_libraries(DigitalStage
         PRIVATE
         #Qt::Core
-        Qt::Widgets
+        Qt5::Widgets
         qt5keychain
         cpprestsdk::cpprest
         OpenSSL::Crypto
