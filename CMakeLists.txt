@@ -70,7 +70,7 @@ endif (APPLE)
 #find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
-find_package(Qt5Keychain REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR}Keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
 find_package(LibXml++ REQUIRED)
 find_package(Jack REQUIRED)
@@ -160,18 +160,19 @@ if (APPLE)
                 ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@executable_path/../../Frameworks/"
                 $<TARGET_FILE:DigitalStage>)
     endif ()
+    # Copy zita binaries into the application bundle
+    add_custom_command(TARGET DigitalStage
+            POST_BUILD
+            COMMAND cp $<TARGET_FILE_DIR:zita-n2j>/zita-n2j
+            $<TARGET_FILE_DIR:DigitalStage>
+            COMMENT "Copying zita-n2j" VERBATIM)
+    add_custom_command(TARGET DigitalStage
+            POST_BUILD
+            COMMAND cp $<TARGET_FILE_DIR:zita-j2n>/zita-j2n
+            $<TARGET_FILE_DIR:DigitalStage>
+            COMMENT "Copying zita-j2n" VERBATIM)
 endif ()
-# Copy zita binaries into the application bundle
-add_custom_command(TARGET DigitalStage
-        POST_BUILD
-        COMMAND cp $<TARGET_FILE_DIR:zita-n2j>/zita-n2j
-        $<TARGET_FILE_DIR:DigitalStage>
-        COMMENT "Copying zita-n2j" VERBATIM)
-add_custom_command(TARGET DigitalStage
-        POST_BUILD
-        COMMAND cp $<TARGET_FILE_DIR:zita-j2n>/zita-j2n
-        $<TARGET_FILE_DIR:DigitalStage>
-        COMMENT "Copying zita-j2n" VERBATIM)
+
 # Bundle dynamic libraries into application bundle
 if (CMAKE_BUILD_TYPE MATCHES Release)
     if (APPLE)
@@ -261,7 +262,6 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
         #set(CPACK_COMPONENTS_ALL "${CMAKE_BINARY_DIR}/DigitalStage.app")
         include(CPack)
     endif ()
-
 else ()
     message("Not isolating app bundle, set CMAKE_BUILD_TYPE to Release to fix the app bundle and finish deploy preparation.")
 endif ()
