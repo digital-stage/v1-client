@@ -6,7 +6,6 @@
 #include <QMessageBox>
 #include <QSystemTrayIcon>
 #include <QSplashScreen>
-#include <unistd.h>
 #include <QTimer>
 #include <QTranslator>
 

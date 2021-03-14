@@ -1,82 +1,84 @@
 cmake_minimum_required(VERSION 3.16.0)
 
-#set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
-
 ## GLOBAL CONFIGURATION
 project(DigitalStage LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_PROJECT_VERSION_MAJOR "0")
+set(CMAKE_PROJECT_VERSION_MINOR "1")
+set(CMAKE_PROJECT_VERSION_PATCH "0")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gdwarf-3")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
+if (APPLE)
+    include(FixAppleArchitecture.cmake)
+endif (APPLE)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_PROJECT_VERSION_MAJOR "0")
-set(CMAKE_PROJECT_VERSION_MINOR "1")
-set(CMAKE_PROJECT_VERSION_PATCH "0")
 
+### RUNTIME FLAGS
 add_compile_definitions(STAGE_URL="https://single.dstage.org")
 add_compile_definitions(AUTH_SERVER="https://single.dstage.org/api/auth")
 add_compile_definitions(API_SERVER="wss://single.dstage.org/api/endpoint/")
 if (APPLE)
     add_compile_definitions(ZITAPATH="./")
+    # Required by AppStore
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gdwarf-3")
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
 endIf (APPLE)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gdwarf-3")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
-
-if (CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
-    if (CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
-        # Check whether we are running under Rosetta on arm64 hardware.
-        execute_process(COMMAND sysctl -q hw.optional.arm64
-                OUTPUT_VARIABLE _sysctl_stdout
-                ERROR_VARIABLE _sysctl_stderr
-                RESULT_VARIABLE _sysctl_result
-                )
-        if (_sysctl_result EQUAL 0 AND _sysctl_stdout MATCHES "hw.optional.arm64: 1")
-            message("Compiling multi build for x84_64 and arm64")
-            set(CMAKE_HOST_SYSTEM_PROCESSOR arm64 CACHE INTERNAL "CMAKE_HOST_SYSTEM_PROCESSOR")
-            # Not possible right now with qt6
-            set(CMAKE_CROSSCOMPILING true)
-            set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
-            set(QMAKE_APPLE_DEVICE_ARCHS arm64)
-            #set(CMAKE_OSX_ARCHITECTURES x86_64)
-        else ()
-            set(CMAKE_OSX_ARCHITECTURES x86_64)
-        endif ()
-    endif ()
-endif ()
 
 
-## DEPENDENCIES
+### SOURCE AND RESOURCE MANAGEMENT
+# Language generation
+set(TS_FILES
+        i18n/DigitalStage_de.ts
+        i18n/DigitalStage_fr.ts
+        i18n/DigitalStage_es.ts
+        )
+# Source files
+set(PROJECT_SOURCES
+        ${PROJECT_SOURCE_DIR}/src/main.cpp
+        ${PROJECT_SOURCE_DIR}/src/app.cpp
+        ${PROJECT_SOURCE_DIR}/src/app.h
+        ${PROJECT_SOURCE_DIR}/src/logindialog.cpp
+        ${PROJECT_SOURCE_DIR}/src/logindialog.h
+        ${PROJECT_SOURCE_DIR}/src/api/auth.cpp
+        ${PROJECT_SOURCE_DIR}/src/api/auth.h
+        ${PROJECT_SOURCE_DIR}/src/api/keystore.cpp
+        ${PROJECT_SOURCE_DIR}/src/api/keystore.h
+        ${PROJECT_SOURCE_DIR}/src/ov/ov_worker.cpp
+        ${PROJECT_SOURCE_DIR}/src/ov/ov_worker.h
+        ${PROJECT_SOURCE_DIR}/src/ov/ov_controller.cpp
+        ${PROJECT_SOURCE_DIR}/src/ov/ov_controller.h
+        resources.qrc
+        )
+file(GLOB
+        PROJECT_ASSETS
+        ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm
+        ${CMAKE_CURRENT_SOURCE_DIR}/images/*.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/images/*.svg
+        )
+
+### DEPENDENCIES
 if (APPLE)
-    find_program(BREW brew)
-    # only if OPENSSL_ROOT_DIR is not set yet
-    if (BREW AND NOT OPENSSL_ROOT_DIR AND NOT "$ENV{OPENSSL_ROOT_DIR}")
-        execute_process(COMMAND ${BREW} --prefix openssl
-                OUTPUT_VARIABLE BREW_OPENSSL_PREFIX
-                RESULT_VARIABLE BREW_OPENSSL_RESULT
-                ERROR_QUIET
-                OUTPUT_STRIP_TRAILING_WHITESPACE
-                )
-        if (BREW_OPENSSL_RESULT EQUAL 0)
-            message(STATUS "Set OPENSSL_ROOT_DIR=${BREW_OPENSSL_PREFIX} (from brew)")
-            set(OPENSSL_ROOT_DIR "${BREW_OPENSSL_PREFIX}" CACHE PATH "")
-        endif ()
-    endif ()
-endif ()
+    include(BrewResolver.cmake)
+endif (APPLE)
+# Note: Qt6 requires c++17, but we are depending to libxml++2, which does NOT support c++17
 #find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt5Keychain REQUIRED)
-#find_package(cpprestsdk REQUIRED)
-find_package(cpprestsdk REQUIRED NAMES cpprestsdk cpprest)
-# cpprest needs boost::system (see: https://github.com/microsoft/cpprestsdk/issues/991)
-find_package(Boost COMPONENTS system REQUIRED)
+find_package(cpprestsdk REQUIRED)
+find_package(LibXml++ REQUIRED)
+find_package(Jack REQUIRED)
 
-
-# DEPENDENCIES
-set(PLUGINPREFIX "ovclient")
+# libov
 add_subdirectory(libov)
+# Tascar plugins
+set(PLUGINPREFIX "ovclient")
 list(APPEND RECEIVERS
         ortf
         hrtf
@@ -101,181 +103,165 @@ list(APPEND AUDIOPLUGINS
         )
 add_subdirectory(libov/tascar/plugins ${PROJECT_BINARY_DIR}/plugins)
 get_property(TASCAR_PLUGIN_LIBRARIES GLOBAL PROPERTY TASCAR_PLUGIN_LIBRARIES)
+# zita-njbridge executables
 add_subdirectory(zita-njbridge ${PROJECT_BINARY_DIR}/zita)
-#add_executable(zita-j2n IMPORTED)
-#set_property(TARGET zita-j2n PROPERTY IMPORTED_LOCATION "/zita-njbridge")
-#add_executable(zita-n2j IMPORTED)
-#set_property(TARGET zita-n2j PROPERTY IMPORTED_LOCATION "/zita-njbridge")
 
 
-## SOURCE AND RESOURCE CONTROL
-# Language generation
-set(TS_FILES i18n/DigitalStage_de.ts)
-
-set(PROJECT_SOURCES
-        src/main.cpp
-        src/logindialog.cpp
-        src/logindialog.h
-        src/logindialog.ui
-        src/api/auth.h
-        src/api/auth.cpp
-        src/api/keystore.h
-        src/api/keystore.cpp
-        src/app.h
-        src/app.cpp
-        resources.qrc
-        ${TS_FILES}
-        )
-
-file(GLOB
-        PROJECT_ASSETS
-        ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.qm
-        ${CMAKE_CURRENT_SOURCE_DIR}/images/*.png
-        ${CMAKE_CURRENT_SOURCE_DIR}/images/*.svg
-        )
-
-set(PROJECT_RESOURCES
-        resources.qrc
-        ${PROJECT_ASSETS}
-        )
-
-## APPLE SPECIFIC
+### TARGETS
 if (APPLE)
     # Add app icon
-    set(MACOSX_BUNDLE_ICON_FILE appicon.icns)
     set(APP_ICON ${CMAKE_CURRENT_SOURCE_DIR}/images/appicon.icns)
     set_source_files_properties(${APP_ICON} PROPERTIES
             MACOSX_PACKAGE_LOCATION "Resources")
-    set_source_files_properties(${APP_ICON} PROPERTIES
-            MACOSX_PACKAGE_LOCATION "Resources")
 endif ()
-
-
-## EXECUTABLE
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    message("Building with QT6")
-    qt_add_executable(DigitalStage
-            ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
-            )
+    qt_add_executable(DigitalStage ${PROJECT_SOURCES} ${APP_ICON})
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else ()
-    message("Building with QT5")
-    if (ANDROID)
-        add_library(DigitalStage SHARED
-                ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON}
-                )
-    else ()
-        add_executable(DigitalStage ${PROJECT_SOURCES} ${PROJECT_RESOURCES} ${APP_ICON})
-        if (APPLE)
-            set_target_properties(DigitalStage PROPERTIES
-                    MACOSX_BUNDLE TRUE
-                    MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
-                    RESOURCE "${PROJECT_RESOURCES}"
-                    )
-        endif ()
-    endif ()
+    add_executable(DigitalStage ${PROJECT_SOURCES} ${APP_ICON})
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif ()
-
 target_include_directories(DigitalStage
         PRIVATE
         libov/src
+        ${LIBXML++_INCLUDE_DIRS}
+        ${JACK_INCLUDE_DIRS}
         )
-
 target_link_libraries(DigitalStage
         PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
+        #Qt::Core
+        Qt::Widgets
         qt5keychain
         cpprestsdk::cpprest
         OpenSSL::Crypto
+        ${LIBXML++_LIBRARIES}
+        ${JACK_LIBRARIES}
         ov
-        ${Boost_SYSTEM_LIBRARY}
         PUBLIC
         ${TASCAR_PLUGIN_LIBRARIES}
         )
 
+### CREATE BUNDLE
+if (APPLE)
+    set_target_properties(DigitalStage PROPERTIES
+            MACOSX_BUNDLE TRUE
+            MACOSX_BUNDLE_NAME DigitalStage
+            MACOSX_BUNDLE_BUNDLE_NAME DigitalStage
+            MACOSX_BUNDLE_GUI_IDENTIFIER org.digital-stage.client
+            MACOSX_BUNDLE_BUNDLE_VERSION ${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH}
+            MACOSX_BUNDLE_ICON_FILE appicon.icns
+            MACOSX_BUNDLE_COPYRIGHT GPLv2
+            MACOSX_BUNDLE_INFO_STRING "Digital Stage Client"
+            MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
+            )
+    if (FALSE)
+        add_custom_command(TARGET DigitalStage
+                POST_BUILD COMMAND
+                ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@executable_path/../../Frameworks/"
+                $<TARGET_FILE:DigitalStage>)
+    endif ()
+endif ()
+# Copy zita binaries into the application bundle
 add_custom_command(TARGET DigitalStage
         POST_BUILD
         COMMAND cp $<TARGET_FILE_DIR:zita-n2j>/zita-n2j
         $<TARGET_FILE_DIR:DigitalStage>
         COMMENT "Copying zita-n2j" VERBATIM)
-
 add_custom_command(TARGET DigitalStage
         POST_BUILD
         COMMAND cp $<TARGET_FILE_DIR:zita-j2n>/zita-j2n
         $<TARGET_FILE_DIR:DigitalStage>
         COMMENT "Copying zita-j2n" VERBATIM)
-
+# Bundle dynamic libraries into application bundle
 if (CMAKE_BUILD_TYPE MATCHES Release)
-    message("Deploying application...")
-
-    include(InstallRequiredSystemLibraries)
-    set(CPACK_PACKAGE_NAME "DigitalStage")
-    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Native client for Digital Stage")
-    set(CPACK_PACKAGE_VENDOR "Digital Stage gGmbH")
-    set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ReadMe.txt")
-    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt")
-    set(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
-    set(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
-    set(CPACK_PACKAGE_VERSION_PATCH ${CMAKE_PROJECT_VERSION_PATCH})
-    set(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
-    set(CPACK_NSIS_CONTACT "info@digital-stage.com")
-    set(CPACK_PACKAGE_EXECUTABLES "DigitalStage" "Digital Stage")
-
-
-    if (WIN32 AND NOT UNIX)
-        find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
-        add_custom_command(TARGET DigitalStage POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E
-                env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
-                "$<TARGET_FILE:DigitalStage>"
-                COMMENT "Running windeployqt..."
-                )
-        set(CPACK_GENERATOR "NSIS")
-        set(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/images\\\\appicon.bmp")
-        set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\DigitalStage.exe")
-        set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} Digital Stage")
-        set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.digital-stage.org")
-        set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.digital-stage.com")
-        set(CPACK_NSIS_MODIFY_PATH ON)
-    endif ()
-
     if (APPLE)
         find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
-        set_target_properties(DigitalStage PROPERTIES
-                MACOSX_BUNDLE TRUE
-                MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
-                RESOURCE "${PROJECT_RESOURCES}")
+
+        # First use macdeployqt to bundle the qt libs, but do NOT sign yet
+        add_custom_command(TARGET DigitalStage POST_BUILD
+                COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+                "$<TARGET_FILE_DIR:DigitalStage>/../.."
+                -libpath="${PROJECT_BINARY_DIR}/plugins"
+                #-codesign="${APPLE_CERT}"
+                -appstore-compliant
+                #-executable="$<TARGET_FILE_DIR:DigitalStage>/../zita-n2j
+                #-executable="$<TARGET_FILE_DIR:DigitalStage>/../zita-j2n
+                #-always-overwrite
+                COMMENT "Running macdeployqt..."
+                )
+        # We have to fix the dynlink paths of the zita-n2j and zita-j2n, too
+        add_custom_command(TARGET DigitalStage POST_BUILD
+                COMMAND
+                ${CMAKE_INSTALL_NAME_TOOL}
+                -change
+                "/usr/local/lib/libjack.0.1.0.dylib"
+                "@executable_path/../Frameworks/libjack.0.1.0.dylib"
+                "$<TARGET_FILE_DIR:DigitalStage>/zita-n2j"
+                COMMENT "Fixing zita-n2j paths..."
+                )
+        add_custom_command(TARGET DigitalStage POST_BUILD
+                COMMAND
+                ${CMAKE_INSTALL_NAME_TOOL}
+                -change
+                "/usr/local/lib/libjack.0.1.0.dylib"
+                "@executable_path/../Frameworks/libjack.0.1.0.dylib"
+                "$<TARGET_FILE_DIR:DigitalStage>/zita-j2n"
+                COMMENT "Fixing zita-j2n paths..."
+                )
+        # Now we have to fix the dynlib paths to the tascar plugins as well
+        foreach (TASCAR_PLUGIN IN LISTS TASCAR_PLUGIN_LIBRARIES)
+            if (FALSE)
+                #This is ommited, since macdeployqt seems to copy the tascar libraries, but is NOT applying the new paths, so...
+                add_custom_command(TARGET DigitalStage POST_BUILD
+                        COMMAND
+                        COMMAND cp "${PROJECT_BINARY_DIR}/plugins/${TASCAR_PLUGIN}.dylib"
+                        "$<TARGET_FILE_DIR:DigitalStage>/../Frameworks/${TASCAR_PLUGIN}.dylib"
+                        COMMENT "Copy tascar plugins..."
+                        )
+            endif ()
+            # Chaning the dynlib signature of the tascar plugin
+            add_custom_command(TARGET DigitalStage POST_BUILD
+                    COMMAND
+                    ${CMAKE_INSTALL_NAME_TOOL}
+                    -change
+                    "@rpath/${TASCAR_PLUGIN}.dylib"
+                    "@executable_path/../Frameworks/${TASCAR_PLUGIN}.dylib"
+                    $<TARGET_FILE:DigitalStage>
+                    COMMENT "Fixing tascar paths..."
+                    )
+        endforeach ()
+        # Now signing the app bundle
+        set(APPLE_CERT "" CACHE STRING "The name of your Apple supplied code signing certificate for the application. The name usually takes the form Developer ID Application: [Name] or 3rd Party Mac Developer Application: [Name].")
+        if (APPLE_CERT STREQUAL "")
+            set(ENV{CODESIGN_ALLOCATE} /Applications/Xcode.app/Contents/Developer/usr/bin/codesign_allocate)
+            add_custom_command(TARGET DigitalStage POST_BUILD
+                    COMMAND
+                    codesign
+                    --force
+                    --deep
+                    --sign "${APPLE_CERT}"
+                    "${PROJECT_BINARY_DIR}/DigitalStage.app"
+                    COMMENT "Signing app bundle using certificate ${APPLE_CERT}..."
+                    VERBATIM
+                    )
+        elseif ()
+            message(WARN "Not signing app bundle, since no APPLE_CERT is specified")
+        endif ()
+
         install(DIRECTORY "${PROJECT_BINARY_DIR}/DigitalStage.app"
                 DESTINATION "."
                 USE_SOURCE_PERMISSIONS)
-        add_custom_command(TARGET DigitalStage POST_BUILD
-                #COMMAND ${CMAKE_COMMAND} -E copy
-                #        ${CMAKE_BINARY_DIR}/plugins/*.dylib
-                #        ${CMAKE_BINARY_DIR}/DigitalStage.app/Contents/libs/
-                COMMAND "${MACDEPLOYQT_EXECUTABLE}"
-                "$<TARGET_FILE_DIR:DigitalStage>/../.."
-                -always-overwrite
-                COMMENT "Running macdeployqt..."
-                )
-        set(CPACK_BUNDLE_APPLE_CERT_APP "")
+
         set(CPACK_GENERATOR "DragNDrop")
-        set(CPACK_DMG_VOLUME_NAME "InstallDigitalStage")
-        #set(CPACK_STRIP_FILES "${CMAKE_BINARY_DIR}/DigitalStage.app")
-        set(CPACK_SOURCE_STRIP_FILES "")
+        set(CPACK_DMG_VOLUME_NAME "DigitalStageInstaller")
+        set(CPACK_BUNDLE_APPLE_CERT_APP "")
         set(CPACK_DMG_DS_STORE_SETUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Packaging_DMGSetup.scpt)
         set(CPACK_DMG_BACKGROUND_IMAGE ${CMAKE_CURRENT_SOURCE_DIR}/images/DMGBackground.tif)
+        set(CPACK_SOURCE_STRIP_FILES "")
         #set(CPACK_COMPONENTS_ALL "${CMAKE_BINARY_DIR}/DigitalStage.app")
+        include(CPack)
     endif ()
 
-    include(CPack)
 else ()
-    message("Not deploying application, set CMAKE_BUILD_TYPE to Release to deploy.")
+    message("Not isolating app bundle, set CMAKE_BUILD_TYPE to Release to fix the app bundle and finish deploy preparation.")
 endif ()
-
-## VERBOSE
-message("CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
-message("CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
-message("CMAKE_CROSSCOMPILING: ${CMAKE_CROSSCOMPILING}")
-
