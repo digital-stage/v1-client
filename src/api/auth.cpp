@@ -1,4 +1,4 @@
-#import "auth.h"
+#include "auth.h"
 
 #include <QDebug>
 //#include <cpprest/filestream.h>

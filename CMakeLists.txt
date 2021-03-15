@@ -91,7 +91,7 @@ if (UNIX AND NOT APPLE)
 endif ()
 
 # libov
-add_subdirectory(libov)
+add_subdirectory(libov EXCLUDE_FROM_ALL)
 # Tascar plugins
 set(PLUGINPREFIX "ovclient")
 list(APPEND RECEIVERS
@@ -119,7 +119,7 @@ list(APPEND AUDIOPLUGINS
 add_subdirectory(libov/tascar/plugins ${PROJECT_BINARY_DIR}/plugins)
 get_property(TASCAR_PLUGIN_LIBRARIES GLOBAL PROPERTY TASCAR_PLUGIN_LIBRARIES)
 # zita-njbridge executables
-add_subdirectory(zita-njbridge ${PROJECT_BINARY_DIR}/zita)
+add_subdirectory(zita-njbridge ${PROJECT_BINARY_DIR}/zita EXCLUDE_FROM_ALL)
 
 
 ### TARGETS
@@ -157,14 +157,11 @@ target_link_libraries(DigitalStage
         ${TASCAR_PLUGIN_LIBRARIES}
         )
 if (UNIX AND NOT APPLE)
-    target_include_directories(DigitalStage
-            PRIVATE
-            ${ALSA_LIBRARIES}
-            )
     target_link_libraries(DigitalStage
             PRIVATE
-            ${ALSA_INCLUDE_DIRS}
+	    ALSA::ALSA
             )
+    set_target_properties(DigitalStage PROPERTIES OUTPUT_NAME "ds-client")
 endif ()
 
 ### CREATE BUNDLE
@@ -199,8 +196,25 @@ if (APPLE)
             COMMENT "Copying zita-j2n" VERBATIM)
 endif ()
 
-# Bundle dynamic libraries into application bundle
+
+## INSTALL
+install(
+        TARGETS DigitalStage
+        EXPORT "${TARGETS_EXPORT_NAME}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+)
+
+
+## CPACK
 if (CMAKE_BUILD_TYPE MATCHES Release)
+
+    set(CPACK_PACKAGE_HOMEPAGE_URL "https://www.digital-stage.org")
+    set(CPACK_PACKAGE_CONTACT "Tobias Hegemann <tobias.hegemann@digital-stage.org")
+
     if (APPLE)
         find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 
@@ -209,11 +223,8 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
                 COMMAND "${MACDEPLOYQT_EXECUTABLE}"
                 "$<TARGET_FILE_DIR:DigitalStage>/../.."
                 -libpath="${PROJECT_BINARY_DIR}/plugins"
-                #-codesign="${APPLE_CERT}"
                 -appstore-compliant
-                #-executable="$<TARGET_FILE_DIR:DigitalStage>/../zita-n2j
-                #-executable="$<TARGET_FILE_DIR:DigitalStage>/../zita-j2n
-                #-always-overwrite
+                -always-overwrite
                 COMMENT "Running macdeployqt..."
                 )
         # We have to fix the dynlink paths of the zita-n2j and zita-j2n, too
@@ -281,13 +292,19 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
 
         set(CPACK_GENERATOR "DragNDrop")
         set(CPACK_DMG_VOLUME_NAME "DigitalStageInstaller")
-        set(CPACK_BUNDLE_APPLE_CERT_APP "")
         set(CPACK_DMG_DS_STORE_SETUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Packaging_DMGSetup.scpt)
         set(CPACK_DMG_BACKGROUND_IMAGE ${CMAKE_CURRENT_SOURCE_DIR}/images/DMGBackground.tif)
         set(CPACK_SOURCE_STRIP_FILES "")
         #set(CPACK_COMPONENTS_ALL "${CMAKE_BINARY_DIR}/DigitalStage.app")
-        include(CPack)
     endif ()
+
+    if (UNIX AND NOT APPLE)
+        set(CPACK_PACKAGE_NAME "ds-client")
+        set(CPACK_GENERATOR "DEB")
+        set(CPACK_DEBIAN_PACKAGE_DEPENDS "libtascar (>= 0.6)")
+    endif ()
+
+    include(CPack)
 else ()
     message(WARNING "Not isolating app bundle, set CMAKE_BUILD_TYPE to Release to fix the app bundle and finish deploy preparation.")
 endif ()
