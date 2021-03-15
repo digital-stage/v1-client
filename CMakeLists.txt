@@ -157,13 +157,9 @@ target_link_libraries(DigitalStage
         ${TASCAR_PLUGIN_LIBRARIES}
         )
 if (UNIX AND NOT APPLE)
-    target_include_directories(DigitalStage
-            PRIVATE
-            ${ALSA_LIBRARIES}
-            )
     target_link_libraries(DigitalStage
             PRIVATE
-            ${ALSA_INCLUDE_DIRS}
+            ALSA::ALSA
             )
 endif ()
 
