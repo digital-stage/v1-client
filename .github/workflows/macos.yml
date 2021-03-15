@@ -19,7 +19,7 @@ jobs:
            export CPPFLAGS="-I/usr/local/opt/qt/include" &&
            export PKG_CONFIG_PATH="/usr/local/opt/qt/lib/pkgconfig"
     - name: Configure project
-      run: cmake . -DCMAKE_BUILD_TYPE=Release -DQT_DIR=/usr/local/opt/qt5/lib/cmake/Qt5 -DQt5_DIR=/usr/local/opt/qt5/lib/cmake/Qt5 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 -DMACDEPLOYQT_EXECUTABLE=/usr/local/opt/qt/bin/macdeployqt
+      run: cmake . -DCMAKE_BUILD_TYPE=Release -DQT_DIR=/usr/local/opt/qt5/lib/cmake/Qt5 -DQt5_DIR=/usr/local/opt/qt5/lib/cmake/Qt5 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 -DMACDEPLOYQT_EXECUTABLE=/usr/local/opt/qt5/bin/macdeployqt
     - name: Build
       run: make
     - name: Create installer
