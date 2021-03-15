@@ -86,6 +86,9 @@ find_package(OpenSSL REQUIRED)
 find_package(LibXml++ REQUIRED)
 find_package(Jack REQUIRED)
 find_package(Boost COMPONENTS system REQUIRED)
+if (UNIX AND NOT APPLE)
+    find_package(ALSA REQUIRED)
+endif ()
 
 # libov
 add_subdirectory(libov)
@@ -153,6 +156,16 @@ target_link_libraries(DigitalStage
         PUBLIC
         ${TASCAR_PLUGIN_LIBRARIES}
         )
+if (UNIX AND NOT APPLE)
+    target_include_directories(DigitalStage
+            PRIVATE
+            ${ALSA_LIBRARIES}
+            )
+    target_link_libraries(DigitalStage
+            PRIVATE
+            ${ALSA_INCLUDE_DIRS}
+            )
+endif ()
 
 ### CREATE BUNDLE
 if (APPLE)
