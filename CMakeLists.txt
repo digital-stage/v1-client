@@ -82,8 +82,10 @@ find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR}Keychain REQUIRED)
 find_package(cpprestsdk REQUIRED)
+find_package(OpenSSL REQUIRED)
 find_package(LibXml++ REQUIRED)
 find_package(Jack REQUIRED)
+find_package(Boost COMPONENTS system REQUIRED)
 
 # libov
 add_subdirectory(libov)
@@ -146,6 +148,7 @@ target_link_libraries(DigitalStage
         OpenSSL::Crypto
         ${LIBXML++_LIBRARIES}
         ${JACK_LIBRARIES}
+        ${Boost_SYSTEM_LIBRARY}
         ov
         PUBLIC
         ${TASCAR_PLUGIN_LIBRARIES}
