@@ -56,9 +56,12 @@ App::App()
           &App::openOrlandoViolsFrontend);
   QAction* switchAction = new QAction(tr("Switch to digital stage"), this);
   connect(switchAction, &QAction::triggered, ovController, [=]() {
-    QString frontend("ds");
-    ovController->start(frontend);
-    switchFrontend(frontend);
+    std::cout << "Switching to digital stage" << std::endl;
+    ovController->stop();
+    switchFrontend("ds");
+    if( !token.isEmpty() ) {
+      ovController->start("ds");
+    }
   });
   ovStatusMenu->addAction(switchAction);
   ovStatusMenu->addSeparator();
@@ -68,9 +71,10 @@ App::App()
   connect(trayIcon, &QSystemTrayIcon::activated, this, &App::iconActivated);
   connect(loginDialog, &LoginDialog::logIn, this, &App::signIn);
   connect(loginDialog, &LoginDialog::switchToOrlandoViols, this, [=]() {
-    QString frontend("ov");
-    ovController->start(frontend);
-    switchFrontend(frontend);
+    std::cout << "Switching to ov" << std::endl;
+    ovController->stop();
+    switchFrontend("ov");
+    ovController->start("ov");
   });
   connect(qApp, &QApplication::aboutToQuit, this, &App::onExit);
   connect(ovController, &OvController::started, this, &App::onStarted);
@@ -94,11 +98,12 @@ void App::show()
   switchFrontend(frontend);
 }
 
-void App::autoSignIn() {
+void App::autoSignIn()
+{
   // Try to sign in by restoring the credentials
   loginDialog->resetError();
   email = keyStore->restoreEmail();
-  if( !email.isEmpty() ) {
+  if(!email.isEmpty()) {
     this->loginDialog->setEmail(email);
     KeyStore::Credentials* credentials = keyStore->restore(email);
     if(credentials != nullptr) {
@@ -164,7 +169,6 @@ void App::stop()
   ovController->stop();
 }
 
-
 void App::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
   switch(reason) {
@@ -184,6 +188,7 @@ void App::switchFrontend(const QString& value)
     this->start();
   } else {
     if(!token.isEmpty()) {
+      std::cout << "TOKEN IS NOT EMPTY" << std::endl;
       ovController->setToken(token);
       this->start();
     } else {
