@@ -201,6 +201,7 @@ endif ()
 install(
         TARGETS DigitalStage
         EXPORT "${TARGETS_EXPORT_NAME}"
+        BUNDLE DESTINATION "/Applications"
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
@@ -270,7 +271,7 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
         endforeach ()
         # Now signing the app bundle
         set(APPLE_CERT "" CACHE STRING "The name of your Apple supplied code signing certificate for the application. The name usually takes the form Developer ID Application: [Name] or 3rd Party Mac Developer Application: [Name].")
-        if (APPLE_CERT STREQUAL "")
+        if (NOT APPLE_CERT STREQUAL "")
             set(ENV{CODESIGN_ALLOCATE} /Applications/Xcode.app/Contents/Developer/usr/bin/codesign_allocate)
             add_custom_command(TARGET DigitalStage POST_BUILD
                     COMMAND
