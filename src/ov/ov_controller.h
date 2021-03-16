@@ -15,22 +15,19 @@ public:
   ~OvController();
 
 public:
-  void start();
+  void start(const QString& frontend);
   void stop();
   void setToken(const QString& token);
-  void changeFrontend(const QString& frontend);
 
 signals:
   void started(const QString& frontend);
   void stopped();
   void errored(const QString& error);
-  void frontendChanged(const QString& frontend);
   void tokenChanged(const QString& token);
 
   // The following events are used to communicate with the worker thread
-  void starting();
+  void starting(const QString& frontend);
   void stopping();
-  void frontendChanging(const QString& frontend);
   void tokenChanging(const QString& token);
 };
 

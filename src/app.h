@@ -11,6 +11,7 @@
 #include <QString>
 #include <QSystemTrayIcon>
 #include <QWidget>
+#include <QSocketNotifier>
 
 #ifndef OV_FRONTEND_URL
 #define OV_FRONTEND_URL "https://box.orlandoviols.com"
@@ -54,8 +55,6 @@ protected:
   void stop();
 
 private:
-  bool isInitialized;
-
   QSystemTrayIcon* trayIcon;
   QMenu* loginMenu;
   QMenu* dsStatusMenu;
@@ -69,6 +68,7 @@ private:
 
   QString email;  // we need this redundancy for signing out
   QString token;
+  QString frontend;
 
   OvController* ovController;
 };

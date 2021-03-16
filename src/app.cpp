@@ -7,7 +7,7 @@
 #include <QUrl>
 #include <iostream>
 
-App::App() : isInitialized(false)
+App::App()
 {
   QApplication::setQuitOnLastWindowClosed(false);
 
@@ -57,7 +57,7 @@ App::App() : isInitialized(false)
   QAction* switchAction = new QAction(tr("Switch to digital stage"), this);
   connect(switchAction, &QAction::triggered, ovController, [=]() {
     QString frontend("ds");
-    ovController->changeFrontend(frontend);
+    ovController->start(frontend);
     switchFrontend(frontend);
   });
   ovStatusMenu->addAction(switchAction);
@@ -69,7 +69,7 @@ App::App() : isInitialized(false)
   connect(loginDialog, &LoginDialog::logIn, this, &App::signIn);
   connect(loginDialog, &LoginDialog::switchToOrlandoViols, this, [=]() {
     QString frontend("ov");
-    ovController->changeFrontend(frontend);
+    ovController->start(frontend);
     switchFrontend(frontend);
   });
   connect(qApp, &QApplication::aboutToQuit, this, &App::onExit);
@@ -155,7 +155,7 @@ void App::openOrlandoViolsFrontend()
 void App::start()
 {
   std::cout << "App::start" << std::endl;
-  ovController->start();
+  ovController->start(frontend);
 }
 
 void App::stop()
@@ -175,9 +175,9 @@ void App::iconActivated(QSystemTrayIcon::ActivationReason reason)
   default:;
   }
 }
-void App::switchFrontend(const QString& frontend)
+void App::switchFrontend(const QString& value)
 {
-  ovController->changeFrontend(frontend);
+  frontend = value;
   this->keyStore->storeFrontendSelection(frontend);
   if(frontend == "ov") {
     // Since no login is necessary directly start client
@@ -191,7 +191,7 @@ void App::switchFrontend(const QString& frontend)
     }
   }
 }
-App::~App() {}
+App::~App() = default;
 
 void App::onError(const QString& error)
 {
@@ -199,10 +199,11 @@ void App::onError(const QString& error)
   msgBox.setText(error);
   msgBox.exec();
 }
-void App::onStarted(const QString& frontend)
+void App::onStarted(const QString& value)
 {
+  frontend = value;
   loginDialog->hide();
-  if(frontend == "ds") {
+  if(value == "ds") {
     trayIcon->setContextMenu(dsStatusMenu);
   } else {
     trayIcon->setContextMenu(ovStatusMenu);
