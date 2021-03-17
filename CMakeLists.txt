@@ -166,13 +166,18 @@ if (UNIX AND NOT APPLE)
 endif ()
 
 ## WEBMIXER
-if (NODEJS_EXECUTABLE)
+if (NODEJS_EXECUTABLE AND FALSE)
     message("Building webmixer")
     add_custom_command(TARGET DigitalStage
             POST_BUILD
             COMMAND
             npm install
             COMMENT "Installing node modules" VERBATIM)
+    add_custom_command(TARGET DigitalStage
+            POST_BUILD
+            COMMAND
+            npm run deploy
+            COMMENT "Building webmixer" VERBATIM)
 endif ()
 
 ### CREATE BUNDLE
