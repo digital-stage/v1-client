@@ -1,4 +1,5 @@
 .idea
+node_modules
 vcpkg_installed
 build-qt6
 bin
@@ -16,6 +17,8 @@ build
 *.so.*
 *.dll
 *.dylib
+package-lock.json
+yarn.lock
 
 # Qt-es
 object_script.*.Release

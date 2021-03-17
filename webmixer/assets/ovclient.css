@@ -1,0 +1,145 @@
+body {
+    color: #fff;
+    background-color: #282828;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 28px;
+    margin: 0; 
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    width: 90%;
+    background-position:center top;
+    background-repeat: no-repeat;
+}
+.mixerstrip {
+    width: 100%;
+    background-color: #a0a0ff40;
+    margin: 8px;
+    padding: 8px;
+}
+.mixerego {
+    background-color: #ffa0a040;
+}
+.mixerother {
+    background-color: #ffffff40;
+}
+.gaintxtfader {
+    -webkit-appearance: none;
+    width: 9%;
+    height: 25px;
+    border-radius: 5px;
+}
+.fader {
+    -webkit-appearance: none;
+    width: 88%;
+    height: 35px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.fader::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%; 
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.fader::-moz-range-thumb {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+button {
+    width: 300px;
+    height: 90px;
+    background-color: #808077;
+    color: #000000;
+    border-radius:11px;
+    padding:17px 24px;
+    margin:0px 140px 70px 0px;
+    font-size: 28px;
+}
+.level {
+    width: 88%;
+    height: 35px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+}
+
+.checkbox {
+    width: 30px;
+}
+
+.netctl {
+    background-color: #383838;
+    padding: 20px;
+}
+.jackrec {
+    background-color: #a0a0a0;
+    margin: 30px;
+    padding: 10px;
+}
+.jackrecctl {
+    padding: 10px;
+    margin: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #000000;
+}
+.jackrecerr {
+    color: #800000;
+    font-weight: bold;
+}
+.filelist {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #000000;
+    color: #000000;
+    margin: 10px;
+    padding: 10px;
+}
+.portlist {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #000000;
+    color: #000000;
+    margin: 10px;
+    padding: 10px;
+}
+.listhead {
+    color: #000;
+    margin: 10px;
+    padding: 10px;
+}
+.ctlbutton {
+    font-size: 28px;
+}
+.jackport {
+    padding: 10px;
+}
+.rectime {
+    background-color: #003000;
+    color: #30aa30;
+    font-size: 36px;
+    text-align: center;
+    width: 180px;
+}
+.recindicator {
+    display: none;
+    width: 36px;
+    height: 36px;
+    margin: 0px;
+    background-color: #b00000;
+    border-radius: 18px;
+}

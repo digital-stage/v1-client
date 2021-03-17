@@ -1,0 +1,50 @@
+{
+  "name": "@digitalstage/ds-client-webmixer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint ./src --ext .js,.ts",
+    "dev-node": "NODE_ENV=development nodemon --watch './src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build-node": "tsc",
+    "start-node": "NODE_ENV=development tsc && node ./dist/index.js",
+    "deploy-node": "pkg ./dist/index.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "dist":"next-pkg"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digital-stage/ds-client.git"
+  },
+  "author": "Giso Grimm, Tobias Hegemann, et al.",
+  "license": "GPL-2.0-only",
+  "bugs": {
+    "url": "https://github.com/digital-stage/ds-client/issues"
+  },
+  "homepage": "https://github.com/digital-stage/ds-client#readme",
+  "dependencies": {
+    "next": "^10.0.9",
+    "node": "^15.10.0",
+    "node-osc": "^5.2.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "socket.io": "^4.0.0",
+    "socket.io-client": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.35",
+    "@types/react": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "nodemon": "^2.0.7",
+    "pkg": "^4.4.9",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  }
+}

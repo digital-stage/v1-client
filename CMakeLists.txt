@@ -89,6 +89,7 @@ find_package(Boost COMPONENTS system REQUIRED)
 if (UNIX AND NOT APPLE)
     find_package(ALSA REQUIRED)
 endif ()
+find_package(NodeJS)
 
 # libov
 add_subdirectory(libov EXCLUDE_FROM_ALL)
@@ -159,9 +160,19 @@ target_link_libraries(DigitalStage
 if (UNIX AND NOT APPLE)
     target_link_libraries(DigitalStage
             PRIVATE
-	    ALSA::ALSA
+            ALSA::ALSA
             )
     set_target_properties(DigitalStage PROPERTIES OUTPUT_NAME "ds-client")
+endif ()
+
+## WEBMIXER
+if (NODEJS_EXECUTABLE)
+    message("Building webmixer")
+    add_custom_command(TARGET DigitalStage
+            POST_BUILD
+            COMMAND
+            npm install
+            COMMENT "Installing node modules" VERBATIM)
 endif ()
 
 ### CREATE BUNDLE

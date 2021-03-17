@@ -3,6 +3,7 @@
 #include "libov/src/ov_client_orlandoviols.h"
 #include "libov/src/ov_render_tascar.h"
 #include <QCoreApplication>
+#include <QStandardPaths>
 #include <iostream>
 #include <stdexcept>
 
@@ -12,6 +13,7 @@ OvWorker::OvWorker(QObject* parent)
   const std::string mac = getmacaddr();
   const int pinglogport(0);
   renderer = std::make_shared<ov_render_tascar_t>(mac, pinglogport);
+  renderer->set_runtime_folder(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation).toStdString());
 }
 
 void OvWorker::start(const QString& frontend)
@@ -36,6 +38,7 @@ void OvWorker::start(const QString& frontend)
       throw std::runtime_error("Unknown frontend type: " +
                                frontend.toStdString());
     }
+    client->set_runtime_folder(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation).toStdString());
     isRunning = true;
     client->start_service();
     emit started(frontend);
