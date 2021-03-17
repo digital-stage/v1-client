@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "nexe webmixer/webmixer.js -r \"webmixer/assets/*\""
+    "deploy": "nexe webmixer/webmixer.js -t x64-14.9.0 -r \"webmixer/assets/*\""
   },
   "repository": {
     "type": "git",
