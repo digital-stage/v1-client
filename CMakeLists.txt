@@ -2,9 +2,8 @@ cmake_minimum_required(VERSION 3.16.0)
 
 ## GLOBAL CONFIGURATION
 project(DigitalStage LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_PROJECT_VERSION_MAJOR "0")
 set(CMAKE_PROJECT_VERSION_MINOR "1")
 set(CMAKE_PROJECT_VERSION_PATCH "0")
@@ -17,6 +16,7 @@ endif (APPLE)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
 ### RUNTIME FLAGS
@@ -66,8 +66,6 @@ file(GLOB
 if (APPLE)
     include(BrewResolver.cmake)
 endif (APPLE)
-# Note: Qt6 requires c++17, but we are depending to libxml++2, which does NOT support c++17
-#find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 if (UNIX AND NOT APPLE)
     if (EXISTS "/usr/lib/x86_64-linux-gnu/cmake")
         message("FIX: Resolving a bug produced by malformed cpprestsdk packages, see: https://bugs.launchpad.net/ubuntu/+source/cpprest/+bug/1838826")
@@ -78,12 +76,13 @@ if (UNIX AND NOT APPLE)
         set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/usr/lib/arm-linux-gnueabihf/cmake")
     endif ()
 endif ()
-find_package(QT NAMES Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR}Keychain REQUIRED)
+find_package(Qt5Keychain REQUIRED)
+message("Using Qt${QT_VERSION_MAJOR}")
 find_package(cpprestsdk REQUIRED)
 find_package(OpenSSL REQUIRED)
-find_package(LibXml++ REQUIRED)
+find_package(XercesC REQUIRED)
 find_package(Jack REQUIRED)
 find_package(Boost COMPONENTS system REQUIRED)
 if (UNIX AND NOT APPLE)
@@ -130,6 +129,7 @@ if (APPLE)
     set_source_files_properties(${APP_ICON} PROPERTIES
             MACOSX_PACKAGE_LOCATION "Resources")
 endif ()
+
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DigitalStage ${PROJECT_SOURCES} ${APP_ICON})
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
@@ -137,20 +137,18 @@ else ()
     add_executable(DigitalStage ${PROJECT_SOURCES} ${APP_ICON})
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif ()
+
 target_include_directories(DigitalStage
         PRIVATE
         libov/src
-        ${LIBXML++_INCLUDE_DIRS}
         ${JACK_INCLUDE_DIRS}
         )
 target_link_libraries(DigitalStage
         PRIVATE
-        #Qt::Core
-        Qt5::Widgets
+        Qt${QT_VERSION_MAJOR}::Widgets
         qt5keychain
         cpprestsdk::cpprest
         OpenSSL::Crypto
-        ${LIBXML++_LIBRARIES}
         ${JACK_LIBRARIES}
         ${Boost_SYSTEM_LIBRARY}
         ov
