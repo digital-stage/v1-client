@@ -54,6 +54,8 @@ set(PROJECT_SOURCES
         ${PROJECT_SOURCE_DIR}/src/ov/ov_worker.h
         ${PROJECT_SOURCE_DIR}/src/ov/ov_controller.cpp
         ${PROJECT_SOURCE_DIR}/src/ov/ov_controller.h
+        ${PROJECT_SOURCE_DIR}/src/helper/filedownloader.cpp
+        ${PROJECT_SOURCE_DIR}/src/helper/filedownloader.h
         resources.qrc
         )
 file(GLOB
@@ -77,8 +79,8 @@ if (UNIX AND NOT APPLE)
         set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/usr/lib/arm-linux-gnueabihf/cmake")
     endif ()
 endif ()
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network LinguistTools REQUIRED)
 find_package(Qt5Keychain REQUIRED)
 message("Using Qt${QT_VERSION_MAJOR}")
 find_package(cpprestsdk REQUIRED)
@@ -89,7 +91,6 @@ find_package(Boost COMPONENTS system REQUIRED)
 if (UNIX AND NOT APPLE)
     find_package(ALSA REQUIRED)
 endif ()
-find_package(NodeJS)
 
 # libov
 add_subdirectory(libov EXCLUDE_FROM_ALL)
@@ -147,6 +148,7 @@ target_include_directories(DigitalStage
 target_link_libraries(DigitalStage
         PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Network
         qt5keychain
         cpprestsdk::cpprest
         OpenSSL::Crypto
@@ -162,25 +164,6 @@ if (UNIX AND NOT APPLE)
             ALSA::ALSA
             )
     set_target_properties(DigitalStage PROPERTIES OUTPUT_NAME "ds-client")
-endif ()
-
-## WEBMIXER
-if (NODEJS_EXECUTABLE)
-    message("Building webmixer")
-    add_custom_command(TARGET DigitalStage
-            POST_BUILD
-            COMMAND
-            npm install
-            WORKING_DIRECTORY
-            ${CMAKE_CURRENT_SOURCE_DIR}/webmixer/
-            COMMENT "Installing node modules" VERBATIM)
-    add_custom_command(TARGET DigitalStage
-            POST_BUILD
-            COMMAND
-            npm run deploy
-            WORKING_DIRECTORY
-            ${CMAKE_CURRENT_SOURCE_DIR}/webmixer/
-            COMMENT "Building webmixer" VERBATIM)
 endif ()
 
 ### CREATE BUNDLE
@@ -214,11 +197,6 @@ add_custom_command(TARGET DigitalStage
     COMMAND cp $<TARGET_FILE_DIR:zita-j2n>/zita-j2n
     $<TARGET_FILE_DIR:DigitalStage>
     COMMENT "Copying zita-j2n" VERBATIM)
-add_custom_command(TARGET DigitalStage
-    POST_BUILD
-    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/webmixer/webmixer
-    $<TARGET_FILE_DIR:DigitalStage>
-    COMMENT "Copying webmixer" VERBATIM)
 
 
 ## INSTALL

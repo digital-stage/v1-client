@@ -54,6 +54,10 @@ App::App()
   ovStatusMenu->addAction(openOrlandoViolsFrontendAction);
   connect(openOrlandoViolsFrontendAction, &QAction::triggered, this,
           &App::openOrlandoViolsFrontend);
+  QAction* openOrlandoViolsMixerAction = new QAction(tr("Open mixer"), this);
+  ovStatusMenu->addAction(openOrlandoViolsMixerAction);
+  connect(openOrlandoViolsMixerAction, &QAction::triggered, this,
+          &App::openOrlandoViolsMixer);
   QAction* switchAction = new QAction(tr("Switch to digital stage"), this);
   connect(switchAction, &QAction::triggered, ovController, [=]() {
     std::cout << "Switching to digital stage" << std::endl;
@@ -155,6 +159,11 @@ void App::openDigitalStageFrontend()
 void App::openOrlandoViolsFrontend()
 {
   QDesktopServices::openUrl(QUrl(OV_FRONTEND_URL));
+}
+
+void App::openOrlandoViolsMixer()
+{
+  QDesktopServices::openUrl(QUrl("http://localhost:8080/"));
 }
 
 void App::start()

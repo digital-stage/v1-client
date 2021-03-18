@@ -1,40 +1,31 @@
 #include "ov_worker.h"
+#include "../helper/filedownloader.h"
 #include "libov/src/ov_client_digitalstage.h"
 #include "libov/src/ov_client_orlandoviols.h"
 #include "libov/src/ov_render_tascar.h"
 #include <QCoreApplication>
+#include <QDir>
 #include <QFile>
+#include <QProcess>
 #include <QStandardPaths>
+#include <QUrl>
 #include <iostream>
 #include <stdexcept>
 
 OvWorker::OvWorker(QObject* parent)
     : QObject(parent), client(nullptr), isRunning(false)
 {
+  localDataPath =
+      (QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+       QDir::separator());
+  QDir dir(localDataPath);
+  if(!dir.exists())
+    dir.mkpath(localDataPath);
+  startWebmixer();
   const std::string mac = getmacaddr();
   const int pinglogport(0);
   renderer = std::make_shared<ov_render_tascar_t>(mac, pinglogport);
-
-  QString program;
-  if(QFile::exists("./webmixer")) {
-    program = "./webmixer";
-  } else if(QFile::exists("/home/pw/docs/file.txt")) {
-    program = "./DigitalStage.app/Contents/MacOS/webmixer";
-  }
-  if(!program.isEmpty()) {
-    QStringList arguments;
-    arguments << "-n"
-              << "Webmixer";
-    webmixerProcess = new QProcess(this);
-    webmixerProcess->start(program, arguments);
-  } else {
-    std::cerr << "Could not find webmixer executable" << std::endl;
-  }
-
-  renderer->set_runtime_folder(
-      QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)
-          .toStdString() +
-      "/");
+  renderer->set_runtime_folder(localDataPath.toStdString());
 }
 
 void OvWorker::start(const QString& frontend)
@@ -59,10 +50,7 @@ void OvWorker::start(const QString& frontend)
       throw std::runtime_error("Unknown frontend type: " +
                                frontend.toStdString());
     }
-    client->set_runtime_folder(
-        QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)
-            .toStdString() +
-        "/");
+    client->set_runtime_folder(localDataPath.toStdString());
     isRunning = true;
     client->start_service();
     emit started(frontend);
@@ -93,4 +81,68 @@ void OvWorker::setToken(const QString& value)
 const QString& OvWorker::getToken()
 {
   return token;
+}
+
+void OvWorker::startWebmixer()
+{
+  const QString program("webmixer");
+  const QString programFilePath = localDataPath + program;
+  if(QFile::exists(programFilePath)) {
+    webmixerProcess = new QProcess(this);
+    connect(webmixerProcess, &QProcess::errorOccurred, this,
+            [](QProcess::ProcessError error) {
+              std::cerr << "Could not start webmixer:" << std::endl;
+              std::cerr << error << std::endl;
+            });
+    connect(webmixerProcess, &QProcess::readyReadStandardOutput, this,
+            [=]() {
+              QString output(webmixerProcess->readAllStandardOutput());
+              std::cout << "OUTPUT:" << output.toStdString() << std::endl;
+            });
+    connect(webmixerProcess, &QProcess::readyReadStandardError, this,
+            [=]() {
+              QString errorOutput(webmixerProcess->readAllStandardError());
+              std::cerr << "ERROR:" << errorOutput.toStdString() << std::endl;
+            });
+    connect(webmixerProcess,
+            QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            [=](int exitCode, QProcess::ExitStatus exitStatus) {
+              std::cout << "Webmixer finsihed with return code " << exitCode
+                        << std::endl;
+            });
+    webmixerProcess->setWorkingDirectory(localDataPath);
+    webmixerProcess->start(programFilePath, QStringList() << "-n"
+                                                          << "webmixer");
+    webmixerProcess->waitForStarted();
+    std::cout << "Started webmixer" << std::endl;
+  } else {
+    std::cout << "Downloading webmixer..." << std::endl;
+    // Download first and then start
+    const QUrl url(
+        "https://github.com/digital-stage/ov-webmixer/releases/download/"
+        "Release/ov-webmixer-macos");
+    auto* fileDownloader = new FileDownloader(url, programFilePath, this);
+    connect(
+        fileDownloader, &FileDownloader::downloaded, this,
+        [=](const QString& targetPath) {
+          QFile(program).setPermissions(QFileDevice::ExeOwner |
+                                        QFileDevice::ReadOwner);
+          std::cout << "Starting webmixer..." << std::endl;
+          webmixerProcess = new QProcess(this);
+          connect(webmixerProcess, &QProcess::errorOccurred, this,
+                  [](QProcess::ProcessError error) {
+                    std::cerr << "Could not start webmixer:" << std::endl;
+                    std::cerr << error << std::endl;
+                  });
+          connect(webmixerProcess,
+                  QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+                  [=](int exitCode, QProcess::ExitStatus exitStatus) {
+                    std::cout << "Webmixer finsihed with return code "
+                              << exitCode << std::endl;
+                  });
+          webmixerProcess->start(programFilePath, QStringList() << "-n"
+                                                                << "webmixer");
+          webmixerProcess->waitForStarted();
+        });
+  }
 }

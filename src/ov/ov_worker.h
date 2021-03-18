@@ -11,7 +11,7 @@ class OvWorker : public QObject {
   Q_OBJECT
 
 public:
-  OvWorker(QObject* parent = nullptr);
+  explicit OvWorker(QObject* parent = nullptr);
   const QString& getToken();
 
 public slots:
@@ -26,8 +26,11 @@ signals:
   void tokenChanged(const QString& token);
 
 private:
+  void startWebmixer();
+
   std::shared_ptr<ov_client_base_t> client;
   std::shared_ptr<ov_render_tascar_t> renderer;
+  QString localDataPath;
   QString token;
   bool isRunning;
   QProcess* webmixerProcess;

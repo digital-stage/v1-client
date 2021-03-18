@@ -44,6 +44,7 @@ private slots:
   void onExit();
   void openDigitalStageFrontend();
   void openOrlandoViolsFrontend();
+  void openOrlandoViolsMixer();
   void iconActivated(QSystemTrayIcon::ActivationReason reason);
   void switchFrontend(const QString& frontend);
   void onStarted(const QString& frontend);
