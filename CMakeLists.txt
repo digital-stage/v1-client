@@ -20,6 +20,7 @@ set(CMAKE_AUTORCC ON)
 
 
 ### RUNTIME FLAGS
+add_compile_definitions(GUI)
 add_compile_definitions(STAGE_URL="https://single.dstage.org")
 add_compile_definitions(AUTH_SERVER="https://single.dstage.org/api/auth")
 add_compile_definitions(API_SERVER="wss://single.dstage.org/api/endpoint/")
@@ -164,17 +165,21 @@ if (UNIX AND NOT APPLE)
 endif ()
 
 ## WEBMIXER
-if (NODEJS_EXECUTABLE AND FALSE)
+if (NODEJS_EXECUTABLE)
     message("Building webmixer")
     add_custom_command(TARGET DigitalStage
             POST_BUILD
             COMMAND
             npm install
+            WORKING_DIRECTORY
+            ${CMAKE_CURRENT_SOURCE_DIR}/webmixer/
             COMMENT "Installing node modules" VERBATIM)
     add_custom_command(TARGET DigitalStage
             POST_BUILD
             COMMAND
             npm run deploy
+            WORKING_DIRECTORY
+            ${CMAKE_CURRENT_SOURCE_DIR}/webmixer/
             COMMENT "Building webmixer" VERBATIM)
 endif ()
 
@@ -192,23 +197,28 @@ if (APPLE)
             MACOSX_FRAMEWORK_IDENTIFIER org.digital-stage.client
             )
     if (FALSE)
-        add_custom_command(TARGET DigitalStage
-                POST_BUILD COMMAND
-                ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@executable_path/../../Frameworks/"
-                $<TARGET_FILE:DigitalStage>)
+            add_custom_command(TARGET DigitalStage
+                    POST_BUILD COMMAND
+                    ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@executable_path/../../Frameworks/"
+                    $<TARGET_FILE:DigitalStage>)
     endif ()
-    # Copy zita binaries into the application bundle
-    add_custom_command(TARGET DigitalStage
-            POST_BUILD
-            COMMAND cp $<TARGET_FILE_DIR:zita-n2j>/zita-n2j
-            $<TARGET_FILE_DIR:DigitalStage>
-            COMMENT "Copying zita-n2j" VERBATIM)
-    add_custom_command(TARGET DigitalStage
-            POST_BUILD
-            COMMAND cp $<TARGET_FILE_DIR:zita-j2n>/zita-j2n
-            $<TARGET_FILE_DIR:DigitalStage>
-            COMMENT "Copying zita-j2n" VERBATIM)
-endif ()
+endif()
+# Copy zita binaries into the application bundle
+add_custom_command(TARGET DigitalStage
+    POST_BUILD
+    COMMAND cp $<TARGET_FILE_DIR:zita-n2j>/zita-n2j
+    $<TARGET_FILE_DIR:DigitalStage>
+    COMMENT "Copying zita-n2j" VERBATIM)
+add_custom_command(TARGET DigitalStage
+    POST_BUILD
+    COMMAND cp $<TARGET_FILE_DIR:zita-j2n>/zita-j2n
+    $<TARGET_FILE_DIR:DigitalStage>
+    COMMENT "Copying zita-j2n" VERBATIM)
+add_custom_command(TARGET DigitalStage
+    POST_BUILD
+    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/webmixer/webmixer
+    $<TARGET_FILE_DIR:DigitalStage>
+    COMMENT "Copying webmixer" VERBATIM)
 
 
 ## INSTALL

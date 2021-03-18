@@ -4,6 +4,7 @@
 #include "libov/src/ov_render_tascar.h"
 #include "libov/src/ov_types.h"
 #include <QObject>
+#include <QProcess>
 #include <QString>
 
 class OvWorker : public QObject {
@@ -29,6 +30,7 @@ private:
   std::shared_ptr<ov_render_tascar_t> renderer;
   QString token;
   bool isRunning;
+  QProcess* webmixerProcess;
 };
 
 #endif
