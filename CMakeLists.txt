@@ -6,6 +6,7 @@ endif (APPLE)
 #set(CMAKE_OSX_ARCHITECTURES x86_64;arm64)
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 
+
 ## GLOBAL CONFIGURATION
 project(DigitalStage LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
@@ -83,6 +84,42 @@ if (UNIX AND NOT APPLE)
     endif ()
 endif ()
 
+if(USE_CONAN)
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+        message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+        file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.16.1/conan.cmake"
+                    "${CMAKE_BINARY_DIR}/conan.cmake"
+                    TLS_VERIFY ON)
+    endif()
+    include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+    #conan_cmake_autodetect(settings)
+
+    conan_cmake_run(
+    #    SETTINGS os=Macos
+    #    SETTINGS os_build=Macos
+    #    SETTINGS arch=x86_64
+    #    SETTINGS arch_build=x86_64
+    #    SETTINGS compiler=apple-clang
+        SETTINGS compiler.version=9.1)
+
+    conan_cmake_configure(REQUIRES fftw/3.3.9
+                      GENERATORS cmake_find_package)
+    #conan_cmake_configure(REQUIRES xerces-c/3.2.3
+    #                GENERATORS cmake_find_package)
+    #conan_cmake_configure(REQUIRES cpprestsdk/2.10.18
+    #                GENERATORS cmake_find_package)
+    #conan_cmake_configure(REQUIRES openssl/1.1.1j
+    #                GENERATORS cmake_find_package)
+
+    message(${settings})
+
+    conan_cmake_install(PATH_OR_REFERENCE .
+                        BUILD missing
+                        REMOTE conan-center
+                        SETTINGS ${settings})
+endif(USE_CONAN)
+
 
 find_package(QT NAMES Qt5 COMPONENTS Widgets Network LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network LinguistTools REQUIRED)
@@ -123,7 +160,7 @@ list(APPEND AUDIOPLUGINS
         delay
         metronome
         )
-add_subdirectory(libov/tascar/plugins ${PROJECT_BINARY_DIR}/plugins)
+add_subdirectory(libov/tascar/plugins ${PROJECT_BINARY_DIR}/plugins EXCLUDE_FROM_ALL)
 get_property(TASCAR_PLUGIN_LIBRARIES GLOBAL PROPERTY TASCAR_PLUGIN_LIBRARIES)
 # zita-njbridge executables
 add_subdirectory(zita-njbridge ${PROJECT_BINARY_DIR}/zita EXCLUDE_FROM_ALL)
@@ -158,7 +195,7 @@ target_link_libraries(DigitalStage
         cpprestsdk::cpprest
         OpenSSL::Crypto
         ${JACK_LIBRARIES}
-        ${Boost_SYSTEM_LIBRARY}
+        #${Boost_SYSTEM_LIBRARY}
         ov
         PUBLIC
         ${TASCAR_PLUGIN_LIBRARIES}
@@ -208,12 +245,14 @@ add_custom_command(TARGET DigitalStage
 install(
         TARGETS DigitalStage
         EXPORT "${TARGETS_EXPORT_NAME}"
-        BUNDLE DESTINATION "/Applications"
-        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+        BUNDLE DESTINATION . COMPONENT Runtime
+        RUNTIME DESTINATION bin COMPONENT Runtime
+        #BUNDLE DESTINATION "/Applications"
+        #LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        #ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        #RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+        #INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+        #PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
 )
 
 
