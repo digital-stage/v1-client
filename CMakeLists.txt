@@ -83,34 +83,18 @@ if (UNIX AND NOT APPLE)
     endif ()
 endif ()
 
+
 find_package(QT NAMES Qt5 COMPONENTS Widgets Network LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network LinguistTools REQUIRED)
 message("Using Qt${QT_VERSION_MAJOR}")
 if (UNIX AND NOT APPLE)
     find_package(ALSA REQUIRED)
 endif ()
-if(USE_CPM)
-    include(cmake/CPM.cmake)
-    CPMAddPackage("gh:frankosterfeld/qtkeychain#v0.12.0")
-    CPMAddPackage("gh:microsoft/cpprestsdk#v2.10.18")
-    CPMAddPackage("gh:openssl/openssl#OpenSSL_1_1_1i")
-    CPMAddPackage("gh:apache/xerces-c#v3.2.3")
-    CPMAddPackage("gh:jackaudio/jack2#v1.9.17")
-    CPMAddPackage(
-        NAME nlohmann_json
-        VERSION 3.7.3
-        # the git repo is incredibly large, so we download the archived include directory
-        URL https://github.com/nlohmann/json/releases/download/v3.7.3/include.zip
-        URL_HASH SHA256=87b5884741427220d3a33df1363ae0e8b898099fbc59f1c451113f6732891014
-    )
-else()
-    find_package(Qt5Keychain REQUIRED)
-    find_package(cpprestsdk REQUIRED)
-    find_package(OpenSSL REQUIRED)
-    find_package(XercesC REQUIRED)
-    find_package(Jack REQUIRED)
-endif()
-
+find_package(Qt5Keychain REQUIRED)
+find_package(cpprestsdk REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(XercesC REQUIRED)
+find_package(Jack REQUIRED)
 
 
 # libov
@@ -168,7 +152,7 @@ target_include_directories(DigitalStage
         )
 target_link_libraries(DigitalStage
         PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widget
+        Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Network
         qt5keychain
         cpprestsdk::cpprest
