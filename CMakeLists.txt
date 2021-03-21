@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.16.0)
 
+if (APPLE)
+    include(FixAppleArchitecture.cmake)
+endif (APPLE)
+#set(CMAKE_OSX_ARCHITECTURES x86_64;arm64)
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.14)
+
 ## GLOBAL CONFIGURATION
 project(DigitalStage LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
@@ -10,13 +16,10 @@ set(CMAKE_PROJECT_VERSION_PATCH "0")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gdwarf-3")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
-if (APPLE)
-    include(FixAppleArchitecture.cmake)
-endif (APPLE)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
 ### RUNTIME FLAGS
@@ -68,7 +71,7 @@ file(GLOB
 ### DEPENDENCIES
 if (APPLE)
     include(BrewResolver.cmake)
-endif (APPLE)
+endif(APPLE)
 if (UNIX AND NOT APPLE)
     if (EXISTS "/usr/lib/x86_64-linux-gnu/cmake")
         message("FIX: Resolving a bug produced by malformed cpprestsdk packages, see: https://bugs.launchpad.net/ubuntu/+source/cpprest/+bug/1838826")
@@ -79,18 +82,36 @@ if (UNIX AND NOT APPLE)
         set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/usr/lib/arm-linux-gnueabihf/cmake")
     endif ()
 endif ()
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network LinguistTools REQUIRED)
+
+find_package(QT NAMES Qt5 COMPONENTS Widgets Network LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network LinguistTools REQUIRED)
-find_package(Qt5Keychain REQUIRED)
 message("Using Qt${QT_VERSION_MAJOR}")
-find_package(cpprestsdk REQUIRED)
-find_package(OpenSSL REQUIRED)
-find_package(XercesC REQUIRED)
-find_package(Jack REQUIRED)
-find_package(Boost COMPONENTS system REQUIRED)
 if (UNIX AND NOT APPLE)
     find_package(ALSA REQUIRED)
 endif ()
+if(USE_CPM)
+    include(cmake/CPM.cmake)
+    CPMAddPackage("gh:frankosterfeld/qtkeychain#v0.12.0")
+    CPMAddPackage("gh:microsoft/cpprestsdk#v2.10.18")
+    CPMAddPackage("gh:openssl/openssl#OpenSSL_1_1_1i")
+    CPMAddPackage("gh:apache/xerces-c#v3.2.3")
+    CPMAddPackage("gh:jackaudio/jack2#v1.9.17")
+    CPMAddPackage(
+        NAME nlohmann_json
+        VERSION 3.7.3
+        # the git repo is incredibly large, so we download the archived include directory
+        URL https://github.com/nlohmann/json/releases/download/v3.7.3/include.zip
+        URL_HASH SHA256=87b5884741427220d3a33df1363ae0e8b898099fbc59f1c451113f6732891014
+    )
+else()
+    find_package(Qt5Keychain REQUIRED)
+    find_package(cpprestsdk REQUIRED)
+    find_package(OpenSSL REQUIRED)
+    find_package(XercesC REQUIRED)
+    find_package(Jack REQUIRED)
+endif()
+
+
 
 # libov
 add_subdirectory(libov EXCLUDE_FROM_ALL)
@@ -147,7 +168,7 @@ target_include_directories(DigitalStage
         )
 target_link_libraries(DigitalStage
         PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Widget
         Qt${QT_VERSION_MAJOR}::Network
         qt5keychain
         cpprestsdk::cpprest
