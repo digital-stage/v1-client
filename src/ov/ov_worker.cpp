@@ -85,8 +85,7 @@ const QString& OvWorker::getToken()
 
 void OvWorker::startWebmixer()
 {
-  const QString program("webmixer");
-  const QString programFilePath = localDataPath + program;
+  const QString programFilePath = localDataPath + "webmixer";
   if(QFile::exists(programFilePath)) {
     webmixerProcess = new QProcess(this);
     connect(webmixerProcess, &QProcess::errorOccurred, this,
@@ -125,7 +124,7 @@ void OvWorker::startWebmixer()
     connect(
         fileDownloader, &FileDownloader::downloaded, this,
         [=](const QString& targetPath) {
-          QFile(program).setPermissions(QFileDevice::ExeOwner |
+          QFile(programFilePath).setPermissions(QFileDevice::ExeOwner |
                                         QFileDevice::ReadOwner);
           std::cout << "Starting webmixer..." << std::endl;
           webmixerProcess = new QProcess(this);
