@@ -4,7 +4,7 @@ if (APPLE)
     include(FixAppleArchitecture.cmake)
 endif (APPLE)
 #set(CMAKE_OSX_ARCHITECTURES x86_64;arm64)
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.14)
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 
 ## GLOBAL CONFIGURATION
 project(DigitalStage LANGUAGES CXX)
